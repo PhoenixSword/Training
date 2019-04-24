@@ -19,8 +19,8 @@ class NewsList extends React.Component {
           <News
             key={id}
             id={id}
-            width={100+ (index%3*80) + Math.round(20 + Math.random() *50)}
-            height={300  + (index%5*80) + Math.round(Math.random() *20)}
+            width={100+ (index%3*100) + Math.round(20 + Math.random() *50)}
+            height={33+(index%5*9)}
           />
         ))}
       </Container>

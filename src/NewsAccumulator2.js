@@ -4,27 +4,21 @@ import { DropTarget } from "react-dnd";
 
 const Container = styled.div`
   background: url("https://content.uchi.ru/27398/930/32.png") no-repeat;
-  background-size: 200%;
   position: absolute;
   margin: 1rem;
-  left: 1%;
-  width: 20%;
-  height: 50%;
-  min-height:210px;
-  transition: background 0s, transform 2s ease-in-out;
-  ${p => p.finish ? `transform: rotateZ(-5deg) translateX(-300%) translateY(-300%);` : ``}
-  ${p => (p.isOver? `background-position: 100% 100%;` : `background-position: 0 100%;`)}
-  // box-shadow: 0 0 ${p => (p.isOver ? "1.75" : "0.75")}rem 0.1rem rgba(0, 0, 100, 0.5);
-  // background-color: ${p => (p.isOver ? "rgba(0, 0, 0, 0.1)" : "")};
-  // ${p => p.finish ? (`background: url("https://content.uchi.ru/27398/930/31.png") no-repeat;`) : ``}
-  // ${p => p.finish ? (`animation: animated 3s infinite`) : ``}
-  // @keyframes animated {
-  // from {
-  //   background-position: 0px 0px; }
-
-  // to {
-  //   background-position: 100% 0px; } 
-  // }
+  top: 40%;
+  left: -3%;
+  width: 399px;
+  height: 455px;
+  transition: background 0s, transform 3s ease-in-out;
+  ${p => p.isOver ? `background-position: -399px;` : ``}
+  ${p => p.finish ? `transform: translateY(-300%) translateX(-300%) rotate(-80deg);` : ``}
+  ${p => p.finish ? (`background: url('https://content.uchi.ru/27398/930/34.png') no-repeat;`) : ``}
+  ${p => p.finish ? (`animation: animatedleft 0.6s steps(19) infinite;`) : ``}
+  ${p => p.finish ? (`background-size: auto;`) : ``}
+  @keyframes animatedleft {
+  100% { background-position: -7600px; }
+}
 `;
 
 const List = styled.div`
@@ -33,33 +27,24 @@ const List = styled.div`
 `;
 
 const NewsContainer = styled.div`
-  background: url("https://content.uchi.ru/27398/930/39.png");
-  background-position: 46px 0;
-  width: 30px;
-  height: 39px;
+  background: url("/public/selecteditem.png");
+  width: 70px;
+  height: 88px;
+  background-position: 84px 0;
   background-size: cover;
   align-self: center;
-  margin: 0.5rem;
   padding: 0.5rem;
   & > p {
     font-weight: bold;
-    font-size: 13px;
+    font-size: 16px;
     border-radius: 10px;
     text-align: center;
-    margin: 15px 2px 0 2px;
+    margin: 30px 0 0 14px;
     padding: 1px 0 0 0;
-    width: 25px;
+    width: 42px;
     height: 20px;
     background: white;
     color: black;
-  }
-  @keyframes fade-out {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
   }
 `;
 
@@ -91,7 +76,7 @@ class NewsAccumulator extends React.Component {
     return (
       <Container finish={finish} canDrop={canDrop} isOver={isOver}>
         {connectDropTarget(
-          <div style={{ height: "100%" }}>
+          <div style={{ height: "100%", paddingTop: "0", paddingLeft: "50px", marginBottom: "1000px" }}>
             <Header>
             </Header>
             <List>
