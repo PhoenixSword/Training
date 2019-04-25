@@ -11,6 +11,7 @@ const Container = styled.div`
   width: 399px;
   height: 455px;
   transition: background 0s, transform 3s ease-in-out;
+  z-index: 1;
   ${p => p.isOver ? `background-position: -399px;` : ``}
   ${p => p.finish ? `transform: translateY(-300%) translateX(-300%) rotate(-80deg);` : ``}
   ${p => p.finish ? (`background: url('https://content.uchi.ru/27398/930/34.png') no-repeat;`) : ``}

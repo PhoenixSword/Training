@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 347px;
   height: 379px;
   transition: background 0s, transform 3s ease-in-out;
-
+  z-index: 1;
   ${p => p.isOver ? `background-position: -347px;` : ``}
   ${p => p.finish ? `transform: translateY(-300%) translateX(300%) rotate(80deg);` : ``}
   ${p => p.finish ? (`background: url('https://content.uchi.ru/27398/930/31.png') no-repeat;`) : ``}
@@ -28,7 +28,7 @@ const List = styled.div`
 `;
 
 const NewsContainer = styled.div`
-    background: url("/public/selecteditem.png");
+  background: url("/public/selecteditem.png");
   width: 70px;
   height: 88px;
   background-position: 173px 0;

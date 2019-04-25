@@ -49,12 +49,12 @@ function rand(type) {
 
 function width(index)
 {
-   return 100 + (index%3*80) + Math.round(20 + Math.random() *50);
+   return 100 + (index%5*80) + Math.round(20 + Math.random() *50);
 }
 
 function height(index)
 {
-    return 300 + (index%5*80) + Math.round(Math.random() *20);
+    return 300 + (index%7*80) + Math.round(Math.random() *20);
 }
 
 const initialList = [

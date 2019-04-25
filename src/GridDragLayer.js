@@ -19,7 +19,7 @@ function getItemTransform(props) {
   }
 
   const { x, y } = currentOffset;
-  const transform = `translate(${x+props.item.height}px, ${y}px)`;
+  const transform = `translate(${x+props.item.height-15}px, ${y+props.item.width+35}px)`;
   return {  
     position: 'fixed', 
     display: 'block',
@@ -32,6 +32,21 @@ function getItemTransform(props) {
 class GridDragLayer extends Component {
   constructor(props) {
     super(props);
+    this.lastUpdate = +new Date();
+    this.updateTimer = null;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (+new Date() - this.lastUpdate > 16) {
+      this.lastUpdate = +new Date();
+      clearTimeout(this.updateTimer);
+      return true;
+    } else {
+      this.updateTimer = setTimeout(() => {
+        this.forceUpdate();
+      }, 100);
+    }
+    return false;
   }
 
 render() {

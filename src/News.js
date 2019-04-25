@@ -1,44 +1,103 @@
 import React from "react";
 import { DragSource } from "react-dnd";
 import styled from "styled-components";
+import throttle from './throttle.js';
 
 const Container = styled.div`
   position: absolute;
-  background: url("/public/item.png");
-  width: 71px;
-  height: 88px;
+  background: url("/public/item.png") no-repeat;
+  width: 80px;
+  height: 94px;
   background-size: cover;
-  align-self: center;
-  padding: 0.5rem;
-
   z-index: 10;
+  transition: all background 0s;
   & > p {
     font-weight: bold;
     font-size: 16px;
     border-radius: 10px;
     text-align: center;
-    margin: 30px 0 0 14px;
+    margin: 35px 0 0 20px;
     padding: 1px 0 0 0;
     width: 42px;
     height: 20px;
     background: white;
     color: black;
   }
-  background-position: -92px;
-  animation: animateditem 0.6s steps(11) infinite;
-   @keyframes animateditem {
-  100% { background-position: 880px; }
-}
-
+ 
   ${p => p.error ? `background-position: -46px;` : ""};
-  transition: all 0.7s ease-in-out;
-  ${p => (`animation: jump_${p.id} 2s infinite`)};
-
   ${p => ( p.isDragging ? `display:none;` : "display:flex")};
   ${p => (!p.isDragging ? "top:" + p.width + "px" : null)};
-  ${p => (!p.isDragging ? "left:" + p.height + "%" : null)};
-
+  ${p => (!p.isDragging ? "left:" + p.height + "px" : null)};
 `;
+function generatePlaceholder(item) {
+  console.log(item);
+  const placeholder = document.createElement('div');
+  placeholder.id = 'drag-placeholder';
+  placeholder.style.cssText =
+    'display:none;position:fixed;z-index:100000;pointer-events:none;';
+  
+  placeholder.innerHTML = ReactDOMServer.renderToStaticMarkup(<SubjectContent { ...item } />);
+  return placeholder;
+}
+
+function createMouseMoveHandler() {
+  let currentX = -1;
+  let currentY = -1;
+
+  return function(event) {
+    let newX = event.clientX - 8;
+    let newY = event.clientY - 2;
+
+    if (currentX === newX && currentY === newY) {
+      return;
+    }
+
+    const dragPlaceholder = document.getElementById('drag-placeholder');
+    const transform = 'translate(' + newX + 'px, ' + newY + 'px) rotate(3deg)';
+
+    dragPlaceholder.style.transform = transform;
+    dragPlaceholder.style.display = 'block';
+  };
+}
+
+const mouseMoveHandler = createMouseMoveHandler();
+
+const throttledMoveHandler = throttle(createMouseMoveHandler(), 16);
+
+const subjectSource = {
+  beginDrag(props, monitor, component) {
+    document.addEventListener('dragover', throttledMoveHandler);
+    document.body.insertBefore(
+      generatePlaceholder(props),
+      document.body.firstChild
+    );
+    return props;
+  },
+  endDrag(props, monitor, component) {
+    document.removeEventListener('dragover', throttledMoveHandler);
+    let child = document.getElementById('drag-placeholder');
+    child.parentNode.removeChild(child);
+
+    if (!monitor.didDrop()) {
+      return;
+    }
+    const item = monitor.getItem();
+    const dropResult = monitor.getDropResult();
+
+    props.moveSubject(item.data.ID, {
+      day: dropResult.xPos,
+      period: dropResult.yPos,
+    });
+  },
+};
+
+function collect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+    connectDragPreview: connect.dragPreview(),
+  };
+}
 
 @DragSource(
   "NEWS_ITEM",
@@ -65,7 +124,6 @@ class News extends React.Component {
 
     return connectDragSource(
       <div style={{ display: "flex" }}>
-
         <Container error={error} isDragging={isDragging} width={width} height={height} id={id}>
           <p>{id}</p>
         </Container>
@@ -73,5 +131,4 @@ class News extends React.Component {
     );
   }
 }
-
-export default News;
+export default DragSource('subjectItem', subjectSource, collect)(News);
