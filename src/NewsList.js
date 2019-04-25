@@ -12,10 +12,10 @@ const Container = styled.div`
 
 class NewsList extends React.Component {
   render() {
-    const { list } = this.props;
+    const { error, list, width, height } = this.props;
     return (
       <Container>
-        {list.map(({ id }, index) => (
+        {list.map(({ id, width, height }, index) => (
           <News
             key={id}
             id={id}
