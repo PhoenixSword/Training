@@ -6,6 +6,7 @@ import NewsAccumulator from "./NewsAccumulator";
 import NewsAccumulator2 from "./NewsAccumulator2";
 import NewsAccumulator3 from "./NewsAccumulator3";
 import NewsList from "./NewsList";
+import GridDragLayer from "./GridDragLayer";
 
 const Container = styled.div`
   width: 80%;
@@ -46,16 +47,26 @@ function rand(type) {
   return Math.round(0 + Math.random() * 300);
 }
 
+function width(index)
+{
+   return 100 + (index%3*80) + Math.round(20 + Math.random() *50);
+}
+
+function height(index)
+{
+    return 300 + (index%5*80) + Math.round(Math.random() *20);
+}
+
 const initialList = [
-  { id: rand(1), added: false },
-  { id: rand(1), added: false },
-  { id: rand(1), added: false },
-  { id: rand(2), added: false },
-  { id: rand(2), added: false },
-  { id: rand(2), added: false },
-  { id: rand(3), added: false },
-  { id: rand(3), added: false },
-  { id: rand(3), added: false }
+  { id: rand(1), added: false, width: width(1), height: height(1) },
+  { id: rand(1), added: false, width: width(2), height: height(2) },
+  { id: rand(1), added: false, width: width(3), height: height(3) },
+  { id: rand(2), added: false, width: width(4), height: height(4) },
+  { id: rand(2), added: false, width: width(5), height: height(5) },
+  { id: rand(2), added: false, width: width(6), height: height(6) },
+  { id: rand(3), added: false, width: width(7), height: height(7) },
+  { id: rand(3), added: false, width: width(8), height: height(8) },
+  { id: rand(3), added: false, width: width(9), height: height(9) }
 ];
 
 function splitToDigits(number) {
@@ -73,7 +84,8 @@ class Main extends React.Component {
     finish: false,
     addedList: [],
     addedList2: [],
-    addedList3: []
+    addedList3: [],
+    error: ""
   };
 
   handleDropNews = id => {
@@ -86,6 +98,13 @@ class Main extends React.Component {
       }));
       this.checkFinish();
     }
+    else
+    {
+      this.setState(state => ({
+        error: id
+      }));
+    }
+
   };
   handleDropNews2 = id => {
     if (splitToDigits(id)[1] === 2) {
@@ -96,6 +115,12 @@ class Main extends React.Component {
         list: state.list.filter(news => news.id !== id)
       }));
       this.checkFinish();
+    }
+    else
+    {
+      this.setState(state => ({
+        error: id
+      }));
     }
   };
 
@@ -108,6 +133,12 @@ class Main extends React.Component {
         list: state.list.filter(news => news.id !== id)
       }));
       this.checkFinish();
+    }
+    else
+    {
+      this.setState(state => ({
+        error: id
+      }));
     }
   };
 
@@ -122,11 +153,14 @@ class Main extends React.Component {
     ) : "";
   }
   render() {
-    const { list, addedList, addedList2, addedList3, finish } = this.state;
+    const { error, list, addedList, addedList2, addedList3, finish } = this.state;
     
     return (
       
       <Container>
+
+      <GridDragLayer />
+
       <Finish finish={finish}>Finish</Finish>
         <NewsAccumulator2
           list={addedList2}
@@ -134,7 +168,7 @@ class Main extends React.Component {
           finish={finish}
         />
 
-        <NewsList list={list} />
+        <NewsList list={list} error={error}/>
 
         <NewsAccumulator
           list={addedList}

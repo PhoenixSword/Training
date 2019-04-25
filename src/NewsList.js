@@ -12,15 +12,16 @@ const Container = styled.div`
 
 class NewsList extends React.Component {
   render() {
-    const { list } = this.props;
+    const { error, list, width, height } = this.props;
     return (
       <Container>
-        {list.map(({ id }, index) => (
+        {list.map(({ id, width, height }, index) => (
           <News
             key={id}
             id={id}
-            width={100+ (index%3*80) + Math.round(20 + Math.random() *50)}
-            height={300  + (index%5*80) + Math.round(Math.random() *20)}
+            width={width}
+            height={height}
+            error = {+error === +id ? true : false}
           />
         ))}
       </Container>

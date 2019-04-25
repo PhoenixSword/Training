@@ -12,6 +12,7 @@ const Container = styled.div`
   width: 30%;
   min-height: 135px;
   height: 20%;
+  z-index: 1;
   transition: background 0s, transform 2s ease-in-out;
   ${p => p.finish ? `transform: translateX(300%);` : ``}
   ${p => (p.isOver? `background-position: 100% 100%;` : `background-position: 0 100%;`)}

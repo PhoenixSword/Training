@@ -11,6 +11,7 @@ const Container = styled.div`
   width: 20%;
   height: 50%;
   min-height:210px;
+  z-index: 1;
   transition: background 0s, transform 2s ease-in-out;
   ${p => p.finish ? `transform: rotateZ(5deg) translateX(300%) translateY(-300%);` : ``}
  
