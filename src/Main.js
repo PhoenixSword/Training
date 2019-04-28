@@ -35,9 +35,6 @@ function height(index)
 }
 
 function init() {
-
-
-  // Hide the success message
   $('#successMessage').hide();
   $('#successMessage').css( {
     left: '580px',
@@ -46,18 +43,15 @@ function init() {
     height: 0
   } );
 
-  // Reset the game
   correctCards = 0;
   $('#cardPile').html( '' );
   $('#fake').html( '' );
   position1 = 0;
   position2 = 0;
   position3 = 0;
-  // Create the pile of shuffled cards
   var numbers = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
   var terms = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ];
   
-
   for ( var i=0; i<10; i++ ) {
     var number = rand((i+1)%3);
     $(`<div style="left: ${height(i)}px;top:${width(i)}px" class="item"><p>${number}</p></div>`).data( 'number', number ).attr( 'id', 'card'+number ).appendTo( '#cardPile' ).draggable( {
@@ -66,7 +60,6 @@ function init() {
     } );
   }
 
-  // Create the card slots
   var words = [ 'one', 'two', 'three'];
   for ( var i=1; i<=3; i++ ) {
     $(`<div id='cardSlots${i}'></div>`).data( 'number', i ).appendTo( `#fake` ).droppable( {
@@ -75,7 +68,6 @@ function init() {
       drop: handleCardDrop
     } );
   }
-
 }
 
 function splitToDigits(number) {
@@ -159,10 +151,13 @@ function handleCardDrop( event, ui ) {
     default:
       break;
   }
-  if ( correctCards == 1 ) {
+  if ( correctCards == 10 ) {
     $('#cardSlots1').addClass('animated');
     $('#cardSlots2').addClass('animated');
     $('#cardSlots3').addClass('animated');
+    $('.leftItem').addClass('animated');
+    $('.centerItem').addClass('animated');
+    $('.rightItem').addClass('animated');
   }
 
 }
@@ -178,24 +173,17 @@ class Main extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-
-    <div id="content">
-      <div id="fake"></div>
-      <div id="cardPile"> </div>
-
-
-
-      <div id="successMessage">
-        <h2>Congratulations!</h2>
-        <button onClick={init}>Play Again</button>
+    <React.Fragment>
+      <div id="content">
+        <div id="fake"></div>
+        <div id="cardPile"> </div>
+        <div id="successMessage">
+          <h2>Congratulations!</h2>
+          <button onClick={init}>Play Again</button>
+        </div>
       </div>
-
-    </div>
-
     </React.Fragment>
     );
   }
 }
-
 export default Main;

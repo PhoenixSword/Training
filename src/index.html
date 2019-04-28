@@ -8,14 +8,15 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <title>Training</title>
     <style>
-      body{
-        max-width: 1000px;
-        background: url('https://content.uchi.ru/27398/930/28.png') no-repeat center center fixed;;
-        background-size: cover;
-      }
-       
-       /* Add some margin to the page and set a default font and colour */
+body{
+  overflow: hidden;
+  max-width: 1000px;
+  background: url('https://content.uchi.ru/27398/930/28.png') no-repeat center center fixed;;
+  background-size: cover;
+}
  
+ /* Add some margin to the page and set a default font and colour */
+
 
 /* Give headings their own font */
  
@@ -117,6 +118,16 @@ h1, h2, h3, h4 {
   animation: 0;
 }
 
+.centerItem
+{
+  position: absolute;
+  background: url("/public/invalidItem.png") no-repeat;
+  width: 79px;
+  height: 94px;
+  z-index: 10;
+  animation: 0;
+}
+
 .rightItem
 {
   position: absolute;
@@ -128,6 +139,47 @@ h1, h2, h3, h4 {
   animation: 0;
 }
 
+.leftItem.animated
+{
+  position: absolute;
+  background: url("https://content.uchi.ru/27398/930/43.png") no-repeat;
+  width: 87px;
+  height: 104px;
+  z-index: 10;
+  animation: animatedleftItem 0.6s steps(11) infinite;
+  transition: transform 2s ease-in-out;
+  transform: translateY(-500%) translateX(-500%) rotate(-80deg);
+}
+@keyframes animatedleftItem{
+  100% { background-position: -957px; }
+}
+.centerItem.animated
+{
+  position: absolute;
+  background: url("/public/item.png") no-repeat;
+  width: 79px;
+  height: 94px;
+  z-index: 10;
+  animation: animateditem 0.6s steps(11) infinite;
+  transition: transform 3s ease-in-out;
+  transform: translateY(-50%) translateX(2100%) rotate(-5deg);
+}
+
+.rightItem.animated
+{
+  position: absolute;
+  background: url("https://content.uchi.ru/27398/930/42.png") no-repeat;
+  width: 87px;
+  height: 104px;
+  z-index: 10;
+  animation: animatedrightItem 0.6s steps(11) infinite;
+  transition: transform 2s ease-in-out;
+  transform: translateY(-500%) translateX(500%) rotate(80deg);
+}
+
+@keyframes animatedrightItem{
+  100% { background-position: -957px; }
+}
 /* Individual cards and slots */
  
 
@@ -145,10 +197,6 @@ h1, h2, h3, h4 {
   margin: 10px 0 0 10px;
   background: #fff;
 }
- 
-/*#cardSlots div:first-child, #cardPile div:first-child {
-  margin-left: 0;
-}*/
 
 #cardSlots1{
   background: url("https://content.uchi.ru/27398/930/32.png") no-repeat;
@@ -181,7 +229,7 @@ h1, h2, h3, h4 {
 }
 
 #cardSlots3{
-    background: url("https://content.uchi.ru/27398/930/45.png") no-repeat;
+  background: url("https://content.uchi.ru/27398/930/45.png") no-repeat;
   margin: 0 10%;
   position: absolute;
   left: 25%;
@@ -195,42 +243,34 @@ h1, h2, h3, h4 {
   background-position: -380px;
 }
 
- 
 
- #cardSlots1.animated{
-  background: url('https://content.uchi.ru/27398/930/34.png') no-repeat;
-  background-position: 0;
-  background-size: auto;
-  /*transform: translateY(-300%) translateX(-300%) rotate(-80deg);*/
-  animation: animatedleft 0.6s steps(19) infinite;
+#cardSlots1.animated{
+background: url('https://content.uchi.ru/27398/930/34.png') no-repeat;
+transform: translateY(-300%) translateX(-300%) rotate(-80deg);
+animation: animatedleft 0.6s steps(19) infinite;
 }
 @keyframes animatedleft {
   100% { background-position: -7600px; }
 }
 #cardSlots2.animated{
-  background: url("https://content.uchi.ru/27398/930/29.png") no-repeat;
-  position: absolute;
-  margin: 1rem;
-  top: 40%;
-  right: 0;
-  width: 347px;
-  height: 379px;
-  transition: background 0s, transform 3s ease-in-out;
-  z-index: 1;
+background: url('https://content.uchi.ru/27398/930/31.png') no-repeat;
+transform: translateY(-300%) translateX(300%) rotate(80deg);
+animation: animatedright 0.6s steps(19) infinite;
+}
+@keyframes animatedright {
+  100% { background-position: -6593px; }
 }
 
 #cardSlots3.animated{
-    background: url("https://content.uchi.ru/27398/930/45.png") no-repeat;
-  margin: 0 10%;
-  position: absolute;
-  left: 25%;
-  bottom: 0%;
-  width: 380px;
-  height: 185px;
-  transition: background 0s, transform 3s ease-in-out;
-  z-index: 1;
+background: url('https://content.uchi.ru/27398/930/44.png') no-repeat;
+width: 409px;
+height: 202px;
+transform: translateY(-30%) translateX(400%) rotate(-10deg);
+animation: animatedcenter 0.6s steps(14) infinite;
 }
-
+@keyframes animatedcenter {
+  100% { background-position:  0 -2828px; }
+}
 
 /* "You did it!" message */
 #successMessage {
@@ -242,11 +282,7 @@ h1, h2, h3, h4 {
   z-index: 100;
   background: #dfd;
   border: 2px solid #333;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
   border-radius: 10px;
-  -moz-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
-  -webkit-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
   box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
   padding: 20px;
 }
