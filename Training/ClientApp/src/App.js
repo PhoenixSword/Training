@@ -1,0 +1,36 @@
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import React from 'react';
+import { Route, Switch } from 'react-router';
+import { Layout } from './components/Layout';
+import { Home } from './components/Home';
+import { Login } from './components/Login';
+import { Register } from './components/Register';
+import Main from './Main';
+
+const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
+  <Route {...rest} render={props => (
+    <Layout>
+      <Component {...props} />
+    </Layout>
+  )} />
+)
+
+const EmptyLayout = props => (
+  <div>
+    {props.children}
+  </div>
+)
+
+const App = () => (
+  <div>
+    <Switch>
+      <AppRoute exact path="/" layout={Layout} component={Home} />
+      <AppRoute exact path="/login" layout={Layout} component={Login} />
+      <AppRoute exact path="/register" layout={Layout} component={Register} />
+      <AppRoute exact path="/main" layout={EmptyLayout} component={Main} />
+    </Switch>
+  </div>
+)
+export default App;
