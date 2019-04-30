@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {userService} from "./services/UserService";
-import Main from "../Main";
+import Game1 from "../Game1";
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -13,8 +13,9 @@ export class Home extends Component {
     return (
       <div>
         {
-          <iframe src="/main" scrolling="no"/>
+          //<iframe src="/main"/>
         }
+        
       </div>
     );
   }

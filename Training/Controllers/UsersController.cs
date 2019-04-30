@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Training.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -19,11 +18,11 @@ namespace Training.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private UserManager<IdentityUser> _userManager;
-        private SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public UsersController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+        public UsersController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -31,34 +30,40 @@ namespace Training.Controllers
         }
 
         [HttpPost]
-        public async Task<Object> Register(ApplicationUserModel applicationUserModel)
+        public async Task<object> Register(ApplicationUserModel applicationUserModel)
         {
-            var user = new IdentityUser()
+            var user = new User
             {
                 UserName = applicationUserModel.Email,
                 Email = applicationUserModel.Email
-            }; 
+            };
 
-            try
+            var result = await _userManager.CreateAsync(user, applicationUserModel.Password);
+
+            if (!result.Succeeded) return Ok(result);
+
+            await _signInManager.SignInAsync(user, false);
+
+            if (applicationUserModel.Type)
             {
-                var result = await _userManager.CreateAsync(user, applicationUserModel.Password);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, false);
-                    var resultModel = new ResultModel();
-                    resultModel.email = user.Email;
-                    resultModel.ResultStatus = result.Succeeded;
-                    resultModel.Token = (string)(GenerateJwtToken(applicationUserModel.Email, user));
-
-                    return Ok(resultModel);
-                }
-
-                return Ok(result);
+                await _userManager.AddToRoleAsync(user, "Teacher");
             }
-            catch(Exception ex)
+            else
             {
-                throw ex;
+                await _userManager.AddToRoleAsync(user, "Schoolchild");
             }
+
+            var role = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
+            var resultModel = new ResultModel
+            {
+                Email = user.Email,
+                Role = role,
+                ResultStatus = result.Succeeded,
+                Token = (string) (GenerateJwtToken(applicationUserModel.Email, user))
+            };
+
+            return Ok(resultModel);
+
         }
 
         [HttpPost]
@@ -69,10 +74,15 @@ namespace Training.Controllers
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == applicationUserModel.Email);
+                var role = _userManager.GetRolesAsync(appUser).Result.FirstOrDefault();
+                if (appUser != null)
+                {
+                    resultModel.Role = role;
+                    resultModel.Email = appUser.Email;
+                    resultModel.ResultStatus = result.Succeeded;
+                    resultModel.Token = (string) (GenerateJwtToken(applicationUserModel.Email, appUser));
+                }
 
-                resultModel.email = appUser.Email;
-                resultModel.ResultStatus = result.Succeeded;
-                resultModel.Token = (string)(GenerateJwtToken(applicationUserModel.Email, appUser));
                 return Ok(resultModel);
             }
 
@@ -80,18 +90,16 @@ namespace Training.Controllers
             return BadRequest(resultModel);
         }
 
-
-
         [Authorize]
         [HttpGet]
         public async Task<object> Protected()
         {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await _userManager.FindByIdAsync(userId);
             return user;
         }
 
-        private object GenerateJwtToken(string email, IdentityUser user)
+        private object GenerateJwtToken(string email, User user)
         {
             var claims = new List<Claim>
             {

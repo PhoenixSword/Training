@@ -53,8 +53,9 @@ export class Register extends Component {
                 </h3>
               </MDBCardHeader>
                <Formik
-                initialValues={{ email: '', password: '', passwordConfirm: '' }}
+                initialValues={{ email: '', password: '', passwordConfirm: '', type: true }}
                 onSubmit={(values) => {
+                  console.log(values);
                     this.handleSubmit(values);
                 }}
                 validationSchema={Yup.object().shape({
@@ -153,6 +154,7 @@ export class Register extends Component {
                         touched.passwordConfirm && <div className="text-danger input-feedback">{errors.passwordConfirm}</div>}
                         </div>
                         </div>
+                       
                     <div className="text-center mt-4">
                       <MDBBtn
                         color="light-blue"

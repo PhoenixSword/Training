@@ -2,6 +2,7 @@ import React from "react";
 import $ from "jquery";
 import 'jquery-ui-dist/jquery-ui';
 
+$(init);
 var position1 = 0;
 var position2 = 0;
 var position3 = 0;
@@ -159,7 +160,7 @@ function handleCardDrop( event, ui ) {
 
 }
 
-class Main extends React.Component {
+class Game1 extends React.Component {
   state = {
     finish: correctCards
   };
@@ -168,8 +169,6 @@ class Main extends React.Component {
     return (
 
       <div id="content" style={{background: `url('https://content.uchi.ru/27398/930/28.png') no-repeat center center fixed`}}>
-        {this.state.finish}
-      <button onClick={(e) => init(this.state)}>Play</button>
           <div id="fake"></div>
           <div id="cardPile"> </div>
           <div id="successMessage" style={{display: 'none'}}>
@@ -180,4 +179,4 @@ class Main extends React.Component {
     );
   }
 }
-export default Main;
+export default Game1;

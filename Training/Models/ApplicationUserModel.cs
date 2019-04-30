@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Training.Models
 {
@@ -12,12 +9,16 @@ namespace Training.Models
 
         [Required]
         public string Password { get; set; }
+
+        public bool Type { get; set; } = false;
+
     }
 
     public class ResultModel
     {
+        public string Role { get; set; }
         public bool ResultStatus { get; set; }
-        public string email { get; set; }
+        public string Email { get; set; }
         public string Token { get; set; }
     }
 

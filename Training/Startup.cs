@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -14,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Training.Data;
+using Training.Models;
 
 namespace Training
 {
@@ -51,8 +51,7 @@ namespace Training
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDefaultIdentity<IdentityUser>(opts =>
+            services.AddDefaultIdentity<User>(opts =>
             {
                 opts.Password.RequiredLength = 4;
                 opts.Password.RequireNonAlphanumeric = false;
@@ -60,6 +59,7 @@ namespace Training
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = false;
             })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
@@ -118,7 +118,7 @@ namespace Training
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseAuthentication();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

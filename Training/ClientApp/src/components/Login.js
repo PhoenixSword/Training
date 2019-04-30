@@ -102,27 +102,27 @@ export class Login extends Component {
                         touched.email && <div className="text-danger input-feedback">{errors.email}</div>}
                         </div>
                        <div className="input-group m-0 justify-content-center">   
-                      <MDBInput
-                          id="password"
-                          label="Enter your password"
-                          type="password"
-                          icon="key"
-                          group
-                          value={values.password}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          required 
-                          ref={node => (this.password = node)}
-                          className={
-                            errors.password && touched.password ? 'form-control text-input text-danger error' : 'form-control text-input'
-                          }
-                          validate
-                          error="wrong"
-                          success="right"
-                          style={{width: '400px'}}
-                        /> 
-                      {errors.password &&
-                        touched.password && <div className="text-danger input-feedback">{errors.password}</div>}
+                        <MDBInput
+                            id="password"
+                            label="Enter your password"
+                            type="password"
+                            icon="key"
+                            group
+                            value={values.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required 
+                            ref={node => (this.password = node)}
+                            className={
+                              errors.password && touched.password ? 'form-control text-input text-danger error' : 'form-control text-input'
+                            }
+                            validate
+                            error="wrong"
+                            success="right"
+                            style={{width: '400px'}}
+                          /> 
+                        {errors.password &&
+                          touched.password && <div className="text-danger input-feedback">{errors.password}</div>}
                         </div>
                         </div>
                     <div className="text-center mt-4">

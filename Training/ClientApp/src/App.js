@@ -7,7 +7,7 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
-import Main from './Main';
+import Game1 from './Game1';
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
   <Route {...rest} render={props => (
@@ -29,7 +29,7 @@ const App = () => (
       <AppRoute exact path="/" layout={Layout} component={Home} />
       <AppRoute exact path="/login" layout={Layout} component={Login} />
       <AppRoute exact path="/register" layout={Layout} component={Register} />
-      <AppRoute exact path="/main" layout={EmptyLayout} component={Main} />
+      <AppRoute exact path="/main" layout={EmptyLayout} component={Game1} />
     </Switch>
   </div>
 )
