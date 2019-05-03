@@ -35,7 +35,9 @@ namespace Training.Controllers
             var user = new User
             {
                 UserName = applicationUserModel.Email,
-                Email = applicationUserModel.Email
+                Fio = applicationUserModel.Fio,
+                Email = applicationUserModel.Email,
+                Password = applicationUserModel.Password               
             };
 
             var result = await _userManager.CreateAsync(user, applicationUserModel.Password);
@@ -56,10 +58,10 @@ namespace Training.Controllers
             var role = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
             var resultModel = new ResultModel
             {
-                Email = user.Email,
+                Fio = user.Fio,
                 Role = role,
                 ResultStatus = result.Succeeded,
-                Token = (string) (GenerateJwtToken(applicationUserModel.Email, user))
+                Token = (string) GenerateJwtToken(applicationUserModel.Email, user)
             };
 
             return Ok(resultModel);
@@ -77,10 +79,10 @@ namespace Training.Controllers
                 var role = _userManager.GetRolesAsync(appUser).Result.FirstOrDefault();
                 if (appUser != null)
                 {
+                    resultModel.Fio = appUser.Fio;
                     resultModel.Role = role;
-                    resultModel.Email = appUser.Email;
                     resultModel.ResultStatus = result.Succeeded;
-                    resultModel.Token = (string) (GenerateJwtToken(applicationUserModel.Email, appUser));
+                    resultModel.Token = (string) GenerateJwtToken(applicationUserModel.Email, appUser);
                 }
 
                 return Ok(resultModel);
@@ -90,14 +92,6 @@ namespace Training.Controllers
             return BadRequest(resultModel);
         }
 
-        [Authorize]
-        [HttpGet]
-        public async Task<object> Protected()
-        {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = await _userManager.FindByIdAsync(userId);
-            return user;
-        }
 
         private object GenerateJwtToken(string email, User user)
         {

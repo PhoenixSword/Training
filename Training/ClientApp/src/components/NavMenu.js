@@ -13,7 +13,7 @@ function Greeting(props) {
 function UserGreeting(props) {
     return <React.Fragment>
         <NavItem>
-            <NavLink tag={Link} className="text-dark" to="#">{JSON.parse(localStorage.getItem('currentUser')).email}</NavLink>
+            <NavLink tag={Link} className="text-dark" to="#">{JSON.parse(localStorage.getItem('user')).fio}</NavLink>
         </NavItem>
         <NavItem>
             <NavLink tag={Link} className="text-dark" to="#" onClick={userService.logout}>Logout</NavLink>

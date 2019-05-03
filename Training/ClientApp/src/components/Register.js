@@ -33,7 +33,7 @@ export class Register extends Component {
           redirect: true
         })
       )
-      );
+    );
   }
 
   render () {
@@ -53,14 +53,16 @@ export class Register extends Component {
                 </h3>
               </MDBCardHeader>
                <Formik
-                initialValues={{ email: '', password: '', passwordConfirm: '', type: true }}
+                initialValues={{ email: '', fio: '', password: '', passwordConfirm: '', type: true }}
                 onSubmit={(values) => {
-                  console.log(values);
                     this.handleSubmit(values);
                 }}
                 validationSchema={Yup.object().shape({
                   email: Yup.string()
                     .email('Email must be a valid email address')
+                    .required('Required'),
+                  fio: Yup.string()
+                    .min(10, 'fio has to be longer than 10 characters') 
                     .required('Required'),
                   password: Yup.string()
                     .min(5, 'Password has to be longer than 5 characters') 
@@ -106,6 +108,29 @@ export class Register extends Component {
                         />
                          {errors.email &&
                         touched.email && <div className="text-danger input-feedback">{errors.email}</div>}
+                        </div>
+                        <div className="input-group m-0 justify-content-center">   
+                      <MDBInput
+                          id="fio"
+                          label="Enter your fio"
+                          type="text"
+                          icon="key"
+                          group
+                          value={values.fio}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          required 
+                          ref={node => (this.fio = node)}
+                          className={
+                            errors.fio && touched.fio ? 'form-control text-input text-danger error' : 'form-control text-input'
+                          }
+                          validate
+                          error="wrong"
+                          success="right"
+                          style={{width: '400px'}}
+                        /> 
+                      {errors.fio &&
+                        touched.fio && <div className="text-danger input-feedback">{errors.fio}</div>}
                         </div>
                        <div className="input-group m-0 justify-content-center">   
                       <MDBInput

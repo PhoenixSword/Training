@@ -29,7 +29,7 @@ const App = () => (
       <AppRoute exact path="/" layout={Layout} component={Home} />
       <AppRoute exact path="/login" layout={Layout} component={Login} />
       <AppRoute exact path="/register" layout={Layout} component={Register} />
-      <AppRoute exact path="/main" layout={EmptyLayout} component={Game1} />
+      <AppRoute exact path="/game1" layout={EmptyLayout} component={Game1} />
     </Switch>
   </div>
 )

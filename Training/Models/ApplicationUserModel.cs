@@ -9,6 +9,7 @@ namespace Training.Models
 
         [Required]
         public string Password { get; set; }
+        public string Fio { get; set; }
 
         public bool Type { get; set; } = false;
 
@@ -18,7 +19,7 @@ namespace Training.Models
     {
         public string Role { get; set; }
         public bool ResultStatus { get; set; }
-        public string Email { get; set; }
+        public string Fio { get; set; }
         public string Token { get; set; }
     }
 

@@ -1,5 +1,6 @@
+import authHeader from './Auth-header';
+
 export const userService={
-  token,
   authorize,
   login,
   register,
@@ -9,12 +10,7 @@ export const userService={
 var message = "";
 
 function authorize() {
-  return localStorage.getItem('currentUser') ? true : false;
-}
-
-function token() {
-  let temp = localStorage.getItem('currentUser') && JSON.parse(localStorage.getItem('currentUser')).token
-  return { headers: {'Authorization': 'Bearer ' + temp}};
+  return localStorage.getItem('user') ? true : false;
 }
 
 function login(data) {
@@ -30,7 +26,7 @@ function login(data) {
 .then((json)=>{ 
   if(json.resultStatus)
   {
-    localStorage.setItem('currentUser', JSON.stringify(json)); 
+    localStorage.setItem('user', JSON.stringify(json)); 
     message = null;
   }
   else
@@ -53,7 +49,7 @@ function register(data) {
 .then((json)=>{ 
   if(json.resultStatus)
   {
-    localStorage.setItem('currentUser', JSON.stringify(json)); 
+    localStorage.setItem('user', JSON.stringify(json)); 
     message = null;
   }
   else
@@ -64,5 +60,5 @@ function register(data) {
 
 
 function logout() {
-  localStorage.removeItem('currentUser');
+  localStorage.removeItem('user');
 }
