@@ -1,5 +1,30 @@
+body {
+  background: transparent url("/background.jpg") left top no-repeat;
+  background-position: cover;
+}
+
+table {
+  border-radius: 10px;
+}
+
+.css-lj0up9, [data-css-lj0up9] {
+  background: rgba(0, 200, 81, 0.9);
+  border-radius: 0;
+}
+
+.css-w74h2a, [data-css-w74h2a] {
+  margin: auto 20px;
+}
+
+header > nav {
+  top: 0;
+  height: 50px !important;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
 /* Main content area */
 iframe {
+  border: 0;
   overflow: hidden;
   max-width: 1100px;
   max-height: 700px;
@@ -7,262 +32,30 @@ iframe {
   height: 700px;
 }
 
+.card {
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
+.container {
+  margin-top: 100px;
+}
+
 #content {
   width: 1100px;
   height: 700px;
 }
 
-/* Header/footer boxes */
-.wideBox {
-  clear: both;
-  text-align: center;
-  margin: 70px;
-  padding: 10px;
-  background: #ebedf2;
-  border: 1px solid #333;
+.list-group {
+  flex-direction: row;
 }
 
-.wideBox h1 {
-  font-weight: bold;
-  margin: 20px;
-  color: #666;
-  font-size: 1.5em;
+.list-group-item {
+  width: 135px;
+  cursor: pointer;
 }
 
-/* Slots for final card positions */
-#cardPile {
-  margin: 0 auto;
-  background: green;
-  float: left;
-}
-
-.item {
-  cursor: grab;
-  position: absolute;
-  background: url("/item.png") no-repeat;
-  width: 80px;
-  height: 94px;
-  z-index: 10;
-  animation: animateditem 0.6s steps(11) infinite;
-}
-
-@keyframes animateditem {
-  100% {
-    background-position-x: -880px;
-  }
-}
-.item > p {
-  font-weight: bold;
-  font-size: 16px;
-  border-radius: 10px;
-  text-align: center;
-  margin: 34px 0 0 20px;
-  padding: 1px 0 0 0;
-  width: 42px;
-  height: 20px;
-  background: white;
-  color: black;
-}
-
-.invalidItem {
-  position: absolute;
-  background: url("/invalidItem.png") no-repeat;
-  width: 79px;
-  background-position-x: -79px;
-  height: 94px;
-  z-index: 10;
-  animation: 0;
-}
-
-.invalidItem > p {
-  margin: 35px 0 0 17px;
-}
-
-.leftItem {
-  position: absolute;
-  background: url("/invalidItem.png") no-repeat;
-  width: 79px;
-  background-position-x: -237px;
-  height: 94px;
-  z-index: 10;
-  animation: 0;
-}
-
-.centerItem {
-  position: absolute;
-  background: url("/invalidItem.png") no-repeat;
-  width: 79px;
-  height: 94px;
-  z-index: 10;
-  animation: 0;
-}
-
-.rightItem {
-  position: absolute;
-  background: url("/invalidItem.png") no-repeat;
-  width: 79px;
-  background-position-x: -158px;
-  height: 94px;
-  z-index: 10;
-  animation: 0;
-}
-
-.leftItem.animated {
-  position: absolute;
-  background: url("https://content.uchi.ru/27398/930/43.png") no-repeat;
-  width: 87px;
-  height: 104px;
-  z-index: 10;
-  animation: animatedleftItem 0.6s steps(11) infinite;
-  transition: transform 3s ease-in-out;
-  transform: translateY(-500%) translateX(-500%) rotate(-80deg);
-}
-
-@keyframes animatedleftItem {
-  100% {
-    background-position-x: -957px;
-  }
-}
-.centerItem.animated {
-  position: absolute;
-  background: url("/item.png") no-repeat;
-  width: 79px;
-  height: 94px;
-  z-index: 10;
-  animation: animateditem 0.6s steps(11) infinite;
-  transition: transform 5s ease-in-out;
-  transform: translateY(-700%) translateX(2600%) rotate(-70deg);
-}
-
-.rightItem.animated {
-  position: absolute;
-  background: url("https://content.uchi.ru/27398/930/42.png") no-repeat;
-  width: 87px;
-  height: 104px;
-  z-index: 10;
-  animation: animatedrightItem 0.6s steps(11) infinite;
-  transition: transform 3s ease-in-out;
-  transform: translateY(-500%) translateX(500%) rotate(80deg);
-}
-
-@keyframes animatedrightItem {
-  100% {
-    background-position-x: -957px;
-  }
-}
-/* Individual cards and slots */
-#cardSlots1 div, #cardSlots2 div, #cardSlots3 div {
-  float: left;
-  width: 43%;
-  height: 18%;
-  padding: 0.85em;
-  padding-top: 40px;
-  padding-bottom: 0;
-  border: 2px solid #333;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  margin: 10px 0 0 10px;
-  background: #fff;
-}
-
-#cardSlots1 {
-  background: url("https://content.uchi.ru/27398/930/32.png") no-repeat;
-  background-position-y: bottom !important;
-  position: absolute;
-  margin: 1rem;
-  top: 20%;
-  left: -50px;
-  width: 399px;
-  height: 550px;
-  transition: background 0s, transform 5s ease-in-out;
-  z-index: 1;
-}
-
-#cardSlots1.hovered {
-  background-position-x: -399px;
-}
-
-#cardSlots2 {
-  background: url("https://content.uchi.ru/27398/930/29.png") no-repeat;
-  background-position-y: bottom !important;
-  position: absolute;
-  margin: 1rem;
-  top: 20%;
-  right: -50px;
-  width: 347px;
-  height: 479px;
-  transition: background 0s, transform 5s ease-in-out;
-  z-index: 1;
-}
-
-#cardSlots2.hovered {
-  background-position-x: -347px;
-}
-
-#cardSlots3 {
-  background: url("https://content.uchi.ru/27398/930/45.png") no-repeat;
-  margin: 0 10%;
-  position: absolute;
-  left: 25%;
-  bottom: 0%;
-  width: 380px;
-  height: 185px;
-  transition: background 0s, transform 5s ease-in-out;
-  z-index: 1;
-}
-
-#cardSlots3.hovered {
-  background-position-x: -380px;
-}
-
-#cardSlots1.animated {
-  background: url("https://content.uchi.ru/27398/930/34.png") no-repeat;
-  transform: translateY(-300%) translateX(-200%) rotate(-80deg);
-  animation: animatedleft 0.5s steps(19) infinite;
-}
-
-@keyframes animatedleft {
-  100% {
-    background-position-x: -7600px;
-  }
-}
-#cardSlots2.animated {
-  background: url("https://content.uchi.ru/27398/930/31.png") no-repeat;
-  transform: translateY(-300%) translateX(200%) rotate(80deg);
-  animation: animatedright 0.5s steps(19) infinite;
-}
-
-@keyframes animatedright {
-  100% {
-    background-position-x: -6593px;
-  }
-}
-#cardSlots3.animated {
-  background: url("https://content.uchi.ru/27398/930/44.png") no-repeat;
-  width: 409px;
-  transform: translateY(-400%) translateX(500%) rotate(-60deg);
-  animation: animatedcenter 0.5s steps(14) infinite;
-}
-
-@keyframes animatedcenter {
-  100% {
-    background-position-y: -2828px;
-  }
-}
-/* "You did it!" message */
-#successMessage {
-  position: absolute;
-  left: 580px;
-  top: 250px;
-  width: 0;
-  height: 0;
-  z-index: 100;
-  background: #dfd;
-  border: 2px solid #333;
-  border-radius: 10px;
-  box-shadow: 0.3em 0.3em 0.5em rgba(0, 0, 0, 0.8);
-  padding: 20px;
+.list-group-item-action {
+  width: 135px;
 }
 
 /*# sourceMappingURL=style.css.map */

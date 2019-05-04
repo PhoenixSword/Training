@@ -2,37 +2,52 @@ import React from "react";
 import $ from "jquery";
 import 'jquery-ui-dist/jquery-ui';
 
-$(init);
 var position1 = 0;
 var position2 = 0;
 var position3 = 0;
 var correctCards = 0;
+var cardsCount = 10;
+var leftResult = 2;
+var leftValue = 5;
+var rightResult = 1;
+var rightValue = 2;
 
 function rand(type) {
   switch (type) {
     case 1:
-      return 5 + "" + Math.round(Math.random() * 9) + "" + Math.round(Math.random() * 9);
+    switch (leftResult) {
+      case 0: return Math.round(Math.random() * 9) + "" + Math.round(Math.random() * 9) + "" + leftValue;
+      case 1: return Math.round(Math.random() * 9) + "" + leftValue + "" + Math.round(Math.random() * 9);
+      case 2: return leftValue + "" + Math.round(Math.random() * 9) + "" + Math.round(Math.random() * 9);
+      default:
+      break;
+    }
+    break;
     case 2:
-      return Math.round(Math.random() * 9) + "" + 2 + "" + Math.round(Math.random() * 9);
-    case 3:
-      return Math.round( 2 + Math.random() * 7) + "" + Math.round(Math.random() * 9) + "" + Math.round(Math.random() * 9);
+    switch (rightResult) {
+      case 0: return Math.round(Math.random() * 9) + "" + Math.round(Math.random() * 9) + "" + rightValue;
+      case 1: return Math.round(Math.random() * 9) + "" + rightValue + "" + Math.round(Math.random() * 9);
+      case 2: return rightValue + "" + Math.round(Math.random() * 9) + "" + Math.round(Math.random() * 9);
+      default:
+      break;
+    }
+    break;
+    case 0:
+      return Math.round(Math.random() * 999);
     default:
       break;
   }
-  return Math.round(0 + Math.random() * 300);
 }
 
-function width(index)
-{
-   return 100 + (index%4*80) + Math.round(20 + Math.random() *50);
-}
+const width = (index) => 100 + (index%4*80) + Math.round(20 + Math.random() *50);
+const height = (index) => 300 + (index%6*80) + Math.round(Math.random() *20);
 
-function height(index)
-{
-    return 300 + (index%6*80) + Math.round(Math.random() *20);
-}
-
-function init(stat) { 
+function init(mas) { 
+  cardsCount = mas.cardsCount;
+  leftResult = mas.leftResult;
+  leftValue = mas.leftValue;
+  rightResult = mas.rightResult;
+  rightValue = mas.rightValue;
   $('#successMessage').hide();
   $('#successMessage').css( {
     left: '580px',
@@ -48,7 +63,7 @@ function init(stat) {
   $('#cardPile').html( '' );
   $('#fake').html( '' );
  
-  for ( var i=0; i<10; i++ ) {
+  for ( var i=0; i<cardsCount; i++ ) {
     var number = rand((i+1)%3);
     $(`<div style="left: ${height(i)}px;top:${width(i)}px" class="item"><p>${number}</p></div>`).data( 'number', number ).attr( 'id', 'card'+number ).appendTo( '#cardPile' ).draggable( {
       stack: '#cardPile div',
@@ -58,7 +73,18 @@ function init(stat) {
   }
 
   for ( i=1; i<=3; i++ ) {
-    $(`<div id='cardSlots${i}'></div>`).data( 'number', i ).appendTo( `#fake` ).droppable( {
+    var text = "";
+    switch (i) {
+      case 1:
+      text = mas.textLeft;
+        break;
+      case 2:
+      text = mas.textRight;
+        break;
+      default:
+        break;
+    }
+    $(`<div id='cardSlots${i}'><p>${text}</p></div>`).data( 'number', i ).appendTo( `#fake` ).droppable( {
       accept: '#cardPile div',
       hoverClass: 'hovered',
       drop: handleCardDrop
@@ -109,7 +135,7 @@ function handleCardDrop( event, ui ) {
   var masDigits = splitToDigits(cardNumber);
   switch (slotNumber) {
     case 1:
-      if ( masDigits[2] === 5 ) {
+      if ( masDigits[leftResult] === leftValue ) {
         correct($(this), ui, 1);
       }
       else
@@ -121,7 +147,7 @@ function handleCardDrop( event, ui ) {
       }
       break;
     case 2:
-      if ( masDigits[1] === 2 ) {
+      if ( masDigits[rightResult] === rightValue ) {
         correct($(this), ui, 2);
       }
       else
@@ -133,7 +159,7 @@ function handleCardDrop( event, ui ) {
       }
       break;
     case 3:
-      if ( ( masDigits[1] !== 2 ) && ( masDigits[2] !== 5 )  ) {
+      if ( ( masDigits[leftResult] !== leftValue ) && ( masDigits[rightResult] !== rightValue )  ) {
         correct($(this), ui, 3);
       }
       else
@@ -148,7 +174,7 @@ function handleCardDrop( event, ui ) {
       break;
   }
 
-  if ( correctCards === 10) {
+  if (correctCards === cardsCount) {
     $('#cardSlots1').addClass('animated');
     $('#cardSlots2').addClass('animated');
     $('#cardSlots3').addClass('animated');
@@ -157,18 +183,67 @@ function handleCardDrop( event, ui ) {
     $('.rightItem').addClass('animated');
     $('#successMessage').show();
   }
-
 }
+function getText(value)
+  {
+    switch (value) {
+      case 0:
+        return "единицы";
+      case 1:
+        return "десятки";
+      case 2:
+        return "сотни";
+      default:
+        break;
+    }
+  }
+class Game2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cardsCount: 0,
+      leftResult: 0,
+      leftValue: 0,
+      rightResult: 0,
+      rightValue: 0,
+      textLeft: "",
+      textRight: ""
+    };
+    this.random = this.random.bind(this);
+  }
 
-class Game1 extends React.Component {
-  state = {
-    finish: correctCards
-  };
+  componentDidMount()
+  {
+    this.random();
+  }
 
+  random()
+  {
+    this.setState({
+      cardsCount: Math.round(3 + Math.random() * 7),
+      leftResult: Math.round(Math.random() * 2),
+      leftValue: Math.round(Math.random() * 9),
+      rightResult: Math.round(Math.random() * 2),
+      rightValue: Math.round(Math.random() * 9)
+    }, () =>  
+    {
+      this.setState({textLeft: `У моих осьминожек ${getText(this.state.leftResult)} равны ${this.state.leftValue}`}, () =>  
+        {
+          this.setState({textRight: `У моих осьминожек ${getText(this.state.rightResult)} равны ${this.state.rightValue}`}, () =>  
+            {
+              init(this.state)
+            });
+        });
+    });
+  }
   render() {
     return (
-
       <div id="content" style={{background: `url('https://content.uchi.ru/27398/930/28.png') no-repeat center center fixed`}}>
+      <h6>{this.state.text}</h6>
+        <div className="game1Name text-center text-black">
+          <h1 className="title">Помоги папам-осьминогам найти своих детей</h1>
+          <h2 className="subtitle">Чужих детей посади на черепаху</h2>
+        </div>
           <div id="fake"></div>
           <div id="cardPile"> </div>
           <div id="successMessage" style={{display: 'none'}}>
@@ -179,4 +254,4 @@ class Game1 extends React.Component {
     );
   }
 }
-export default Game1;
+export default Game2;

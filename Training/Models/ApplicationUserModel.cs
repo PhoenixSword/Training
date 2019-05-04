@@ -4,6 +4,7 @@ namespace Training.Models
 {
     public class ApplicationUserModel
     {
+        public string Id { get; set; }
         [Required]
         public string Email { get; set; }
 

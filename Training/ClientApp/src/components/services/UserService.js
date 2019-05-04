@@ -1,5 +1,3 @@
-import authHeader from './Auth-header';
-
 export const userService={
   authorize,
   login,

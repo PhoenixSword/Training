@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "ClientApp/src/styles/game1.css",
+    "inputFile": "ClientApp/src/styles/game1.scss"
+  },
+  {
+    "outputFile": "ClientApp/src/styles/style.css",
+    "inputFile": "ClientApp/src/styles/style.scss"
+  }
+]

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import {
   MDBContainer,
   MDBRow,
@@ -47,9 +48,9 @@ export class Register extends Component {
           <MDBCard>
            <Alert message={this.state.alert} />
             <MDBCardBody>
-              <MDBCardHeader className=" form-header deep-blue-gradient rounded">
+              <MDBCardHeader className=" form-header aqua-gradient rounded">
                 <h3 className="my-3">
-                  <MDBIcon icon="lock" /> Register:
+                  <MDBIcon icon="lock" /> Регистрация учителя:
                 </h3>
               </MDBCardHeader>
                <Formik
@@ -59,16 +60,16 @@ export class Register extends Component {
                 }}
                 validationSchema={Yup.object().shape({
                   email: Yup.string()
-                    .email('Email must be a valid email address')
+                    // .email('Email must be a valid email address')
                     .required('Required'),
                   fio: Yup.string()
-                    .min(10, 'fio has to be longer than 10 characters') 
+                    .min(10, 'ФИО должен быть больше 10 символов') 
                     .required('Required'),
                   password: Yup.string()
-                    .min(5, 'Password has to be longer than 5 characters') 
+                    .min(5, 'Пароль должен быть больше 5 символов') 
                     .required('Required'),
                   passwordConfirm: Yup.string()
-                    .test('passwords-match', 'Passwords must match ya fool', function(value) {
+                    .test('passwords-match', 'Пароль не совпадают', function(value) {
                       return this.parent.password === value;
                     }),
                 })}
@@ -78,7 +79,6 @@ export class Register extends Component {
                     values,
                     touched,
                     errors,
-                    isSubmitting,
                     handleChange,
                     handleBlur,
                     handleSubmit,
@@ -89,7 +89,7 @@ export class Register extends Component {
                      <div className="input-group justify-content-center">
                         <MDBInput
                           id="email"
-                          label="Enter your email"
+                          label="Введите логин"
                           type="email"
                           icon="envelope"
                           group
@@ -112,7 +112,7 @@ export class Register extends Component {
                         <div className="input-group m-0 justify-content-center">   
                       <MDBInput
                           id="fio"
-                          label="Enter your fio"
+                          label="Введите ФИО"
                           type="text"
                           icon="key"
                           group
@@ -135,7 +135,7 @@ export class Register extends Component {
                        <div className="input-group m-0 justify-content-center">   
                       <MDBInput
                           id="password"
-                          label="Enter your password"
+                          label="Введите пароль"
                           type="password"
                           icon="key"
                           group
@@ -158,7 +158,7 @@ export class Register extends Component {
                          <div className="input-group m-0 justify-content-center">   
                       <MDBInput
                           id="passwordConfirm"
-                          label="Enter your password confirm"
+                          label="Введите еще раз пароль"
                           type="password"
                           icon="key"
                           group
@@ -185,7 +185,6 @@ export class Register extends Component {
                         color="light-blue"
                         className="mb-3"
                         type="submit"
-                        // disabled={isSubmitting}
                         >
                         Register
                       </MDBBtn>
@@ -198,7 +197,7 @@ export class Register extends Component {
               <hr/>
               <div className=" text-center">
                 <div className="font-weight-light">
-                  <p>Alreay a member? Login</p>
+                  <p>Уже зарегистрированы? <Link to="/login">Войти</Link>  </p>
                 </div>
               </div>
             </MDBCardBody>

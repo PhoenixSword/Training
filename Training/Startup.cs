@@ -132,8 +132,9 @@ namespace Training
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                    spa.UseReactDevelopmentServer(npmScript: "sass");
+                    spa.UseReactDevelopmentServer("start");
+                    spa.UseReactDevelopmentServer("sass");
+                    spa.UseReactDevelopmentServer("sassgame1");
                 }
             });
         }

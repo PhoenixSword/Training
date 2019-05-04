@@ -1,9 +1,8 @@
-import {token} from './Auth-header';
+import token from './Auth-header';
 
 export const teacherService={
   getSchoolChilds,
-  addSchoolChilds,
-  removeSchoolChilds
+  addSchoolChilds
 }
 
 var result = [];
@@ -22,6 +21,7 @@ function addSchoolChilds(data) {
  return fetch('/api/teachers/addSchoolChilds', 
    {
     method: 'POST',
+    headers: token(),
     headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token()
@@ -35,13 +35,3 @@ function addSchoolChilds(data) {
   })
 }
 
-function removeSchoolChilds(id) {
- return fetch(`/api/teachers/removeSchoolChilds?id=${id}`, 
-   {
-    method: 'DELETE',
-    headers: {'Authorization': 'Bearer ' + token()}
-  })
-.then((resp)=>{ 
-  return resp;
-  })
-}

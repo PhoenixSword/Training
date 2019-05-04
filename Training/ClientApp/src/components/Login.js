@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router'
 import {
   MDBContainer,
@@ -46,9 +47,9 @@ export class Login extends Component {
           <MDBCard>
            <Alert message={this.state.alert} />
             <MDBCardBody>
-              <MDBCardHeader className=" form-header deep-blue-gradient rounded">
+              <MDBCardHeader className=" form-header aqua-gradient rounded">
                 <h3 className="my-3">
-                  <MDBIcon icon="lock" /> Login:
+                  <MDBIcon icon="lock" /> Войти:
                 </h3>
               </MDBCardHeader>
                <Formik
@@ -57,11 +58,10 @@ export class Login extends Component {
                     this.handleSubmit(values);
                 }}
                 validationSchema={Yup.object().shape({
-                  email: Yup.string()
-                    .email('Email must be a valid email address')
-                    .required('Required'),
+                  // email: Yup.string()
+                  //   .email('Email must be a valid email address')
+                  //   .required('Required'),
                   password: Yup.string()
-                    .min(5, 'Password has to be longer than 5 characters') 
                     .required('Required'),
                 })}
               >
@@ -70,7 +70,6 @@ export class Login extends Component {
                     values,
                     touched,
                     errors,
-                    isSubmitting,
                     handleChange,
                     handleBlur,
                     handleSubmit,
@@ -81,8 +80,8 @@ export class Login extends Component {
                       <div className="input-group justify-content-center">
                         <MDBInput
                           id="email"
-                          label="Enter your email"
-                          type="email"
+                          label="Введите логин"
+                          type="text"
                           icon="envelope"
                           group
                           value={values.email}
@@ -104,7 +103,7 @@ export class Login extends Component {
                        <div className="input-group m-0 justify-content-center">   
                         <MDBInput
                             id="password"
-                            label="Enter your password"
+                            label="Введите пароль"
                             type="password"
                             icon="key"
                             group
@@ -130,7 +129,6 @@ export class Login extends Component {
                         color="light-blue"
                         className="mb-3"
                         type="submit"
-                        // disabled={isSubmitting}
                         >
                         Login
                       </MDBBtn>
@@ -142,7 +140,8 @@ export class Login extends Component {
               <hr/>
               <div className=" text-center">
                 <div className="font-weight-light">
-                  <p>Not a member? Sign Up</p>
+                <p>Не зарегистрированы? <Link to="/register"> Зарегистрироваться УЧИТЕЛЮ</Link></p>
+                  <p className="blue text-white" style={{border: '2px solid white', borderRadius: '10px'}}>Ученики должны получить логин и пароль у учителя</p>
                 </div>
               </div>
             </MDBCardBody>

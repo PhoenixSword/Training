@@ -6,7 +6,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Training.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -46,20 +45,12 @@ namespace Training.Controllers
 
             await _signInManager.SignInAsync(user, false);
 
-            if (applicationUserModel.Type)
-            {
-                await _userManager.AddToRoleAsync(user, "Teacher");
-            }
-            else
-            {
-                await _userManager.AddToRoleAsync(user, "Schoolchild");
-            }
-
-            var role = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
+            await _userManager.AddToRoleAsync(user, "Teacher");
+            
             var resultModel = new ResultModel
             {
                 Fio = user.Fio,
-                Role = role,
+                Role = "Teacher",
                 ResultStatus = result.Succeeded,
                 Token = (string) GenerateJwtToken(applicationUserModel.Email, user)
             };
@@ -77,13 +68,11 @@ namespace Training.Controllers
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == applicationUserModel.Email);
                 var role = _userManager.GetRolesAsync(appUser).Result.FirstOrDefault();
-                if (appUser != null)
-                {
-                    resultModel.Fio = appUser.Fio;
-                    resultModel.Role = role;
-                    resultModel.ResultStatus = result.Succeeded;
-                    resultModel.Token = (string) GenerateJwtToken(applicationUserModel.Email, appUser);
-                }
+                if (appUser == null) return Ok(resultModel);
+                resultModel.Fio = appUser.Fio;
+                resultModel.Role = role;
+                resultModel.ResultStatus = result.Succeeded;
+                resultModel.Token = (string) GenerateJwtToken(applicationUserModel.Email, appUser);
 
                 return Ok(resultModel);
             }
