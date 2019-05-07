@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Training.Data;
+using Training.Data.Repositories.Abstract;
+using Training.Data.Repositories.Concrete;
 using Training.Models;
 
 namespace Training
@@ -87,9 +89,7 @@ namespace Training
                 });
 
 
-            //services.AddTransient<ITaskRepo, TaskRepo>();
-            //services.AddTransient<IDebtRepo, DebtRepo>();
-
+            services.AddTransient<IRepo, Repo>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

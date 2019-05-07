@@ -61,15 +61,15 @@ export class Register extends Component {
                 validationSchema={Yup.object().shape({
                   email: Yup.string()
                     // .email('Email must be a valid email address')
-                    .required('Required'),
+                    .required('Заполните поле'),
                   fio: Yup.string()
                     .min(10, 'ФИО должен быть больше 10 символов') 
-                    .required('Required'),
+                    .required('Заполните поле'),
                   password: Yup.string()
                     .min(5, 'Пароль должен быть больше 5 символов') 
-                    .required('Required'),
+                    .required('Заполните поле'),
                   passwordConfirm: Yup.string()
-                    .test('passwords-match', 'Пароль не совпадают', function(value) {
+                    .test('passwords-match', 'Пароли не совпадают', function(value) {
                       return this.parent.password === value;
                     }),
                 })}
@@ -114,7 +114,7 @@ export class Register extends Component {
                           id="fio"
                           label="Введите ФИО"
                           type="text"
-                          icon="key"
+                          icon="male"
                           group
                           value={values.fio}
                           onChange={handleChange}

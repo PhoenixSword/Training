@@ -41,7 +41,7 @@ function rand(type) {
   }
 }
 
-const width = (index) => 100 + (index%4*80) + Math.round(20 + Math.random() *50);
+const width = (index) => 130 + (index%4*80) + Math.round(20 + Math.random() *50);
 const height = (index) => 300 + (index%6*80) + Math.round(Math.random() *20);
 
 function init(mas) { 
@@ -60,14 +60,15 @@ function init(mas) {
   leftValue = mas.leftValue;
   rightResult = mas.rightResult;
   rightValue = mas.rightValue;
-  levelsCount = mas.levelsCount;
+  levelsCount = mas.countLevels;
+  completedLevels = mas.currentLevel;
 
   $('#successMessage').hide();
   $('#successMessage').css( {
     left: '580px',
     top: '250px',
-    width: 0,
-    height: 0
+    width: '200px',
+    height: '100px'
   } );
 
   $('#cardPile').html( '' );
@@ -191,10 +192,11 @@ function handleCardDrop( event, ui ) {
     $('.leftItem').addClass('animated');
     $('.centerItem').addClass('animated');
     $('.rightItem').addClass('animated');
-  }
 
-  if (completedLevels === levelsCount) {
-    $('#successMessage').show();
+    if (completedLevels === levelsCount) 
+      $('#completedGame').show();
+    else
+      $('#successMessage').show();
   }
 }
 function getText(value)
@@ -221,25 +223,29 @@ class Game1 extends React.Component {
       rightValue: 0,
       textLeft: "",
       textRight: "",
-      countLevels: ""
+      countLevels: 0,
+      currentLevel: 0
     };
-    this.random = this.random.bind(this);
+    this.generateLevel = this.generateLevel.bind(this);
   }
 
   componentDidMount()
   {
-    this.random();
+    this.generateLevel();
   }
 
-  random()
+  generateLevel(type)
   {
+    var countLevels;
+    type ? countLevels = this.state.countLevels : countLevels = Math.round(2 + Math.random() * 5);
     this.setState({
       cardsCount: Math.round(3 + Math.random() * 7),
       leftResult: Math.round(Math.random() * 2),
       leftValue: Math.round(Math.random() * 9),
       rightResult: Math.round(Math.random() * 2),
-      rightValue: Math.round(Math.random() * 9),
-      countLevels: Math.round(Math.random() * 3)
+      rightValue: Math.round(1 + Math.random() * 9),
+      countLevels: countLevels,
+      currentLevel: this.state.currentLevel+1
     }, () =>  
     {
       this.setState({textLeft: `У моих осьминожек ${getText(this.state.leftResult)} равны ${this.state.leftValue}`}, () =>  
@@ -251,19 +257,27 @@ class Game1 extends React.Component {
         });
     });
   }
+
   render() {
     return (
       <div id="content" style={{background: `url('https://content.uchi.ru/27398/930/28.png') no-repeat center center fixed`}}>
-      <h6>{this.state.text}</h6>
+      <div className="progress">
+          <div className="progress-bar progress-bar-danger progress-bar-striped active" style={{width:`${this.state.currentLevel*100/this.state.countLevels}%`}}>Уровень {this.state.currentLevel}/{this.state.countLevels}</div>
+      </div>
         <div className="game1Name text-center text-black">
           <h1 className="title">Помоги папам-осьминогам найти своих детей</h1>
           <h2 className="subtitle">Чужих детей посади на черепаху</h2>
         </div>
           <div id="fake"></div>
-          <div id="cardPile"> </div>
+          <div id="cardPile"></div>
+
           <div id="successMessage" style={{display: 'none'}}>
-            <h2>Congratulations!</h2>
-            <button onClick={init}>Play Again</button>
+            <h2>Успех!</h2>
+            <button onClick={() => this.generateLevel(true)}>Перейти на следующий уровень</button>
+          </div>
+          <div id="completedGame" style={{display: 'none'}}>
+            <h2>Успех!</h2>
+            <button>успех</button>
           </div>
       </div>
     );

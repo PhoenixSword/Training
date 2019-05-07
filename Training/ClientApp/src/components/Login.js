@@ -58,11 +58,10 @@ export class Login extends Component {
                     this.handleSubmit(values);
                 }}
                 validationSchema={Yup.object().shape({
-                  // email: Yup.string()
-                  //   .email('Email must be a valid email address')
-                  //   .required('Required'),
+                   email: Yup.string()
+                     .required('Заполните поле'),
                   password: Yup.string()
-                    .required('Required'),
+                    .required('Заполните поле'),
                 })}
               >
                 {props => {

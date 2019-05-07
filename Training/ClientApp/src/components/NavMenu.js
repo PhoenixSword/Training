@@ -40,9 +40,6 @@ function TeacherNav(props) {
         <NavItem>
             <NavLink tag={Link} className="text-white" to="/events">Задания</NavLink>
         </NavItem>
-        <NavItem>
-            <NavLink tag={Link} className="text-white" to="/games">Все игры</NavLink>
-        </NavItem>
     </React.Fragment>;
 }
 
@@ -95,6 +92,9 @@ export class NavMenu extends Component {
                         <Collapse className="d-sm-inline-flex flex-sm-row" isOpen={!this.state.collapsed} navbar>
                             <ul className="navbar-nav flex-grow">
                                 <Nav/>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-white" to="/games">Все игры</NavLink>
+                                </NavItem>
                             </ul>
                             <ul className="navbar-nav flex-grow ml-auto">
                                 <Greeting />

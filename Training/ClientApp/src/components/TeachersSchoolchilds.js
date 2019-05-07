@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {userService} from "./services/UserService";
 import {teacherService} from "./services/TeacherService";
-import { MDBBtn, MDBInput, Button, ToastContainer, toast   } from "mdbreact";
+import { MDBBtn, MDBInput, Button, ToastContainer   } from "mdbreact";
 import Notification from "./Notification";
 
 const Schoolchild = () => 
@@ -9,14 +9,13 @@ const Schoolchild = () =>
   return {id: "00000000-0000-0000-0000-000000000000", email: '', password: '', fio: ''}
 }
 
-export class TeacherHome extends Component {
-  static displayName = TeacherHome.name;
+export class TeachersSchoolchilds extends Component {
+  static displayName = TeachersSchoolchilds.name;
   constructor (props) {
     super(props);
     this.state = 
     {
-      schoolChilds: [],
-      notification: null
+      schoolChilds: []
     }
     this.service = userService;
     this.teacherService = teacherService;
@@ -31,16 +30,15 @@ export class TeacherHome extends Component {
   }
 
   save(){
-    Notification("Сохранено");
     this.teacherService.addSchoolChilds(this.state.schoolChilds).then(
-      (response)=> {
-        console.log(response);
+      ()=> {
+        Notification("Сохранено");
       });
   }
 
   add(){
     this.setState(prevState => ({
-          schoolChilds: [...prevState.schoolChilds, Schoolchild()]}), () => {})
+        schoolChilds: [...prevState.schoolChilds, Schoolchild()]}), () => {})
   }
 
   remove(e){
@@ -81,11 +79,7 @@ export class TeacherHome extends Component {
   render () {
     return (
       <div>
-      <ToastContainer
-          hideProgressBar={true}
-          newestOnTop={true}
-          autoClose={3000}
-        />
+      <ToastContainer hideProgressBar={true} newestOnTop={true} autoClose={3000}/>
       <div className="card">
       <h3 className="blue-gradient white-text card-header text-center font-weight-bold text-uppercase py-4 mb-0">Ваши ученики</h3>
         <table className="table">

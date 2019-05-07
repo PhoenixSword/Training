@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { MDBBtn, MDBInput, Button, ToastContainer, toast   } from "mdbreact";
+import { MDBBtn, MDBInput, Button, ToastContainer   } from "mdbreact";
 
-export class Events extends Component {
-  static displayName = Events.name;
+export class SchoolchildsEvents extends Component {
+  static displayName = SchoolchildsEvents.name;
   constructor (props) {
     super(props);
   }
@@ -10,11 +10,7 @@ export class Events extends Component {
   render () {
     return (
       <div>
-      <ToastContainer
-          hideProgressBar={true}
-          newestOnTop={true}
-          autoClose={3000}
-        />
+      <ToastContainer hideProgressBar={true} newestOnTop={true} autoClose={3000} />
       <div className="card">
       <h3 className="blue-gradient white-text card-header text-center font-weight-bold text-uppercase py-4 mb-0">Ваши задания</h3>
         <table className="table">

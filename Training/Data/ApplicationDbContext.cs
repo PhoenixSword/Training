@@ -11,8 +11,7 @@ namespace Training.Data
         {
             Database.EnsureCreated();
         }
-        public DbSet<User> Users { get; set; }
-        //public DbSet<Member> Members { get; set; }
-        //public DbSet<Debt> Debts { get; set; }
+        public new DbSet<User> Users { get; set; }
+        public DbSet<Event> Events { get; set; }
     }
 }

@@ -22,7 +22,7 @@
 .item {
   cursor: grab;
   position: absolute;
-  background: url("/item.png") no-repeat;
+  background: url("/games/game1/item.png") no-repeat;
   width: 80px;
   height: 94px;
   z-index: 10;
@@ -46,7 +46,7 @@
 
 .invalidItem {
   position: absolute;
-  background: url("/invalidItem.png") no-repeat;
+  background: url("/games/game1/invalidItem.png") no-repeat;
   width: 79px;
   background-position-x: -79px;
   height: 94px;
@@ -58,7 +58,7 @@
 
 .leftItem {
   position: absolute;
-  background: url("/invalidItem.png") no-repeat;
+  background: url("/games/game1/invalidItem.png") no-repeat;
   width: 79px;
   background-position-x: -237px;
   height: 94px;
@@ -67,7 +67,7 @@
 
 .centerItem {
   position: absolute;
-  background: url("/invalidItem.png") no-repeat;
+  background: url("/games/game1/invalidItem.png") no-repeat;
   width: 79px;
   height: 94px;
   z-index: 10;
@@ -75,7 +75,7 @@
 
 .rightItem {
   position: absolute;
-  background: url("/invalidItem.png") no-repeat;
+  background: url("/games/game1/invalidItem.png") no-repeat;
   width: 79px;
   background-position-x: -158px;
   height: 94px;
@@ -230,7 +230,7 @@
   position: absolute;
   width: 260px;
   font-size: 24px;
-  top: -100px;
+  top: -80px;
   color: white; }
 
 #cardSlots1 > p {

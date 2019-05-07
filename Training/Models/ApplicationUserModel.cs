@@ -23,11 +23,4 @@ namespace Training.Models
         public string Fio { get; set; }
         public string Token { get; set; }
     }
-
-    public class TaskResultModel
-    {
-        public bool ResultStatus { get; set; }
-        //public List<Task> Tasks { get; set; }
-    }
-
 }

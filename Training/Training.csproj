@@ -16,19 +16,17 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Models\Mappings\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Models\Mappings\**" />
+    <EmbeddedResource Remove="Models\Mappings\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Models\Mappings\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Repositories\Abstract\" />
-    <Folder Include="Data\Repositories\Concrete\" />
-    <Folder Include="Models\Mappings\" />
   </ItemGroup>
 
   <ItemGroup>
