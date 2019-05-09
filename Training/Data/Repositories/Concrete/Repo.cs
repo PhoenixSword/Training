@@ -29,7 +29,7 @@ namespace Training.Data.Repositories.Concrete
 
         public IEnumerable<Event> GetEvents(string userId)
         {
-            return Events.Where(e=>e.TeacherId == userId);
+            return Events.Where(e => e.TeacherId == userId);
         }
 
         public async Task<bool> AddSchoolChilds(IEnumerable<ApplicationUserModel> listUserModels, string userId)
@@ -70,6 +70,7 @@ namespace Training.Data.Repositories.Concrete
                 {
                     Id = eventModel.Id,
                     Name = eventModel.Name,
+                    Url = eventModel.Url,
                     CountLevels = eventModel.CountLevels,
                     TeacherId = userId
                 };
@@ -101,6 +102,11 @@ namespace Training.Data.Repositories.Concrete
             var deletedEvent = _ctx.Events.FirstOrDefault(e => e.Id == id);
             _ctx.Events.Remove(deletedEvent ?? throw new InvalidOperationException());
             _ctx.SaveChanges();
+            return true;
+        }
+
+        public bool SaveResults()
+        {
             return true;
         }
 

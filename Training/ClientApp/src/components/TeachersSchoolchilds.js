@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {userService} from "./services/UserService";
 import {teacherService} from "./services/TeacherService";
-import { MDBBtn, MDBInput, Button, ToastContainer   } from "mdbreact";
+import { MDBBtn, MDBInput, ToastContainer   } from "mdbreact";
 import Notification from "./Notification";
 
 const Schoolchild = () => 

@@ -1,14 +1,14 @@
-import token from './Auth-header';
+import {token} from './Auth-header';
 
-export const teacherService={
-  getSchoolChilds,
-  addSchoolChilds
+export const schoolchildService={
+  getEvents,
+  save
 }
 
 var result = [];
 
-function getSchoolChilds() {
- return fetch('/api/teachers/getSchoolChilds', {headers: {'Authorization': 'Bearer ' + token()}})
+function getEvents() {
+ return fetch('/api/schoolchilds/getEvents', {headers: {'Authorization': 'Bearer ' + token()}})
 .then((resp)=>{ 
  if (resp.ok) return resp.json(); else return result;})
 .then((json)=>{ 
@@ -17,11 +17,10 @@ function getSchoolChilds() {
   })
 }
 
-function addSchoolChilds(data) {
- return fetch('/api/teachers/addSchoolChilds', 
+function save(data) {
+ return fetch('/api/schoolchilds/saveResults', 
    {
     method: 'POST',
-    headers: token(),
     headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token()

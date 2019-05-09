@@ -1,6 +1,8 @@
 import React from "react";
 import $ from "jquery";
 import 'jquery-ui-dist/jquery-ui';
+import queryString from 'query-string';
+import {schoolchildService} from "../services/SchoolchildService";
 
 var position1 = 0;
 var position2 = 0;
@@ -192,11 +194,14 @@ function handleCardDrop( event, ui ) {
     $('.leftItem').addClass('animated');
     $('.centerItem').addClass('animated');
     $('.rightItem').addClass('animated');
-
-    if (completedLevels === levelsCount) 
+    if (completedLevels === levelsCount) {
       $('#completedGame').show();
-    else
+      console.log('a');
+    }
+    else{
       $('#successMessage').show();
+      console.log('b');
+    }
   }
 }
 function getText(value)
@@ -215,7 +220,10 @@ function getText(value)
 class Game2 extends React.Component {
   constructor(props) {
     super(props);
+    this.service = schoolchildService;
+    let countLevels = +queryString.parse(this.props.location.search).countLevels;
     this.state = {
+      score: 0,
       cardsCount: 0,
       leftResult: 0,
       leftValue: 0,
@@ -223,7 +231,7 @@ class Game2 extends React.Component {
       rightValue: 0,
       textLeft: "",
       textRight: "",
-      countLevels: 0,
+      countLevels: countLevels,
       currentLevel: 0
     };
     this.generateLevel = this.generateLevel.bind(this);
@@ -236,14 +244,16 @@ class Game2 extends React.Component {
 
   generateLevel(type)
   {
-    var countLevels;
-    type ? countLevels = this.state.countLevels : countLevels = Math.round(2 + Math.random() * 5);
+    var countLevels = this.state.countLevels;
+    var score;
+    type ? score = this.state.cardsCount * 10 : score = 0;
     this.setState({
+      score: this.state.score + score,
       cardsCount: Math.round(3 + Math.random() * 7),
       leftResult: Math.round(Math.random() * 2),
       leftValue: Math.round(Math.random() * 9),
       rightResult: Math.round(Math.random() * 2),
-      rightValue: Math.round(1 + Math.random() * 9),
+      rightValue: Math.round(Math.random() * 9),
       countLevels: countLevels,
       currentLevel: this.state.currentLevel+1
     }, () =>  

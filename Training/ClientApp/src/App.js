@@ -36,15 +36,12 @@ const App = () => (
       {role() === "Teacher" ? <AppRoute exact path="/" layout={Layout} component={TeachersEvents} /> : null}
       {role() === "Teacher" ? <AppRoute exact path="/events" layout={Layout} component={TeachersEvents}/> : null}
       {role() === "Teacher" ? <AppRoute exact path="/schoolchilds" layout={Layout} component={TeachersSchoolchilds}/> : null}
+      {role() === "Teacher" ? <AppRoute exact path="/games" layout={Layout} component={Games} /> : null }
       {role() === "Schoolchild" ? <AppRoute exact path="/" layout={Layout} component={SchoolchildsEvents} /> : null}
       {role() === "Schoolchild" ? <AppRoute exact path="/events" layout={Layout} component={SchoolchildsEvents} /> : null}
-      
-
       {
         //role() === "Schoolchild" ? <AppRoute exact path="/event" layout={Layout} component={Event}/> : null
       }
-      <AppRoute exact path="/" layout={Layout} component={Login}/>
-      <AppRoute exact path="/games" layout={Layout} component={Games} />
       <AppRoute exact path="/login" layout={Layout} component={Login} />
       <AppRoute exact path="/register" layout={Layout} component={Register} />
       {
@@ -52,6 +49,7 @@ const App = () => (
       }
       <AppRoute exact path="/game1" layout={EmptyLayout} component={Game1} />
       <AppRoute exact path="/game2" layout={EmptyLayout} component={Game2} />
+      <AppRoute exact path="/*" layout={Layout} component={Login}/>
     </Switch>
   </div>
 )

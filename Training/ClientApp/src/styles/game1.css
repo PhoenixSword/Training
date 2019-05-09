@@ -209,16 +209,33 @@
 
 #successMessage {
   position: absolute;
-  left: 580px;
-  top: 250px;
-  width: 0;
-  height: 0;
+  color: white;
+  left: 350px;
+  top: 200px;
+  width: 400px;
+  height: 150px;
   z-index: 100;
-  background: #dfd;
-  border: 2px solid #333;
+  background: rgba(255, 255, 255, 0.1);
+  border: 3px solid #333;
   border-radius: 10px;
-  box-shadow: 0.3em 0.3em 0.5em rgba(0, 0, 0, 0.8);
-  padding: 20px; }
+  box-shadow: 0 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.8);
+  padding: 20px; 
+}
+
+#completedGame {
+  position: absolute;
+  color: white;
+  left: 350px;
+  top: 200px;
+  width: 400px;
+  height: 150px;
+  z-index: 100;
+  background: rgba(64, 255, 64, 0.2);
+  border: 3px solid #333;
+  border-radius: 10px;
+  box-shadow: 0 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.8);
+  padding: 20px; 
+}
 
 .game1Name > h1, .game1Name > h2 {
   font-weight: 500 !important; }

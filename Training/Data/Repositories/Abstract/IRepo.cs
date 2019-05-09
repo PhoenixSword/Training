@@ -12,6 +12,7 @@ namespace Training.Data.Repositories.Abstract
         bool AddEvents(IEnumerable<Event> listEvents, string userId);
         Task<bool> RemoveSchoolChilds(string id);
         bool RemoveEvents(string id);
+        bool SaveResults();
 
     }
 }

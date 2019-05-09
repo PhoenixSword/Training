@@ -24,7 +24,6 @@ export class Games extends Component {
 
   show(value)
   {
-    console.log(this.state.previewUrl);
     this.setState({
       previewUrl: value
     });
@@ -39,12 +38,12 @@ export class Games extends Component {
         <MDBListGroup>
           {this.state.listGames.map((item, index) =>
             <MDBListGroupItem style={{width: '250px'}} className="text-center" key={index} onClick={() => this.show(item.url)}
-                     hover disabled={item.url === null}>{item.name}<img src={`/games/${item.url}/preview.png`}/>
+                     hover disabled={item.url === null}>{item.name}<img src={`/games/${item.url}/preview.png`} alt={item.name}/>
             </MDBListGroupItem>
           )}
         </MDBListGroup>
       </MDBContainer>
-        {this.state.previewUrl ? <div className="previewGame"><iframe src={`/${this.state.previewUrl}`} scrolling="no"/></div> : null}
+        {this.state.previewUrl ? <div className="previewGame"><iframe title="Задание" src={`/${this.state.previewUrl}`} scrolling="no"/></div> : null}
       </div>
 
     );

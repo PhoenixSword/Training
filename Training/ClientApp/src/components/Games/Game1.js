@@ -1,6 +1,9 @@
 import React from "react";
 import $ from "jquery";
 import 'jquery-ui-dist/jquery-ui';
+import queryString from 'query-string';
+import {MDBBtn} from 'mdbreact';
+import {schoolchildService} from "../services/SchoolchildService";
 
 var position1 = 0;
 var position2 = 0;
@@ -64,12 +67,6 @@ function init(mas) {
   completedLevels = mas.currentLevel;
 
   $('#successMessage').hide();
-  $('#successMessage').css( {
-    left: '580px',
-    top: '250px',
-    width: '200px',
-    height: '100px'
-  } );
 
   $('#cardPile').html( '' );
   $('#fake').html( '' );
@@ -192,11 +189,12 @@ function handleCardDrop( event, ui ) {
     $('.leftItem').addClass('animated');
     $('.centerItem').addClass('animated');
     $('.rightItem').addClass('animated');
-
-    if (completedLevels === levelsCount) 
+    if (completedLevels === levelsCount) {
       $('#completedGame').show();
-    else
+    }
+    else{
       $('#successMessage').show();
+    }
   }
 }
 function getText(value)
@@ -215,7 +213,10 @@ function getText(value)
 class Game1 extends React.Component {
   constructor(props) {
     super(props);
+    this.service = schoolchildService;
+    let countLevels = +queryString.parse(this.props.location.search).countLevels;
     this.state = {
+      score: 0,
       cardsCount: 0,
       leftResult: 0,
       leftValue: 0,
@@ -223,10 +224,11 @@ class Game1 extends React.Component {
       rightValue: 0,
       textLeft: "",
       textRight: "",
-      countLevels: 0,
+      countLevels: countLevels,
       currentLevel: 0
     };
     this.generateLevel = this.generateLevel.bind(this);
+    this.save = this.save.bind(this);
   }
 
   componentDidMount()
@@ -234,16 +236,22 @@ class Game1 extends React.Component {
     this.generateLevel();
   }
 
+  save()
+  {
+  }
+
   generateLevel(type)
   {
-    var countLevels;
-    type ? countLevels = this.state.countLevels : countLevels = Math.round(2 + Math.random() * 5);
+    var countLevels = this.state.countLevels;
+    var score;
+    type ? score = this.state.cardsCount * 10 : score = 0;
     this.setState({
+      score: this.state.score + score,
       cardsCount: Math.round(3 + Math.random() * 7),
       leftResult: Math.round(Math.random() * 2),
       leftValue: Math.round(Math.random() * 9),
       rightResult: Math.round(Math.random() * 2),
-      rightValue: Math.round(1 + Math.random() * 9),
+      rightValue: Math.round(Math.random() * 9),
       countLevels: countLevels,
       currentLevel: this.state.currentLevel+1
     }, () =>  
@@ -271,13 +279,13 @@ class Game1 extends React.Component {
           <div id="fake"></div>
           <div id="cardPile"></div>
 
-          <div id="successMessage" style={{display: 'none'}}>
+          <div id="successMessage" style={{display: 'none'}} className="text-center">
             <h2>Успех!</h2>
-            <button onClick={() => this.generateLevel(true)}>Перейти на следующий уровень</button>
-          </div>
-          <div id="completedGame" style={{display: 'none'}}>
-            <h2>Успех!</h2>
-            <button>успех</button>
+              <MDBBtn color="primary" onClick={() => this.generateLevel(true)}>Перейти на следующий уровень</MDBBtn>
+            </div>
+          <div id="completedGame" style={{display: 'none'}} className="text-center">
+            <h2>Задание пройдено!</h2>
+              <MDBBtn color="success" onClick={() => this.save()}>Закончить задание</MDBBtn>
           </div>
       </div>
     );

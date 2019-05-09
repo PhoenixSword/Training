@@ -8,6 +8,8 @@ namespace Training.Models
         [Required]
         public string Name { get; set; }
         [Required]
+        public string Url { get; set; }
+        [Required]
         public string CountLevels { get; set; }
 
         [ForeignKey("User")]

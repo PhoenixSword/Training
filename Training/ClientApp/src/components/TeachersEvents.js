@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {userService} from "./services/UserService";
 import {teacherService} from "./services/TeacherService";
-import { MDBBtn, MDBInput, Button, ToastContainer, MDBSelect, MDBSelectInput, MDBSelectOptions, MDBSelectOption } from "mdbreact";
+import { MDBBtn, MDBInput, ToastContainer } from "mdbreact";
 import Notification from "./Notification";
 import {ListGames} from "./ListGames.js";
 
 const Event = () => 
 {
-  return {id: "00000000-0000-0000-0000-000000000000", name: '', countLevels: 0}
+  return {id: "00000000-0000-0000-0000-000000000000", name: '', url: '', countLevels: 0}
 }
 
 export class TeachersEvents extends Component {
@@ -58,7 +58,6 @@ export class TeachersEvents extends Component {
   }
 
   onChange(e){
-    console.log(e.target.value)
     var val = e.target.value;
     var index = e.target.parentNode.parentNode.parentNode.id;
     var stateCopy = Object.assign({}, this.state);
@@ -66,8 +65,10 @@ export class TeachersEvents extends Component {
     stateCopy.Events[index] = Object.assign({}, stateCopy.Events[index]);
     switch(e.target.name)
     {
-      case "name":
-        stateCopy.Events[index].name = val;
+      case "url":
+        var text = e.target.selectedOptions[0].innerText;
+        stateCopy.Events[index].url = val;
+        stateCopy.Events[index].name = text;
         break;
       case "countLevels":
         stateCopy.Events[index].countLevels = val;
@@ -98,7 +99,7 @@ export class TeachersEvents extends Component {
                 <td hidden><input name="id" value={item.id} readOnly hidden/></td>
                   <td>
                     <div className="md-form">
-                      <select name="name" className="browser-default custom-select" value={item.name} onChange={this.onChange}>
+                      <select name="url" className="browser-default custom-select" value={item.url} onChange={this.onChange}>
                       <option value="">Выберите игру</option>
                       {this.state.listGames.map((item2, index) =>
                          <option key={index} value={item2.url} disabled={item2.url === null}>{item2.name}</option>
