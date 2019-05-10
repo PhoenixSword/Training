@@ -90,10 +90,12 @@ iframe {
 }
  
 .list-group {
-    flex-direction: row;
-  }
+  flex-direction: row;
+}
 .list-group-item{
+  margin: 0;
   width: 135px;
+  height: 257px;
   cursor: pointer;
 }
 .list-group-item-action {
@@ -101,6 +103,9 @@ iframe {
 }
 
 .previewGame{
+  background: white;
+  border-radius: 10px;
+  padding: 10px 10px;
   z-index: 15;
   position: fixed;
   top: 15%;
@@ -115,4 +120,11 @@ iframe {
   top:0;
   left:0;
   z-index: 10;
+}
+.completedEvent{
+  opacity: 0.5;
+}
+
+.text-green{
+  color: #12ba12;
 }

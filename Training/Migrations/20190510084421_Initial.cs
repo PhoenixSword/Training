@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Training.Migrations
 {
-    public partial class EventsUrl : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -178,6 +178,31 @@ namespace Training.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SchoolchildEvents",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    EventId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SchoolchildEvents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SchoolchildEvents_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SchoolchildEvents_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -221,6 +246,16 @@ namespace Training.Migrations
                 name: "IX_Events_TeacherId",
                 table: "Events",
                 column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SchoolchildEvents_EventId",
+                table: "SchoolchildEvents",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SchoolchildEvents_UserId",
+                table: "SchoolchildEvents",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -241,10 +276,13 @@ namespace Training.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "SchoolchildEvents");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

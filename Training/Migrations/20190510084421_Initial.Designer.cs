@@ -10,14 +10,14 @@ using Training.Data;
 namespace Training.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190508133419_EventsUrl")]
-    partial class EventsUrl
+    [Migration("20190510084421_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -214,6 +214,24 @@ namespace Training.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("Training.Models.SchoolchildEvent", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EventId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SchoolchildEvents");
+                });
+
             modelBuilder.Entity("Training.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -277,6 +295,17 @@ namespace Training.Migrations
                     b.HasOne("Training.Models.User", "Teacher")
                         .WithMany("Events")
                         .HasForeignKey("TeacherId");
+                });
+
+            modelBuilder.Entity("Training.Models.SchoolchildEvent", b =>
+                {
+                    b.HasOne("Training.Models.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId");
+
+                    b.HasOne("Training.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

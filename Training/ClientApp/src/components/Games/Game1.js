@@ -4,6 +4,7 @@ import 'jquery-ui-dist/jquery-ui';
 import queryString from 'query-string';
 import {MDBBtn} from 'mdbreact';
 import {schoolchildService} from "../services/SchoolchildService";
+import '../../styles/game1.css'
 
 var position1 = 0;
 var position2 = 0;
@@ -111,6 +112,7 @@ function splitToDigits(number) {
 
 function correct(element, ui, index)
 {
+ 
     //element.droppable( 'disable' );
     ui.draggable.addClass( 'correct' );
     ui.draggable.draggable( 'disable' );
@@ -118,11 +120,15 @@ function correct(element, ui, index)
     correctCards++;
     switch (index) {
       case 1:
+        ui.draggable.animate({ top: '200px' },
+        { duration: 1000, easing: 'easeOutBounce' });
         ui.draggable.position( { of: element, my: `left+${position1} top`, at: 'left top'});
         ui.draggable.addClass( 'leftItem' );
         position1+=90;
         break;
       case 2:
+        ui.draggable.animate({ top: '200px' },
+        { duration: 1000, easing: 'easeOutBounce' });
         ui.draggable.position( { of: element, my: `left+${position2} top`, at: 'left top'});
         ui.draggable.addClass( 'rightItem' );
         position2+=90;
@@ -139,7 +145,6 @@ function correct(element, ui, index)
 function handleCardDrop( event, ui ) {
   var slotNumber = $(this).data( 'number' );
   var cardNumber = ui.draggable.data( 'number' );
-
   var masDigits = splitToDigits(cardNumber);
   switch (slotNumber) {
     case 1:
@@ -183,12 +188,16 @@ function handleCardDrop( event, ui ) {
   }
 
   if (correctCards === cardsCount) {
-    $('#cardSlots1').addClass('animated');
-    $('#cardSlots2').addClass('animated');
-    $('#cardSlots3').addClass('animated');
-    $('.leftItem').addClass('animated');
-    $('.centerItem').addClass('animated');
-    $('.rightItem').addClass('animated');
+    setTimeout(()=>
+    {
+      $('#cardSlots1').addClass('animated');
+      $('#cardSlots2').addClass('animated');
+      $('#cardSlots3').addClass('animated');
+      $('.leftItem').addClass('animated');
+      $('.centerItem').addClass('animated');
+      $('.rightItem').addClass('animated');
+    }, 500);
+    
     if (completedLevels === levelsCount) {
       $('#completedGame').show();
     }
@@ -215,6 +224,9 @@ class Game1 extends React.Component {
     super(props);
     this.service = schoolchildService;
     let countLevels = +queryString.parse(this.props.location.search).countLevels;
+    let eventId = queryString.parse(this.props.location.search).eventId;
+    countLevels = countLevels || Math.round(1 + Math.random() * 2);
+    eventId = eventId || 'test';
     this.state = {
       score: 0,
       cardsCount: 0,
@@ -225,7 +237,9 @@ class Game1 extends React.Component {
       textLeft: "",
       textRight: "",
       countLevels: countLevels,
-      currentLevel: 0
+      eventId: eventId,
+      currentLevel: 0,
+      redirect: false
     };
     this.generateLevel = this.generateLevel.bind(this);
     this.save = this.save.bind(this);
@@ -238,6 +252,17 @@ class Game1 extends React.Component {
 
   save()
   {
+    if (this.state.eventId === 'test') {
+      this.setState({redirect: true});
+      return false;
+    }
+    var score = this.state.cardsCount * 10;
+    this.setState({score: this.state.score + score});
+    this.service.save(this.state.eventId, this.state.score + score).then((resp) => {
+      if (resp === true) {
+        this.setState({redirect: true});
+      }
+    });
   }
 
   generateLevel(type)
@@ -267,8 +292,15 @@ class Game1 extends React.Component {
   }
 
   render() {
+    if (this.state.redirect) {
+       window.top.location.reload();
+     }
+    if (this.state.countLevels === 0 || this.state.eventId === 0) {
+      return (<div></div>);
+    }
+    else
     return (
-      <div id="content" style={{background: `url('https://content.uchi.ru/27398/930/28.png') no-repeat center center fixed`}}>
+      <div id="content" className="game1" style={{background: `url('/games/game1/background.png') no-repeat center center fixed`}}>
       <div className="progress">
           <div className="progress-bar progress-bar-danger progress-bar-striped active" style={{width:`${this.state.currentLevel*100/this.state.countLevels}%`}}>Уровень {this.state.currentLevel}/{this.state.countLevels}</div>
       </div>
@@ -285,7 +317,7 @@ class Game1 extends React.Component {
             </div>
           <div id="completedGame" style={{display: 'none'}} className="text-center">
             <h2>Задание пройдено!</h2>
-              <MDBBtn color="success" onClick={() => this.save()}>Закончить задание</MDBBtn>
+              <MDBBtn color="success" onClick={this.save}>Закончить задание</MDBBtn>
           </div>
       </div>
     );

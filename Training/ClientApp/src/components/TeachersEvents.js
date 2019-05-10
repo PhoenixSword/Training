@@ -89,6 +89,7 @@ export class TeachersEvents extends Component {
                 <tr>
                   <th className="">Название игры</th>
                   <th className="">Количество уровней</th>
+                  <th className="">Ученики выполнившие задание</th>
                   <th className="">Удалить</th>
                 </tr>
               </thead>
@@ -109,6 +110,11 @@ export class TeachersEvents extends Component {
                   </td>
                   <td>
                     <MDBInput type="number" name="countLevels" value={item.countLevels.toString()} onChange={this.onChange}/>
+                  </td>
+                  <td>
+                    <div className="md-form">
+                    <span className={item.completedCount === item.count ? "text-green" : "text-danger"}>Количество учеников: {item.completedCount || 0}/{item.count || 0} </span>
+                    </div>
                   </td>
                   <td><MDBBtn style={{padding: "5px 20px"}} onClick={this.remove} color="danger">Удалить</MDBBtn></td>
                 </tr>

@@ -17,7 +17,9 @@ function getEvents() {
   })
 }
 
-function save(data) {
+function save(eventId, score) {
+  
+    console.log(score);
  return fetch('/api/schoolchilds/saveResults', 
    {
     method: 'POST',
@@ -25,7 +27,7 @@ function save(data) {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token()
         },
-    body: JSON.stringify(data) 
+    body: JSON.stringify({eventId, score}) 
   })
 .then((resp)=>{ return resp.json() })
 .then((json)=>{ 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Training.Data.Repositories.Abstract;
 using Training.Models;
+using Training.Models.ViewModel;
 
 namespace Training.Controllers
 {
@@ -24,12 +25,12 @@ namespace Training.Controllers
 
         public IEnumerable<Event> GetEvents()
         {
-            return _repo.GetEvents(TeacherId);
+            return _repo.GetEvents(UserId, TeacherId);
         }
         [HttpPost]
-        public bool SaveResults()
+        public bool SaveResults([FromBody]SaveModel model)
         {
-            return _repo.SaveResults();
+            return _repo.SaveResults(model.EventId, model.Score, UserId);
         }
     }
 }

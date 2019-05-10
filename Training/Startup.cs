@@ -135,6 +135,7 @@ namespace Training
                     spa.UseReactDevelopmentServer("start");
                     spa.UseReactDevelopmentServer("sass");
                     spa.UseReactDevelopmentServer("sassgame1");
+                    spa.UseReactDevelopmentServer("sassgame2");
                 }
             });
         }

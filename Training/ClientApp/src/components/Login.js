@@ -38,7 +38,7 @@ export class Login extends Component {
 
   render () {
     if (this.state.redirect && !this.state.alert) {
-      return <Redirect to='/'/>;
+      return <Redirect to='/events'/>;
     }
     return (
       <MDBContainer>

@@ -9,9 +9,9 @@ namespace Training.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
         public new DbSet<User> Users { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<SchoolchildEvent> SchoolchildEvents { get; set; }
     }
 }

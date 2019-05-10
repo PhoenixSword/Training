@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
+import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBIcon } from "mdbreact";
 import {schoolchildService} from "./services/SchoolchildService";
 import $ from "jquery";
 
@@ -18,7 +18,8 @@ export class SchoolchildsEvents extends Component {
     this.state={
         Events: [],
         previewUrl: null,
-        countLevels: 1
+        countLevels: 1,
+        eventId: 0
     }
     this.service = schoolchildService;
     this.show = this.show.bind(this);
@@ -28,11 +29,12 @@ export class SchoolchildsEvents extends Component {
     }));
   }
 
-  show(url, count)
+  show(url, count, eventId)
   {
     this.setState({
       previewUrl: url,
-      countLevels: count
+      countLevels: count,
+      eventId: eventId
     });
     $(".previewGame").show();
     $('#overlay').show();
@@ -44,13 +46,15 @@ export class SchoolchildsEvents extends Component {
         <MDBContainer>
         <MDBListGroup>
           {this.state.Events.map((item, index) =>
-            <MDBListGroupItem style={{width: '250px'}} className="text-center" key={index} onClick={() => this.show(item.url, item.countLevels)}
-            hover disabled={item.url === null}>{item.name} <p>Уровней: {item.countLevels}</p><img src={`/games/${item.url}/preview.png`} alt={item.name}/>
+            <MDBListGroupItem style={{width: '250px'}} className="text-center" key={index} onClick={() => this.show(item.url, item.countLevels, item.id)}
+            hover disabled={item.completed}>{item.name} <p>Количество уровней: {item.countLevels}</p><img className={item.completed ? 'completedEvent' : null} src={`/games/${item.url}/preview.png`} alt={item.name}/>
+            {item.completed ? <img width="200" height="127 "src="/completedEvent.png" alt="Завершено" style={{position: 'absolute', right: '24px'}}/> : null}
+            {item.completed ? <p style={{color: 'green'}}> <MDBIcon icon="check" /> Получено очков: {item.score}</p> : <p style={{color: 'red'}}> <MDBIcon icon="times" /> Не завершено</p> }
             </MDBListGroupItem>
           )}
         </MDBListGroup>
       </MDBContainer>
-        {this.state.previewUrl ? <div className="previewGame"><iframe title="Задание" src={`/${this.state.previewUrl}?countLevels=${this.state.countLevels}`} scrolling="no"/></div> : null}
+        {this.state.previewUrl ? <div className="previewGame"><iframe title="Задание" src={`/${this.state.previewUrl}?countLevels=${this.state.countLevels}&eventId=${this.state.eventId}`} scrolling="no"/></div> : null}
       </div>
 
     );
