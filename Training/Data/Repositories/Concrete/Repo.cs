@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Training.Data.Repositories.Abstract;
 using Training.Models;
 using Training.Models.Mapping;
@@ -32,7 +33,7 @@ namespace Training.Data.Repositories.Concrete
         public IEnumerable<Event> GetEvents(string userId, string teacherId)
         {
             var sevents = SchoolchildEvents.Where(s => s.UserId == userId).ToList();
-            var events = Events.Where(e => e.TeacherId == teacherId).Select(e=>e.MapSchoolchild()).ToList();
+            var events = Events.Where(e => e.TeacherId == teacherId).Select(e => e.MapSchoolchild()).ToList();
             foreach (var item in events)
             {
                 var existsEvent = sevents.FirstOrDefault(e => e.EventId == item.Id);
@@ -41,6 +42,22 @@ namespace Training.Data.Repositories.Concrete
                 item.Score = existsEvent.Score;
             }
             return events;
+        }
+
+        public IEnumerable<Event> GetCompletedEvents(string userId, string teacherId)
+        {
+            List<Event> list = new List<Event>();
+            var sevents = SchoolchildEvents.Where(s => s.UserId == userId).ToList();
+            var events = Events.Where(e => e.TeacherId == teacherId).Select(e => e.MapSchoolchild()).ToList();
+            foreach (var item in events)
+            {
+                var existsEvent = sevents.FirstOrDefault(e => e.EventId == item.Id);
+                if (existsEvent == null) continue;
+                item.Date = existsEvent.Date.ToString("f");
+                item.Score = existsEvent.Score;
+                list.Add(item);
+            }
+            return list;
         }
         public IEnumerable<Event> GetEvents(string userId)
         {
@@ -151,6 +168,11 @@ namespace Training.Data.Repositories.Concrete
             }
             _ctx.SaveChanges();
             return true;
+        }
+
+        public IEnumerable<object> GetSchoolChildsWithEvents(string userId)
+        {
+            return _userManager.Users.Where(u => u.TeacherId == userId).Select(s => new { s.Id, s.Email, s.Password, s.Fio, s.Events }).ToList();
         }
 
         private string Hash(string password)

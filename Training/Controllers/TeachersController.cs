@@ -28,6 +28,11 @@ namespace Training.Controllers
             return _repo.GetEvents(UserId);
         }
 
+        public IEnumerable<object> GetSchoolChildsWithEvents()
+        {
+            return _repo.GetSchoolChildsWithEvents(UserId);
+        }
+
         [HttpPost]
         public async Task<bool> AddSchoolChilds([FromBody] IEnumerable<ApplicationUserModel> listUserModels)
         {

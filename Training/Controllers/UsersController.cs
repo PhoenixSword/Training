@@ -76,8 +76,6 @@ namespace Training.Controllers
 
                 return Ok(resultModel);
             }
-
-            resultModel.ResultStatus = result.IsNotAllowed;
             return BadRequest(resultModel);
         }
 

@@ -4,6 +4,7 @@ export const teacherService={
   getSchoolChilds,
   addSchoolChilds,
   removeSchoolChilds,
+  getSchoolChildsWithEvents,
   getEvents,
   addEvents,
   removeEvents,
@@ -13,6 +14,16 @@ var result = [];
 
 function getSchoolChilds() {
  return fetch('/api/teachers/getSchoolChilds', {headers: {'Authorization': 'Bearer ' + token()}})
+.then((resp)=>{ 
+ if (resp.ok) return resp.json(); else return result;})
+.then((json)=>{ 
+  result = json;
+  return result;
+  })
+}
+
+function getSchoolChildsWithEvents() {
+ return fetch('/api/teachers/getSchoolChildsWithEvents', {headers: {'Authorization': 'Bearer ' + token()}})
 .then((resp)=>{ 
  if (resp.ok) return resp.json(); else return result;})
 .then((json)=>{ 

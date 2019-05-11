@@ -171,14 +171,10 @@ class Game2 extends React.Component {
   {
     var countLevels = this.state.countLevels;
     var score;
-    type ? score = this.state.cardsCount * 10 : score = 0;
+    type ? score = this.state.cardsCount * 7 : score = 0;
     this.setState({
       score: this.state.score + score,
       cardsCount: Math.round(4 + Math.random() * 4)*2,
-      leftResult: Math.round(Math.random() * 2),
-      leftValue: Math.round(Math.random() * 9),
-      rightResult: Math.round(Math.random() * 2),
-      rightValue: Math.round(Math.random() * 9),
       countLevels: countLevels,
       currentLevel: this.state.currentLevel+1
     }, ()=> init(this.state));
@@ -202,7 +198,6 @@ class Game2 extends React.Component {
         </div>
           <div id="fake"></div>
           <div id="cardPile"></div>
-
           <div id="successMessage" style={{display: 'none'}} className="text-center">
             <h2>Успех!</h2>
               <MDBBtn color="primary" onClick={() => this.generateLevel(true)}>Перейти на следующий уровень</MDBBtn>

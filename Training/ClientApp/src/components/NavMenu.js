@@ -24,7 +24,7 @@ function Nav(props) {
 function UserGreeting(props) {
     return <React.Fragment>
         <NavItem>
-            <NavLink tag={Link} className="text-white" to="#">{JSON.parse(localStorage.getItem('user')).fio}</NavLink>
+            <NavLink tag={Link} className="text-white" to="/profile">{JSON.parse(localStorage.getItem('user')).fio}</NavLink>
         </NavItem>
         <NavItem>
             <NavLink tag={Link} className="text-white" to="#" onClick={userService.logout}>Выйти</NavLink>

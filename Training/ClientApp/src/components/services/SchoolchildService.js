@@ -2,6 +2,7 @@ import {token} from './Auth-header';
 
 export const schoolchildService={
   getEvents,
+  getCompletedEvents,
   save
 }
 
@@ -17,9 +18,19 @@ function getEvents() {
   })
 }
 
+
+function getCompletedEvents() {
+ return fetch('/api/schoolchilds/getCompletedEvents', {headers: {'Authorization': 'Bearer ' + token()}})
+.then((resp)=>{ 
+ if (resp.ok) return resp.json(); else return result;})
+.then((json)=>{ 
+  result = json;
+  return result;
+  })
+}
+
+
 function save(eventId, score) {
-  
-    console.log(score);
  return fetch('/api/schoolchilds/saveResults', 
    {
     method: 'POST',

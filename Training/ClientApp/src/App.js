@@ -11,6 +11,8 @@ import { role } from './components/services/Auth-header';
 import { TeachersEvents } from './components/TeachersEvents';
 import { SchoolchildsEvents } from './components/SchoolchildsEvents';
 import { TeachersSchoolchilds } from './components/TeachersSchoolchilds';
+import { TeacherProfile } from './components/TeacherProfile';
+import { SchoolchildProfile } from './components/SchoolchildProfile';
 
 import { Games } from './components/Games';
 import Game1 from './components/Games/Game1';
@@ -33,26 +35,33 @@ const EmptyLayout = props => (
 const App = () => (
   <div>
     <Switch>
-      {role() === "Teacher" ? <AppRoute exact path="/" layout={Layout} component={TeachersEvents} /> : null}
-      {role() === "Teacher" ? <AppRoute exact path="/events" layout={Layout} component={TeachersEvents}/> : null}
-      {role() === "Teacher" ? <AppRoute exact path="/schoolchilds" layout={Layout} component={TeachersSchoolchilds}/> : null}
-      {role() === "Teacher" ? <AppRoute exact path="/games" layout={Layout} component={Games} /> : null }
-      {role() === "Schoolchild" ? <AppRoute exact path="/" layout={Layout} component={SchoolchildsEvents} /> : null}
-      {role() === "Schoolchild" ? <AppRoute exact path="/events" layout={Layout} component={SchoolchildsEvents} /> : null}
-      {
-        //role() === "Schoolchild" ? <AppRoute exact path="/event" layout={Layout} component={Event}/> : null
-      }
-      <AppRoute exact path="/login" layout={Layout} component={Login} />
-      <AppRoute exact path="/register" layout={Layout} component={Register} />
-      {
-        //games
-      }
+      {role() === "Teacher" ? 
+      <React.Fragment>
+      <AppRoute exact path="/" layout={Layout} component={TeacherProfile} /> 
+      <AppRoute exact path="/profile" layout={Layout} component={TeacherProfile} />
+      <AppRoute exact path="/events" layout={Layout} component={TeachersEvents}/>
+      <AppRoute exact path="/schoolchilds" layout={Layout} component={TeachersSchoolchilds}/> 
+      <AppRoute exact path="/games" layout={Layout} component={Games} />
+      </React.Fragment>
+       : null }
+
+      {role() === "Schoolchild" ? 
+      <React.Fragment>
+      <AppRoute exact path="/" layout={Layout} component={SchoolchildProfile} />
+      <AppRoute exact path="/profile" layout={Layout} component={SchoolchildProfile} />
+      <AppRoute exact path="/events" layout={Layout} component={SchoolchildsEvents} />
+      </React.Fragment>
+      : null}
+
       {role() === "Schoolchild" || role() === "Teacher" ?
       <React.Fragment>
         <AppRoute exact path="/game1" layout={EmptyLayout} component={Game1} />
         <AppRoute exact path="/game2" layout={EmptyLayout} component={Game2} />
       </React.Fragment>
       : null}
+
+      <AppRoute exact path="/login" layout={Layout} component={Login} />
+      <AppRoute exact path="/register" layout={Layout} component={Register} />
       <AppRoute exact path="/*" layout={Layout} component={Login}/>
     </Switch>
   </div>

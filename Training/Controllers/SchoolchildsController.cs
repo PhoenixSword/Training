@@ -27,6 +27,10 @@ namespace Training.Controllers
         {
             return _repo.GetEvents(UserId, TeacherId);
         }
+        public IEnumerable<Event> GetCompletedEvents()
+        {
+            return _repo.GetCompletedEvents(UserId, TeacherId);
+        }
         [HttpPost]
         public bool SaveResults([FromBody]SaveModel model)
         {
