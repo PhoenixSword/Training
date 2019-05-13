@@ -129,7 +129,7 @@ export class Login extends Component {
                         className="mb-3"
                         type="submit"
                         >
-                        Login
+                        Войти
                       </MDBBtn>
                     </div>
                     </form>

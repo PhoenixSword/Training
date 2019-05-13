@@ -47,6 +47,8 @@ const App = () => (
 
       {role() === "Schoolchild" ? 
       <React.Fragment>
+      <AppRoute exact path="/game1" layout={EmptyLayout} component={Game1} />
+      <AppRoute exact path="/game2" layout={EmptyLayout} component={Game2} />
       <AppRoute exact path="/" layout={Layout} component={SchoolchildProfile} />
       <AppRoute exact path="/profile" layout={Layout} component={SchoolchildProfile} />
       <AppRoute exact path="/events" layout={Layout} component={SchoolchildsEvents} />
