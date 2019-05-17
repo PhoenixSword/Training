@@ -36,7 +36,8 @@ namespace Training.Controllers
                 UserName = applicationUserModel.Email,
                 Fio = applicationUserModel.Fio,
                 Email = applicationUserModel.Email,
-                Password = applicationUserModel.Password               
+                Password = applicationUserModel.Password,
+                Date = DateTime.Now
             };
 
             var result = await _userManager.CreateAsync(user, applicationUserModel.Password);
@@ -44,7 +45,6 @@ namespace Training.Controllers
             if (!result.Succeeded) return Ok(result);
 
             await _signInManager.SignInAsync(user, false);
-
             await _userManager.AddToRoleAsync(user, "Teacher");
             
             var resultModel = new ResultModel
@@ -64,19 +64,16 @@ namespace Training.Controllers
         {
             var result = await _signInManager.PasswordSignInAsync(applicationUserModel.Email, applicationUserModel.Password, false, false);
             var resultModel = new ResultModel();
-            if (result.Succeeded)
-            {
-                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == applicationUserModel.Email);
-                var role = _userManager.GetRolesAsync(appUser).Result.FirstOrDefault();
-                if (appUser == null) return Ok(resultModel);
-                resultModel.Fio = appUser.Fio;
-                resultModel.Role = role;
-                resultModel.ResultStatus = result.Succeeded;
-                resultModel.Token = (string) GenerateJwtToken(applicationUserModel.Email, appUser);
+            if (!result.Succeeded) return BadRequest(resultModel);
+            var appUser = _userManager.Users.SingleOrDefault(r => r.Email == applicationUserModel.Email);
+            var role = _userManager.GetRolesAsync(appUser).Result.FirstOrDefault();
+            if (appUser == null) return Ok(resultModel);
+            resultModel.Fio = appUser.Fio;
+            resultModel.Role = role;
+            resultModel.ResultStatus = result.Succeeded;
+            resultModel.Token = (string) GenerateJwtToken(applicationUserModel.Email, appUser);
 
-                return Ok(resultModel);
-            }
-            return BadRequest(resultModel);
+            return Ok(resultModel);
         }
 
 

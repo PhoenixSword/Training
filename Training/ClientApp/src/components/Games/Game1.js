@@ -223,17 +223,32 @@ class Game1 extends React.Component {
   constructor(props) {
     super(props);
     this.service = schoolchildService;
-    let countLevels = +queryString.parse(this.props.location.search).countLevels;
-    let eventId = queryString.parse(this.props.location.search).eventId;
+    var countLevels = +this.props.countLevels;
+    var eventId = this.props.eventId;
+    if (this.props.settings !== undefined) {
+      var settings = this.props.settings;
+    }
+    else{
+      var settings = [];
+      settings[0] = 
+      {
+          "cardsCount" : Math.round(3 + Math.random() * 7),
+          "leftResult" : Math.round(Math.random() * 2),
+          "leftValue" : Math.round(Math.random() * 9),
+          "rightResult" : Math.round(Math.random() * 2),
+          "rightValue" : Math.round(Math.random() * 9),
+      }
+    }
     countLevels = countLevels || Math.round(1 + Math.random() * 2);
     eventId = eventId || 'test';
     this.state = {
       score: 0,
-      cardsCount: 0,
-      leftResult: 0,
-      leftValue: 0,
-      rightResult: 0,
-      rightValue: 0,
+      cardsCount: settings[0].cardsCount,
+      leftResult: settings[0].leftResult,
+      leftValue: settings[0].leftValue,
+      rightResult: settings[0].rightResult,
+      rightValue: settings[0].rightValue,
+      settings : settings,
       textLeft: "",
       textRight: "",
       countLevels: countLevels,
@@ -267,17 +282,29 @@ class Game1 extends React.Component {
 
   generateLevel(type)
   {
-    var countLevels = this.state.countLevels;
+    var cardsCount = Math.round(3 + Math.random() * 7);
+    var leftResult = Math.round(Math.random() * 2);
+    var leftValue = Math.round(Math.random() * 9);
+    var rightResult = Math.round(Math.random() * 2);
+    var rightValue = Math.round(Math.random() * 9);
     var score;
     type ? score = this.state.cardsCount * 10 : score = 0;
+
+    if (this.state.eventId !== "test") {
+      cardsCount = this.state.settings[this.state.currentLevel].cardsCount;
+      leftResult = this.state.settings[this.state.currentLevel].leftResult;
+      leftValue = this.state.settings[this.state.currentLevel].leftValue;
+      rightResult = this.state.settings[this.state.currentLevel].rightResult;
+      rightValue = this.state.settings[this.state.currentLevel].rightValue;
+    }
+
     this.setState({
       score: this.state.score + score,
-      cardsCount: Math.round(3 + Math.random() * 7),
-      leftResult: Math.round(Math.random() * 2),
-      leftValue: Math.round(Math.random() * 9),
-      rightResult: Math.round(Math.random() * 2),
-      rightValue: Math.round(Math.random() * 9),
-      countLevels: countLevels,
+      cardsCount: cardsCount,
+      leftResult: leftResult,
+      leftValue: leftValue,
+      rightResult: rightResult,
+      rightValue: rightValue,
       currentLevel: this.state.currentLevel+1
     }, () =>  
     {

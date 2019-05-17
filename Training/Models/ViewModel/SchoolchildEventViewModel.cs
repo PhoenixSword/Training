@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Training.Models.ViewModel
+﻿namespace Training.Models.ViewModel
 {
     public class SchoolchildEventViewModel : Event
     {

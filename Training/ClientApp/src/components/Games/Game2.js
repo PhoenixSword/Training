@@ -131,17 +131,28 @@ class Game2 extends React.Component {
   constructor(props) {
     super(props);
     this.service = schoolchildService;
-    let countLevels = +queryString.parse(this.props.location.search).countLevels;
-    let eventId = queryString.parse(this.props.location.search).eventId;
-    countLevels = countLevels || Math.round(1 + Math.random() * 2);
+    var countLevels = +this.props.countLevels;
+    console.log(countLevels);
+    var eventId = this.props.eventId;
+    if (this.props.settings !== undefined) {
+      var settings = this.props.settings;
+    }
+    else{
+      var settings = [];
+      settings[0] = 
+      {
+          "cardsCount" : Math.round(4 + Math.random() * 4)*2
+      }
+    }
     eventId = eventId || 'test';
     this.state = {
       score: 0,
-      cardsCount: 0,
+      cardsCount: settings[0].cardsCount,
       countLevels: countLevels,
       eventId: eventId,
       currentLevel: 0,
-      redirect: false
+      redirect: false,
+      settings : settings
     };
     this.generateLevel = this.generateLevel.bind(this);
     this.save = this.save.bind(this);
@@ -169,13 +180,17 @@ class Game2 extends React.Component {
 
   generateLevel(type)
   {
-    var countLevels = this.state.countLevels;
+    var cardsCount = Math.round(4 + Math.random() * 4)*2;
     var score;
     type ? score = this.state.cardsCount * 7 : score = 0;
+
+    if (this.state.eventId !== "test") {
+      cardsCount = this.state.settings[this.state.currentLevel].cardsCount;
+    }
+
     this.setState({
       score: this.state.score + score,
-      cardsCount: Math.round(4 + Math.random() * 4)*2,
-      countLevels: countLevels,
+      cardsCount: cardsCount,
       currentLevel: this.state.currentLevel+1
     }, ()=> init(this.state));
   }

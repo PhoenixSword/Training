@@ -34,8 +34,11 @@ export class TeachersEvents extends Component {
 
   save(){
     this.teacherService.addEvents(this.state.Events).then(
-      ()=> {
+      (response)=> {
         Notification("Сохранено");
+        this.setState(state => ({
+          Events: response
+        }))
       });
   }
 
@@ -44,9 +47,7 @@ export class TeachersEvents extends Component {
         Events: [...prevState.Events, Event()]}), () => {})
   }
 
-  remove(e){
-    var id = e.target.parentElement.parentElement.children[0].children[0].value;
-    var index = e.target.parentNode.parentNode.id;
+  remove(id, index){
     this.state.Events.splice(index, 1)
     this.setState(
       prevState => ({
@@ -113,10 +114,10 @@ export class TeachersEvents extends Component {
                   </td>
                   <td>
                     <div className="md-form">
-                    <span className={item.completedCount === item.count ? "text-green" : "text-danger"}>Количество учеников: {item.completedCount || 0}/{item.count || 0} </span>
+                    {item.completedCount !== 0 && item.completedCount !== undefined ? <span className={item.completedCount === item.count ? "text-green" : "text-danger"}>Количество учеников: {item.completedCount || 0}/{item.count || 0} </span> : <span>Задание никто не выполнил</span>}
                     </div>
                   </td>
-                  <td><MDBBtn style={{padding: "5px 20px"}} onClick={this.remove} color="danger">Удалить</MDBBtn></td>
+                  <td><MDBBtn style={{padding: "5px 20px"}} onClick={() => this.remove(item.id, index)} color="danger">Удалить</MDBBtn></td>
                 </tr>
                 )
               }

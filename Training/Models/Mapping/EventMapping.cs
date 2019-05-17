@@ -14,6 +14,7 @@ namespace Training.Models.Mapping
                 Teacher = e.Teacher,
                 TeacherId = e.TeacherId,
                 Url = e.Url,
+                Settings = e.Settings,
                 Completed = false
             };
         }
@@ -29,7 +30,8 @@ namespace Training.Models.Mapping
                 TeacherId = e.TeacherId,
                 Url = e.Url,
                 CompletedCount = 0,
-                Count = count
+                Count = count,
+                Settings = e.Settings
             };
         }
     }

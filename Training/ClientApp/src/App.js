@@ -52,14 +52,7 @@ const App = () => (
       <AppRoute exact path="/events" layout={Layout} component={SchoolchildsEvents} />
       </React.Fragment>
       : null}
-
-      {role() === "Schoolchild" || role() === "Teacher" ?
-      <React.Fragment>
-        <AppRoute exact path="/game1" layout={EmptyLayout} component={Game1} />
-        <AppRoute exact path="/game2" layout={EmptyLayout} component={Game2} />
-      </React.Fragment>
-      : null}
-
+      
       <AppRoute exact path="/login" layout={Layout} component={Login} />
       <AppRoute exact path="/register" layout={Layout} component={Register} />
       <AppRoute exact path="/*" layout={Layout} component={Login}/>

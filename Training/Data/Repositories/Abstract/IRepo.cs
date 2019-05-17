@@ -10,8 +10,8 @@ namespace Training.Data.Repositories.Abstract
         IEnumerable<Event> GetEvents(string userId, string teacherId);
         IEnumerable<Event> GetCompletedEvents(string userId, string teacherId);
         IEnumerable<Event> GetEvents(string userId);
-        Task<bool> AddSchoolChilds(IEnumerable<ApplicationUserModel> listUserModels, string userId);
-        bool AddEvents(IEnumerable<Event> listEvents, string userId);
+        Task<IEnumerable<object>> AddSchoolChilds(IEnumerable<ApplicationUserModel> listUserModels, string userId);
+        IEnumerable<Event> AddEvents(IEnumerable<Event> listEvents, string userId);
         Task<bool> RemoveSchoolChilds(string id);
         bool RemoveEvents(string id);
         bool SaveResults(string eventId, int score, string userid);

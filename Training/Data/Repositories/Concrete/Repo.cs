@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Training.Data.Repositories.Abstract;
 using Training.Models;
 using Training.Models.Mapping;
@@ -27,7 +26,9 @@ namespace Training.Data.Repositories.Concrete
 
         public IEnumerable<object> GetSchoolChilds(string userId)
         {
-            return _userManager.Users.Where(u => u.TeacherId == userId).Select(s => new { s.Id, s.Email, s.Password, s.Fio }).ToList();
+            var list = _userManager.Users.Where(u => u.TeacherId == userId)
+                .Select(s => new {s.Id, s.Email, s.Password, s.Fio, s.Date}).ToList().OrderBy(u=>u.Date);
+            return list;
         }
 
         public IEnumerable<Event> GetEvents(string userId, string teacherId)
@@ -74,37 +75,46 @@ namespace Training.Data.Repositories.Concrete
             return events;
         }
 
-        public async Task<bool> AddSchoolChilds(IEnumerable<ApplicationUserModel> listUserModels, string userId)
+        public async Task<IEnumerable<object>> AddSchoolChilds(IEnumerable<ApplicationUserModel> listUserModels, string userId)
         {
             foreach (var applicationUserModel in listUserModels)
             {
-                var user = new User
+                if (applicationUserModel.Email.Equals("") || (applicationUserModel.Password.Equals("")))
                 {
-                    Id = applicationUserModel.Id,
-                    UserName = applicationUserModel.Email,
-                    Fio = applicationUserModel.Fio,
-                    Email = applicationUserModel.Email,
-                    Password = applicationUserModel.Password,
-                    PasswordHash = Hash(applicationUserModel.Password),
-                    TeacherId = userId
-                };
+                    continue;
+                }
 
-                if (applicationUserModel.Id == "00000000-0000-0000-0000-000000000000")
+                var oldUser = _userManager.Users.FirstOrDefault(u => u.Id == applicationUserModel.Id);
+                if (oldUser != null)
                 {
-                    user.Id = Guid.NewGuid().ToString();
+                    oldUser.Email = applicationUserModel.Email;
+                    oldUser.UserName = applicationUserModel.Email;
+                    oldUser.Password = applicationUserModel.Password;
+                    oldUser.Fio = applicationUserModel.Fio;
+                    await _userManager.UpdateAsync(oldUser);
+
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(oldUser);
+                    await _userManager.ResetPasswordAsync(oldUser, token, applicationUserModel.Password);
                 }
                 else
                 {
-                    user.Id = applicationUserModel.Id;
-                    await RemoveSchoolChilds(applicationUserModel.Id);
+                    var user = new User
+                    {
+                        UserName = applicationUserModel.Email,
+                        Fio = applicationUserModel.Fio,
+                        Email = applicationUserModel.Email,
+                        Password = applicationUserModel.Password,
+                        TeacherId = userId,
+                        Date = DateTime.Now
+                    };
+                    await _userManager.CreateAsync(user, user.Password);
+                    await _userManager.AddToRoleAsync(user, "Schoolchild");
                 }
-                await _userManager.CreateAsync(user, applicationUserModel.Password);
-                await _userManager.AddToRoleAsync(user, "Schoolchild");
             }
-            return true;
+            return GetSchoolChilds(userId);
         }
 
-        public bool AddEvents(IEnumerable<Event> listEvents, string userId)
+        public IEnumerable<Event> AddEvents(IEnumerable<Event> listEvents, string userId)
         {
             foreach (var eventModel in listEvents)
             {
@@ -134,7 +144,7 @@ namespace Training.Data.Repositories.Concrete
                 }
             }
             _ctx.SaveChanges();
-            return true;
+            return GetEvents(userId);
         }
 
         public async Task<bool> RemoveSchoolChilds(string id)
@@ -173,23 +183,6 @@ namespace Training.Data.Repositories.Concrete
         public IEnumerable<object> GetSchoolChildsWithEvents(string userId)
         {
             return _userManager.Users.Where(u => u.TeacherId == userId).Select(s => new { s.Id, s.Email, s.Password, s.Fio, s.Events }).ToList();
-        }
-
-        private string Hash(string password)
-        {
-            var salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-
-            var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-            return hashed;
         }
     }
 }

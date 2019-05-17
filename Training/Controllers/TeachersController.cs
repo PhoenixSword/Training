@@ -34,13 +34,13 @@ namespace Training.Controllers
         }
 
         [HttpPost]
-        public async Task<bool> AddSchoolChilds([FromBody] IEnumerable<ApplicationUserModel> listUserModels)
+        public async Task<IEnumerable<object>> AddSchoolChilds([FromBody] IEnumerable<ApplicationUserModel> listUserModels)
         {
             return await _repo.AddSchoolChilds(listUserModels, UserId);
         }
 
         [HttpPost]
-        public bool AddEvents([FromBody] IEnumerable<Event> eventsModels)
+        public IEnumerable<Event> AddEvents([FromBody] IEnumerable<Event> eventsModels)
         {
             return  _repo.AddEvents(eventsModels, UserId);
         }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
 import $ from "jquery";
 import {ListGames} from "./ListGames.js";
+import GameBlock from "./Games/GameBlock";
 
 $(document).mouseup(function (e){
   var div = $(".previewGame"); 
@@ -43,9 +44,8 @@ export class Games extends Component {
           )}
         </MDBListGroup>
       </MDBContainer>
-        {this.state.previewUrl ? <div className="previewGame"><iframe title="Задание" src={`/${this.state.previewUrl}`} scrolling="no"/></div> : null}
+      {this.state.previewUrl ?  <div className="previewGame"><GameBlock val={this.state.previewUrl}/></div> : null}
       </div>
-
     );
   }
 }

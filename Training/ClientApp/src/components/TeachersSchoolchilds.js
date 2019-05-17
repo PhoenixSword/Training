@@ -31,8 +31,11 @@ export class TeachersSchoolchilds extends Component {
 
   save(){
     this.teacherService.addSchoolChilds(this.state.schoolChilds).then(
-      ()=> {
+      (response)=> {
         Notification("Сохранено");
+      	 this.setState(state => ({
+		      schoolChilds: response
+		    }))
       });
   }
 
@@ -41,9 +44,7 @@ export class TeachersSchoolchilds extends Component {
         schoolChilds: [...prevState.schoolChilds, Schoolchild()]}), () => {})
   }
 
-  remove(e){
-    var id = e.target.parentElement.parentElement.children[0].children[0].value;
-    var index = e.target.parentNode.parentNode.id;
+  remove(id, index){
     this.state.schoolChilds.splice(index, 1)
     this.setState(
       prevState => ({
@@ -63,7 +64,9 @@ export class TeachersSchoolchilds extends Component {
     switch(e.target.name)
     {
       case "email":
-        stateCopy.schoolChilds[index].email = val;
+      	if (val.match("^[A-Za-z0-9]+$")) {
+        	stateCopy.schoolChilds[index].email = val;
+      	}
         break;
       case "password":
         stateCopy.schoolChilds[index].password = val;
@@ -104,7 +107,7 @@ export class TeachersSchoolchilds extends Component {
                   <td>
                     <MDBInput name="fio" value={item.fio} onChange={this.onChange}/>
                   </td>
-                  <td><MDBBtn style={{padding: "5px 20px"}} onClick={this.remove} color="danger">Удалить</MDBBtn></td>
+                  <td><MDBBtn style={{padding: "5px 20px"}} onClick={() => this.remove(item.id, index)} color="danger">Удалить</MDBBtn></td>
                 </tr>
                 )}
               </tbody>
