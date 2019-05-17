@@ -196,11 +196,12 @@ class Game2 extends React.Component {
   }
 
   render() {
-     console.log(this.state);
     if (this.state.redirect) {
        window.top.location.reload();
      }
-    
+    if (this.state.countLevels === 0 || this.state.eventId === 0) {
+      return (<div></div>);
+    }
     else
     return (
       <div id="content" className="game2" style={{background: `url('/games/game2/background.png') no-repeat center center fixed`}}>
