@@ -186,7 +186,7 @@ export class Register extends Component {
                         className="mb-3"
                         type="submit"
                         >
-                        Register
+                        Регистрация
                       </MDBBtn>
                     </div>
                     </form>
