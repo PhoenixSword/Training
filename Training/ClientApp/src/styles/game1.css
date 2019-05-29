@@ -87,7 +87,7 @@
 }
 .game1 .leftItem.animated {
   position: absolute;
-  background: url("https://content.uchi.ru/27398/930/43.png") no-repeat;
+  background: url("/games/game1/lefttem.png") no-repeat;
   width: 87px;
   height: 104px;
   z-index: 10;
@@ -112,7 +112,7 @@
 }
 .game1 .rightItem.animated {
   position: absolute;
-  background: url("https://content.uchi.ru/27398/930/42.png") no-repeat;
+  background: url("/games/game1/rightItem.png") no-repeat;
   width: 87px;
   height: 104px;
   z-index: 10;
@@ -140,29 +140,29 @@
   background: #fff;
 }
 .game1 #cardSlots1 {
-  background: url("https://content.uchi.ru/27398/930/32.png") no-repeat;
+  background: url("/games/game1/slot1.png") no-repeat;
   background-position-y: bottom !important;
   position: absolute;
   margin: 1rem;
   top: 23%;
   left: -50px;
-  width: 399px;
-  height: 550px;
+  width: 400px;
+  height: 540px;
   transition: background 0s, transform 5s ease-in-out;
   z-index: 1;
 }
 .game1 #cardSlots1.hovered {
-  background-position-x: -399px;
+  background-position-x: -400px;
 }
 .game1 #cardSlots2 {
-  background: url("https://content.uchi.ru/27398/930/29.png") no-repeat;
+  background: url("/games/game1/slot2.png") no-repeat;
   background-position-y: bottom !important;
   position: absolute;
   margin: 1rem;
   top: 23%;
   right: -50px;
   width: 347px;
-  height: 479px;
+  height: 486px;
   transition: background 0s, transform 5s ease-in-out;
   z-index: 1;
 }
@@ -170,7 +170,7 @@
   background-position-x: -347px;
 }
 .game1 #cardSlots3 {
-  background: url("https://content.uchi.ru/27398/930/45.png") no-repeat;
+  background: url("/games/game1/slot3.png") no-repeat;
   margin: 0 10%;
   position: absolute;
   left: 25%;
