@@ -232,7 +232,8 @@ class Game1 extends React.Component {
       var settings = [];
       settings[0] = 
       {
-          "cardsCount" : Math.round(3 + Math.random() * 7),
+          //"cardsCount" : Math.round(3 + Math.random() * 7),
+          "cardsCount" : 1,
           "leftResult" : Math.round(Math.random() * 2),
           "leftValue" : Math.round(Math.random() * 9),
           "rightResult" : Math.round(Math.random() * 2),

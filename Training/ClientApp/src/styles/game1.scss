@@ -107,7 +107,7 @@
     z-index: 10;
     animation: animatedleftItem 0.6s steps(11) infinite;
     transition: transform 3s ease-in-out;
-    transform: translateY(-500%) translateX(-500%) rotate(-80deg);
+    transform: translateX(-2500px);
   }
   @keyframes animatedleftItem{
     100% { background-position-x: -957px; }
@@ -120,8 +120,8 @@
     height: 94px;
     z-index: 10;
     animation: animateditem 0.6s steps(11) infinite;
-    transition: transform 5s ease-in-out;
-    transform: translateY(-700%) translateX(2600%) rotate(-70deg);
+    transition: transform 3s ease-in-out;
+    transform: translateY(3500px);
   }
 
   .rightItem.animated
@@ -133,7 +133,7 @@
     z-index: 10;
     animation: animatedrightItem 0.6s steps(11) infinite;
     transition: transform 3s ease-in-out;
-    transform: translateY(-500%) translateX(500%) rotate(80deg);
+    transform: translateX(2500px);
   }
 
   @keyframes animatedrightItem{
@@ -166,7 +166,7 @@
     left: -50px;
     width: 400px;
     height: 540px;
-    transition: background 0s, transform 5s ease-in-out;
+    transition: background 0s, transform 3s ease-in-out;
     z-index: 1;
   }
   #cardSlots1.hovered{
@@ -182,7 +182,7 @@
     right: -50px;
     width: 347px;
     height: 486px;
-    transition: background 0s, transform 5s ease-in-out;
+    transition: background 0s, transform 3s ease-in-out;
     z-index: 1;
   }
   #cardSlots2.hovered{
@@ -197,7 +197,7 @@
     bottom: 0%;
     width: 380px;
     height: 185px;
-    transition: background 0s, transform 5s ease-in-out;
+    transition: background 0s, transform 3s ease-in-out;
     z-index: 1;
   }
   #cardSlots3.hovered{
@@ -205,27 +205,27 @@
   }
 
   #cardSlots1.animated{
-  background: url('https://content.uchi.ru/27398/930/34.png') no-repeat;
-  transform: translateY(-300%) translateX(-200%) rotate(-80deg);
-  animation: animatedleft 0.5s steps(19) infinite;
+  //background: url('https://content.uchi.ru/27398/930/34.png') no-repeat;
+  transform: translateX(-2500px);
+  //animation: animatedleft 0.5s steps(19) infinite;
   }
   @keyframes animatedleft {
     100% { background-position-x: -7600px; }
   }
   #cardSlots2.animated{
-  background: url('https://content.uchi.ru/27398/930/31.png') no-repeat;
-  transform: translateY(-300%) translateX(200%) rotate(80deg);
-  animation: animatedright 0.5s steps(19) infinite;
+  //background: url('https://content.uchi.ru/27398/930/31.png') no-repeat;
+  transform: translateX(2500px);
+  //animation: animatedright 0.5s steps(19) infinite;
   }
   @keyframes animatedright {
     100% { background-position-x: -6593px; }
   }
 
   #cardSlots3.animated{
-  background: url('https://content.uchi.ru/27398/930/44.png') no-repeat;
+  //background: url('https://content.uchi.ru/27398/930/44.png') no-repeat;
   width: 409px;
-  transform: translateY(-400%) translateX(500%) rotate(-60deg);
-  animation: animatedcenter 0.5s steps(14) infinite;
+  transform: translateY(3500px);
+  //animation: animatedcenter 0.5s steps(14) infinite;
   }
   @keyframes animatedcenter {
     100% { background-position-y: -2828px; }
