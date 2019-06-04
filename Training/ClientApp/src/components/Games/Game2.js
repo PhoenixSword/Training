@@ -22,8 +22,8 @@ function init(mas) {
   correctCards = 0;
   positionleft1 = 15;
   positionleft2 = 15;
-  positiontop1 = 15;
-  positiontop2 = 15;
+  positiontop1 = 0;
+  positiontop2 = 0;
   cardsCount = 0;
   cardsCount = mas.cardsCount;
   levelsCount = mas.countLevels;
@@ -132,7 +132,6 @@ class Game2 extends React.Component {
     super(props);
     this.service = schoolchildService;
     var countLevels = +this.props.countLevels;
-    console.log(countLevels);
     var eventId = this.props.eventId;
     if (this.props.settings !== undefined) {
       var settings = this.props.settings;
@@ -144,6 +143,7 @@ class Game2 extends React.Component {
           "cardsCount" : Math.round(4 + Math.random() * 4)*2
       }
     }
+    countLevels = countLevels || Math.round(1 + Math.random() * 2);
     eventId = eventId || 'test';
     this.state = {
       score: 0,

@@ -4,6 +4,7 @@ import {teacherService} from "./services/TeacherService";
 import { MDBBtn, MDBInput, ToastContainer } from "mdbreact";
 import Notification from "./Notification";
 import {ListGames} from "./ListGames.js";
+import {Game1Settings} from "./Game1Settings";
 
 const Event = () => 
 {
@@ -30,6 +31,7 @@ export class TeachersEvents extends Component {
     this.save = this.save.bind(this);
     this.remove = this.remove.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.showSettings = this.showSettings.bind(this);
   }
 
   save(){
@@ -79,9 +81,16 @@ export class TeachersEvents extends Component {
     }
     this.setState(stateCopy);
   }
+
+  showSettings()
+  {
+
+  }
+
   render () {
     return (
       <div>
+      <Game1Settings props={this.state}/>
       <ToastContainer hideProgressBar={true} newestOnTop={true} autoClose={3000} />
       <div className="card">
       <h3 className="blue-gradient white-text card-header text-center font-weight-bold text-uppercase py-4 mb-0">Ваши задания</h3>
@@ -90,6 +99,7 @@ export class TeachersEvents extends Component {
                 <tr>
                   <th className="">Название игры</th>
                   <th className="">Количество уровней</th>
+                  <th className="">Настройка задания</th>
                   <th className="">Ученики выполнившие задание</th>
                   <th className="">Удалить</th>
                 </tr>
@@ -110,6 +120,11 @@ export class TeachersEvents extends Component {
                     </div>
                   </td>
                   <td>
+                    <div className="md-form">
+                      <MDBBtn color="info" onClick={this.showSettings}>Настроить задание</MDBBtn>
+                    </div>
+                  </td>
+                  <td>
                     <MDBInput type="number" name="countLevels" value={item.countLevels.toString()} onChange={this.onChange}/>
                   </td>
                   <td>
@@ -117,7 +132,7 @@ export class TeachersEvents extends Component {
                     {item.completedCount !== 0 && item.completedCount !== undefined ? <span className={item.completedCount === item.count ? "text-green" : "text-danger"}>Количество учеников: {item.completedCount || 0}/{item.count || 0} </span> : <span>Задание никто не выполнил</span>}
                     </div>
                   </td>
-                  <td><MDBBtn style={{padding: "5px 20px"}} onClick={() => this.remove(item.id, index)} color="danger">Удалить</MDBBtn></td>
+                  <td><div className="md-form"><MDBBtn style={{padding: "5px 20px"}} onClick={() => this.remove(item.id, index)} color="danger">Удалить</MDBBtn></div></td>
                 </tr>
                 )
               }
