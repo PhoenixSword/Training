@@ -49,6 +49,11 @@ export class Game1Settings extends Component {
 
     this.service = userService;
     this.teacherService = teacherService;
+    this.add = this.add.bind(this);
+    this.save = this.save.bind(this);
+    this.remove = this.remove.bind(this);
+    this.add = this.add.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   save(){
@@ -79,14 +84,14 @@ export class Game1Settings extends Component {
 
   onChange(e){
     var val = e.target.value;
-    var index = e.target.parentNode.parentNode.parentNode.id;
+    var index = e.target.parentNode.parentNode.parentNode.parentNode.id;
     var stateCopy = Object.assign({}, this.state);
     stateCopy.settings = stateCopy.settings.slice();
     stateCopy.settings[index] = Object.assign({}, stateCopy.settings[index]);
     switch(e.target.name)
     {
       case "cardsCount":
-        stateCopy.settings[index].countLevels = val;
+        stateCopy.settings[index].cardCount = val;
         break;
       case "leftResult":
         stateCopy.settings[index].leftResult = val;
@@ -103,6 +108,7 @@ export class Game1Settings extends Component {
       default:
         break;
     }
+    console.log(stateCopy.settings[index]);
     this.setState(stateCopy);
   }
   render () {
@@ -131,7 +137,7 @@ export class Game1Settings extends Component {
                   <td>
                     <div className="md-form">
                       <select name="leftResult" className="browser-default custom-select" value={item.leftResult} onChange={this.onChange}>
-                        <option value="">Выберите игру</option>
+                        <option value="">Случайно</option>
                            <option value="1">Сотни</option>
                            <option value="2">Десятки</option>
                            <option value="3">Единицы</option>
