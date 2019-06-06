@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 import {userService} from "./services/UserService";
 import {teacherService} from "./services/TeacherService";
-import { MDBBtn, MDBInput, ToastContainer } from "mdbreact";
+import { MDBBtn, ToastContainer } from "mdbreact";
 import Notification from "./Notification";
 import {ListGames} from "./ListGames.js";
 import {Game1Settings} from "./Game1Settings";
+import {Game2Settings} from "./Game2Settings";
+import $ from "jquery";
 
 const Event = () => 
 {
-  return {id: "00000000-0000-0000-0000-000000000000", name: '', url: '', countLevels: 0}
+  return {id: "00000000-0000-0000-0000-000000000000", name: 'Осьминоги', url: 'Game1', countLevels: 1}
 }
+
+$(document).mouseup(function (e){
+  var div = $(".settingsBlock"); 
+  if (!div.is(e.target) && div.has(e.target).length === 0 && e.which === 1) { 
+    div.hide(); 
+    $('#overlay2').hide(); 
+  }
+});
 
 export class TeachersEvents extends Component {
   static displayName = TeachersEvents.name;
@@ -18,7 +28,10 @@ export class TeachersEvents extends Component {
     this.state = 
     {
       Events: [],
-      listGames: []
+      listGames: [],
+      test: null,
+      settingsBlocks: [],
+      currentSettings: null
     }
     this.service = userService;
     this.teacherService = teacherService;
@@ -26,27 +39,55 @@ export class TeachersEvents extends Component {
     this.setState(state => ({
       Events: response,
       listGames: ListGames()
-    })));
+    }),() => {
+      this.getSettings();
+    }));
     this.add = this.add.bind(this);
     this.save = this.save.bind(this);
     this.remove = this.remove.bind(this);
     this.onChange = this.onChange.bind(this);
     this.showSettings = this.showSettings.bind(this);
+    this.getSettings = this.getSettings.bind(this);
   }
 
   save(){
     this.teacherService.addEvents(this.state.Events).then(
       (response)=> {
-        Notification("Сохранено");
+        Notification("Сохранено"); 
         this.setState(state => ({
           Events: response
-        }))
-      });
+        }),()=>{ this.getSettings() });
+       });
+  }
+
+  getSettings()
+  {
+    console.log(this.state);
+    var settingsArray = []
+      for (var i = 0; i < this.state.Events.length; ++i) {
+      switch (this.state.Events[i].url) {
+        case "Game1":
+          settingsArray[i] = <Game1Settings event={this.state.Events[i]}/>;
+          break;
+        case "Game2":
+          settingsArray[i] = <Game2Settings event={this.state.Events[i]}/>;
+          break;
+        default:
+          settingsArray[i] = <Game1Settings event={this.state.Events[i]}/>;
+          break;
+      }
+      this.setState({
+        settingsBlocks: settingsArray
+      })
+    }
   }
 
   add(){
     this.setState(prevState => ({
-        Events: [...prevState.Events, Event()]}), () => {})
+        Events: [...prevState.Events, Event()]}), () => {
+          this.save();
+    })
+
   }
 
   remove(id, index){
@@ -79,18 +120,21 @@ export class TeachersEvents extends Component {
       default:
         break;
     }
-    this.setState(stateCopy);
+    this.setState(stateCopy, () => {
+          this.save();
+    });
   }
 
-  showSettings()
+  showSettings(index)
   {
-
+    this.setState({currentSettings: null}, () => {this.setState({currentSettings: this.state.settingsBlocks[index]});});
+    $(".settingsBlock").show();
+    $('#overlay2').show();
   }
 
   render () {
     return (
       <div>
-      <Game1Settings props={this.state}/>
       <ToastContainer hideProgressBar={true} newestOnTop={true} autoClose={3000} />
       <div className="card">
       <h3 className="blue-gradient white-text card-header text-center font-weight-bold text-uppercase py-4 mb-0">Ваши задания</h3>
@@ -98,7 +142,6 @@ export class TeachersEvents extends Component {
               <thead className="blue-gradient white-text">
                 <tr>
                   <th className="">Название игры</th>
-                  <th className="">Количество уровней</th>
                   <th className="">Настройка задания</th>
                   <th className="">Ученики выполнившие задание</th>
                   <th className="">Удалить</th>
@@ -112,7 +155,6 @@ export class TeachersEvents extends Component {
                   <td>
                     <div className="md-form">
                       <select name="url" className="browser-default custom-select" value={item.url} onChange={this.onChange}>
-                      <option value="">Выберите игру</option>
                       {this.state.listGames.map((item2, index) =>
                          <option key={index} value={item2.url} disabled={item2.url === null}>{item2.name}</option>
                         )}
@@ -121,11 +163,8 @@ export class TeachersEvents extends Component {
                   </td>
                   <td>
                     <div className="md-form">
-                      <MDBBtn color="info" onClick={this.showSettings}>Настроить задание</MDBBtn>
+                      <MDBBtn color="info" onClick={() => this.showSettings(index)}>Настроить задание</MDBBtn>
                     </div>
-                  </td>
-                  <td>
-                    <MDBInput type="number" name="countLevels" value={item.countLevels.toString()} onChange={this.onChange}/>
                   </td>
                   <td>
                     <div className="md-form">
@@ -140,8 +179,8 @@ export class TeachersEvents extends Component {
             </table>
               <MDBBtn color="primary" onClick={this.add}>Добавить</MDBBtn>
               <MDBBtn color="success" onClick={this.save}>Сохранить</MDBBtn>
-
             </div>
+            <div className="settingsBlock">{this.state.currentSettings}</div>
       </div>
     );
   }

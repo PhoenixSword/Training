@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Training.Data.Repositories.Abstract;
 using Training.Models;
 using Training.Models.Mapping;
+using Training.Models.ViewModel;
 
 namespace Training.Data.Repositories.Concrete
 {
@@ -173,8 +173,25 @@ namespace Training.Data.Repositories.Concrete
             {
                 _ctx.Add(new SchoolchildEvent
                 {
-                    Date = DateTime.Now, EventId = eventId, UserId = userid, Id = Guid.NewGuid().ToString(), Score = score
+                    Date = DateTime.Now,
+                    EventId = eventId,
+                    UserId = userid,
+                    Id = Guid.NewGuid().ToString(),
+                    Score = score
                 });
+            }
+            _ctx.SaveChanges();
+            return true;
+        }
+
+
+        public bool SaveSettings(SettingsModel settings)
+        {
+            var ev = Events.FirstOrDefault(s => s.Id == settings?.Id);
+            if (ev != null)
+            {
+                ev.Settings = JsonConvert.SerializeObject(settings.Settings);
+                ev.CountLevels = ((dynamic)settings.Settings).Count.ToString();
             }
             _ctx.SaveChanges();
             return true;

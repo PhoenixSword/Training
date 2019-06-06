@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBIcon } from "mdbreact";
 import {schoolchildService} from "./services/SchoolchildService";
-import Game1 from "./Games/Game1";
 import GameBlock from "./Games/GameBlock";
 import $ from "jquery";
 
@@ -34,7 +33,6 @@ export class SchoolchildsEvents extends Component {
 
   show(url, count, eventId, settings)
   {
-    console.log(settings);
     this.setState({
       previewUrl: url,
       countLevels: count,

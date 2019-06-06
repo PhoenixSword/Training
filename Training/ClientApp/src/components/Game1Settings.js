@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {userService} from "./services/UserService";
 import {teacherService} from "./services/TeacherService";
-import { MDBBtn, MDBInput, ToastContainer } from "mdbreact";
+import { MDBBtn, MDBInput } from "mdbreact";
+import Notification from "./Notification";
+import $ from "jquery";
 
 const Settings = () => 
 {
@@ -18,35 +20,12 @@ export class Game1Settings extends Component {
   static displayName = Game1Settings.name;
   constructor (props) {
     super(props);
-    var settings = this.props.settings;
-    console.log(settings);
+      var settings = this.props.event.settings !== null ? JSON.parse(this.props.event.settings) : [];
     this.state = 
     {
-      settings: 
-      [
-        {
-          cardsCount: 2,
-          leftResult: 1,
-          leftValue: 3,
-          rightResult: 1,
-          rightValue: 6
-        },{
-          cardsCount: 5,
-          leftResult: 2,
-          leftValue: 5,
-          rightResult: 2,
-          rightValue: 4
-        },{
-          cardsCount: 1,
-          leftResult: 1,
-          leftValue: 6,
-          rightResult: 1,
-          rightValue: 1
-        }
-      ]
+      eventId: this.props.event.id,
+      settings : settings
     }
-    console.log(this.state.settings);
-
     this.service = userService;
     this.teacherService = teacherService;
     this.add = this.add.bind(this);
@@ -57,12 +36,11 @@ export class Game1Settings extends Component {
   }
 
   save(){
-    this.teacherService.addEvents(this.state.settings).then(
+    this.teacherService.saveSettings(this.state.eventId, this.state.settings).then(
       (response)=> {
         Notification("Сохранено");
-        this.setState(state => ({
-          settings: response
-        }))
+        $(".settingsBlock").hide(); 
+        $('#overlay2').hide(); 
       });
   }
 
@@ -77,38 +55,37 @@ export class Game1Settings extends Component {
       prevState => ({
             settings: this.state.settings
           }));
-    // if (id !== '00000000-0000-0000-0000-000000000000') {
-    //   this.teacherService.removeEvents(id);
-    // }
   }
 
   onChange(e){
     var val = e.target.value;
-    var index = e.target.parentNode.parentNode.parentNode.parentNode.id;
+    if (e.target.localName === "select")
+      var index = e.target.parentNode.parentNode.parentNode.id;
+    else 
+      index = e.target.parentNode.parentNode.parentNode.parentNode.id;
     var stateCopy = Object.assign({}, this.state);
     stateCopy.settings = stateCopy.settings.slice();
     stateCopy.settings[index] = Object.assign({}, stateCopy.settings[index]);
     switch(e.target.name)
     {
       case "cardsCount":
-        stateCopy.settings[index].cardCount = val;
+        stateCopy.settings[index].cardsCount = +val;
         break;
       case "leftResult":
-        stateCopy.settings[index].leftResult = val;
+        stateCopy.settings[index].leftResult = +val;
         break;
       case "leftValue":
-        stateCopy.settings[index].leftValue = val;
+        stateCopy.settings[index].leftValue = +val;
         break;
       case "rightResult":
-        stateCopy.settings[index].rightResult = val;
+        stateCopy.settings[index].rightResult = +val;
         break;
       case "rightValue":
-        stateCopy.settings[index].rightValue = val;
+        stateCopy.settings[index].rightValue = +val;
         break;
       default:
         break;
     }
-    console.log(stateCopy.settings[index]);
     this.setState(stateCopy);
   }
   render () {
@@ -117,6 +94,7 @@ export class Game1Settings extends Component {
         <table className="table">
               <thead className="blue-gradient white-text">
                 <tr>
+                  <th className="">Уровень</th>
                   <th className="">Количество осьминогов</th>
                   <th className="">Левый осьминог</th>
                   <th className="">Значение левого осьминога</th>
@@ -130,38 +108,41 @@ export class Game1Settings extends Component {
               this.state.settings.map((item, index) =>
                 <tr key={index} id={index}>
                   <td>
-                    <div className="md-form">
-                      <MDBInput type="number" name="cardsCount" value={item.cardsCount.toString()} onChange={this.onChange}/>
+                    <div className="md-form text-center">
+                    <MDBInput readOnly type="number" name="levelNumber" value={(index+1).toString()} disabled/>
                     </div>
                   </td>
                   <td>
                     <div className="md-form">
-                      <select name="leftResult" className="browser-default custom-select" value={item.leftResult} onChange={this.onChange}>
-                        <option value="">Случайно</option>
-                           <option value="1">Сотни</option>
-                           <option value="2">Десятки</option>
-                           <option value="3">Единицы</option>
+                      <MDBInput type="number" name="cardsCount" value={item.cardsCount.toString()} onChange={this.onChange} min="1" max="11"/>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="md-form">
+                      <select name="leftResult" className="browser-default custom-select" value={item.leftResult.toString()} onChange={this.onChange}>
+                           <option value="0">Сотни</option>
+                           <option value="1">Десятки</option>
+                           <option value="2">Единицы</option>
                       </select>
                     </div>
                   </td>
                   <td>
                     <div className="md-form">
-                      <MDBInput type="number" name="leftValue" value={item.leftValue.toString()} onChange={this.onChange}/>
+                      <MDBInput type="number" name="leftValue" value={item.leftValue.toString()} onChange={this.onChange} min="1" max="9"/>
                     </div>
                   </td>
                   <td>
                     <div className="md-form">
-                      <select name="rightResult" className="browser-default custom-select" value={item.rightResult} onChange={this.onChange}>
-                        <option value="">Выберите игру</option>
-                           <option value="1">Сотни</option>
-                           <option value="2">Десятки</option>
-                           <option value="3">Единицы</option>
+                      <select name="rightResult" className="browser-default custom-select" value={item.rightResult.toString()} onChange={this.onChange}>
+                           <option value="0">Сотни</option>
+                           <option value="1">Десятки</option>
+                           <option value="2">Единицы</option>
                       </select>
                     </div>
                   </td>
                   <td>
                     <div className="md-form">
-                      <MDBInput type="number" name="rightValue" value={item.rightValue.toString()} onChange={this.onChange}/>
+                      <MDBInput type="number" name="rightValue" value={item.rightValue.toString()} onChange={this.onChange} min="1" max="9"/>
                     </div>
                   </td>
                   <td><MDBBtn style={{padding: "5px 20px"}} onClick={() => this.remove(item.id, index)} color="danger">Удалить</MDBBtn></td>

@@ -34,7 +34,6 @@ function login(data) {
 }
 
 function register(data) {
-  console.log(data);
  return fetch('/api/users/register',
  {
   method: 'POST',

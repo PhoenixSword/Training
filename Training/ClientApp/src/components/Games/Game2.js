@@ -1,7 +1,6 @@
 import React from "react";
 import $ from "jquery";
 import 'jquery-ui-dist/jquery-ui';
-import queryString from 'query-string';
 import {MDBBtn} from 'mdbreact';
 import {schoolchildService} from "../services/SchoolchildService";
 import '../../styles/game2.css'
@@ -102,7 +101,7 @@ switch (slotNumber) {
 }
   
 
-  if (correctCards === cardsCount/2) {
+  if (correctCards === Math.round(cardsCount/2)) {
     $('#box1').addClass('full');
     $('#box2').show();
   }
@@ -137,11 +136,7 @@ class Game2 extends React.Component {
       var settings = this.props.settings;
     }
     else{
-      var settings = [];
-      settings[0] = 
-      {
-          "cardsCount" : Math.round(4 + Math.random() * 4)*2
-      }
+      settings = [{"cardsCount" : Math.round(4 + Math.random() * 4)*2}];
     }
     countLevels = countLevels || Math.round(1 + Math.random() * 2);
     eventId = eventId || 'test';
@@ -209,7 +204,7 @@ class Game2 extends React.Component {
           <div className="progress-bar progress-bar-danger progress-bar-striped active" style={{width:`${this.state.currentLevel*100/this.state.countLevels}%`}}>Уровень {this.state.currentLevel}/{this.state.countLevels}</div>
       </div>
         <div className="game2Name text-center text-black">
-          <h3 className="subtitle">Раздели {this.state.cardsCount} кристаллов по ящикам так, чтобы в каждом ящике было по {this.state.cardsCount/2}</h3>
+          <h3 className="subtitle">Раздели {this.state.cardsCount} кристаллов по ящикам так, чтобы в каждом ящике было по {Math.round(this.state.cardsCount/2)}</h3>
         </div>
           <div id="fake"></div>
           <div id="cardPile"></div>

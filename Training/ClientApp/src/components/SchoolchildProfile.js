@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBIcon } from "mdbreact";
 import {schoolchildService} from "./services/SchoolchildService";
-import $ from "jquery";
 
 export class SchoolchildProfile extends Component {
   static displayName = SchoolchildProfile.name;

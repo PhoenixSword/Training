@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Training.Models;
+using Training.Models.ViewModel;
 
 namespace Training.Data.Repositories.Abstract
 {
@@ -15,6 +16,7 @@ namespace Training.Data.Repositories.Abstract
         Task<bool> RemoveSchoolChilds(string id);
         bool RemoveEvents(string id);
         bool SaveResults(string eventId, int score, string userid);
+        bool SaveSettings(SettingsModel settings);
         IEnumerable<object> GetSchoolChildsWithEvents(string userId);
 
     }

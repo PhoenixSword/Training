@@ -1,7 +1,6 @@
 import React from "react";
 import $ from "jquery";
 import 'jquery-ui-dist/jquery-ui';
-import queryString from 'query-string';
 import {MDBBtn} from 'mdbreact';
 import {schoolchildService} from "../services/SchoolchildService";
 import '../../styles/game1.css'
@@ -229,15 +228,15 @@ class Game1 extends React.Component {
       var settings = this.props.settings;
     }
     else{
-      var settings = [];
-      settings[0] = 
+      settings = [ 
       {
           "cardsCount" : Math.round(3 + Math.random() * 7),
           "leftResult" : Math.round(Math.random() * 2),
           "leftValue" : Math.round(Math.random() * 9),
           "rightResult" : Math.round(Math.random() * 2),
           "rightValue" : Math.round(Math.random() * 9),
-      }
+      }];
+     
     }
     countLevels = countLevels || Math.round(1 + Math.random() * 2);
     eventId = eventId || 'test';
@@ -250,6 +249,7 @@ class Game1 extends React.Component {
       rightValue: settings[0].rightValue,
       textLeft: "",
       textRight: "",
+      settings: settings,
       countLevels: countLevels,
       eventId: eventId,
       currentLevel: 0,

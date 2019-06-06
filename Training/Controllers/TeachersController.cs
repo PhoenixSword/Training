@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Training.Data.Repositories.Abstract;
 using Training.Models;
+using Training.Models.ViewModel;
 
 namespace Training.Controllers
 {
@@ -43,6 +44,12 @@ namespace Training.Controllers
         public IEnumerable<Event> AddEvents([FromBody] IEnumerable<Event> eventsModels)
         {
             return  _repo.AddEvents(eventsModels, UserId);
+        }
+
+        [HttpPost]
+        public bool SaveSettings([FromBody]SettingsModel settings)
+        {
+            return _repo.SaveSettings(settings);
         }
 
         [HttpDelete]
