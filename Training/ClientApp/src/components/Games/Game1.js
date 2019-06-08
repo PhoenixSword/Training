@@ -44,7 +44,7 @@ function rand(type) {
   }
 }
 
-const width = (index) => 130 + (index%4*80) + Math.round(20 + Math.random() *50);
+const width = (index) => 120 + (index%4*80) + Math.round(20 + Math.random() *50);
 const height = (index) => 300 + (index%6*80) + Math.round(Math.random() *20);
 
 function init(mas) { 
@@ -307,9 +307,9 @@ class Game1 extends React.Component {
       currentLevel: this.state.currentLevel+1
     }, () =>  
     {
-      this.setState({textLeft: `У моих осьминожек ${getText(this.state.leftResult)} равны ${this.state.leftValue}`}, () =>  
+      this.setState({textLeft: `У моих коньков ${getText(this.state.leftResult)} равны ${this.state.leftValue}`}, () =>  
         {
-          this.setState({textRight: `У моих осьминожек ${getText(this.state.rightResult)} равны ${this.state.rightValue}`}, () =>  
+          this.setState({textRight: `У моих коньков ${getText(this.state.rightResult)} равны ${this.state.rightValue}`}, () =>  
             {
               init(this.state)
             });
@@ -326,13 +326,13 @@ class Game1 extends React.Component {
     }
     else
     return (
-      <div id="content" className="game1" style={{background: `url('/games/game1/background.png') no-repeat center center fixed`}}>
+      <div id="content" className="game1" style={{background: `url('/games/game1/background.jpg') no-repeat center center fixed`}}>
       <div className="progress">
           <div className="progress-bar progress-bar-danger progress-bar-striped active" style={{width:`${this.state.currentLevel*100/this.state.countLevels}%`}}>Уровень {this.state.currentLevel}/{this.state.countLevels}</div>
       </div>
         <div className="game1Name text-center text-black">
-          <h1 className="title">Помоги папам-осьминогам найти своих детей</h1>
-          <h2 className="subtitle">Чужих детей посади на черепаху</h2>
+          <h1 className="title">Помоги осьминогам найти нужных морских коньков</h1>
+          <h2 className="subtitle">Остальных посади на черепаху</h2>
         </div>
           <div id="fake"></div>
           <div id="cardPile"></div>

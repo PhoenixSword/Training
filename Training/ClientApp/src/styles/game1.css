@@ -1,6 +1,5 @@
 .game1 {
   /* Slots for final card positions */
-  /* Individual cards and slots */
 }
 .game1 .wideBox {
   clear: both;
@@ -26,22 +25,15 @@
   position: absolute;
   background: url("/games/game1/item.png") no-repeat;
   width: 80px;
-  height: 94px;
+  height: 130px;
   z-index: 10;
-  animation: animateditem 0.6s steps(11) infinite;
-}
-@keyframes animateditem {
-  100% {
-    background-position-x: -880px;
-  }
 }
 .game1 .item > p {
   font-weight: bold;
   font-size: 16px;
   border-radius: 10px;
   text-align: center;
-  margin: 34px 0 0 20px;
-  padding: 1px 0 0 0;
+  margin: 50px 0 0 35px;
   width: 42px;
   height: 20px;
   background: white;
@@ -49,81 +41,49 @@
 }
 .game1 .invalidItem {
   position: absolute;
-  background: url("/games/game1/invalidItem.png") no-repeat;
-  width: 79px;
-  background-position-x: -79px;
-  height: 94px;
+  background: url("/games/game1/item.png") no-repeat;
+  width: 80px;
+  background-position-x: -80px;
+  height: 130px;
   z-index: 10;
-  animation: 0;
-}
-.game1 .invalidItem > p {
-  margin: 35px 0 0 17px;
 }
 .game1 .leftItem {
   position: absolute;
-  background: url("/games/game1/invalidItem.png") no-repeat;
-  width: 79px;
-  background-position-x: -237px;
-  height: 94px;
+  background: url("/games/game1/item.png") no-repeat;
+  width: 80px;
+  background-position-x: -240px;
+  height: 130px;
   z-index: 10;
   animation: 0;
 }
 .game1 .centerItem {
   position: absolute;
-  background: url("/games/game1/invalidItem.png") no-repeat;
-  width: 79px;
-  height: 94px;
+  background: url("/games/game1/item.png") no-repeat;
+  width: 80px;
+  height: 130px;
   z-index: 10;
   animation: 0;
 }
 .game1 .rightItem {
   position: absolute;
-  background: url("/games/game1/invalidItem.png") no-repeat;
-  width: 79px;
-  background-position-x: -158px;
-  height: 94px;
+  background: url("/games/game1/item.png") no-repeat;
+  width: 80px;
+  background-position-x: -160px;
+  height: 130px;
   z-index: 10;
   animation: 0;
 }
 .game1 .leftItem.animated {
-  position: absolute;
-  background: url("/games/game1/lefttem.png") no-repeat;
-  width: 87px;
-  height: 104px;
-  z-index: 10;
-  animation: animatedleftItem 0.6s steps(11) infinite;
   transition: transform 3s ease-in-out;
   transform: translateX(-2500px);
 }
-@keyframes animatedleftItem {
-  100% {
-    background-position-x: -957px;
-  }
-}
 .game1 .centerItem.animated {
-  position: absolute;
-  background: url("/games/game1/item.png") no-repeat;
-  width: 79px;
-  height: 94px;
-  z-index: 10;
-  animation: animateditem 0.6s steps(11) infinite;
   transition: transform 3s ease-in-out;
   transform: translateY(3500px);
 }
 .game1 .rightItem.animated {
-  position: absolute;
-  background: url("/games/game1/rightItem.png") no-repeat;
-  width: 87px;
-  height: 104px;
-  z-index: 10;
-  animation: animatedrightItem 0.6s steps(11) infinite;
   transition: transform 3s ease-in-out;
   transform: translateX(2500px);
-}
-@keyframes animatedrightItem {
-  100% {
-    background-position-x: -957px;
-  }
 }
 .game1 #cardSlots1 div, .game1 #cardSlots2 div, .game1 #cardSlots3 div {
   float: left;
@@ -147,7 +107,7 @@
   top: 23%;
   left: -50px;
   width: 400px;
-  height: 540px;
+  height: 568px;
   transition: background 0s, transform 3s ease-in-out;
   z-index: 1;
 }
@@ -161,13 +121,13 @@
   margin: 1rem;
   top: 23%;
   right: -50px;
-  width: 347px;
-  height: 486px;
+  width: 400px;
+  height: 568px;
   transition: background 0s, transform 3s ease-in-out;
   z-index: 1;
 }
 .game1 #cardSlots2.hovered {
-  background-position-x: -347px;
+  background-position-x: -400px;
 }
 .game1 #cardSlots3 {
   background: url("/games/game1/slot3.png") no-repeat;
