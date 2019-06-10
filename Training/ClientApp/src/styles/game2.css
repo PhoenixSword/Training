@@ -42,6 +42,22 @@
   background: url("/games/game2/item8.png") no-repeat center center;
   background-size: cover;
 }
+.game2 .item9 {
+  background: url("/games/game2/item9.png") no-repeat center center;
+  background-size: cover;
+}
+.game2 .item10 {
+  background: url("/games/game2/item10.png") no-repeat center center;
+  background-size: cover;
+}
+.game2 .item11 {
+  background: url("/games/game2/item11.png") no-repeat center center;
+  background-size: cover;
+}
+.game2 .item12 {
+  background: url("/games/game2/item12.png") no-repeat center center;
+  background-size: cover;
+}
 .game2 #box1 div, .game2 #box2 div {
   float: left;
   width: 43%;
@@ -63,17 +79,14 @@
   position: absolute;
   margin: 1rem;
   top: 17%;
-  left: 30%;
-  width: 145px;
-  height: 272px;
+  left: 5%;
+  width: 385px;
+  height: 448px;
   transition: background 0s, transform 5s ease-in-out;
   z-index: 1;
 }
 .game2 #box1.hovered {
-  background-position-x: -144px;
-}
-.game2 #box1.full {
-  background-position-x: -290px;
+  background-position-x: -385px;
 }
 .game2 #box2 {
   display: none;
@@ -83,14 +96,14 @@
   position: absolute;
   margin: 1rem;
   top: 17%;
-  left: 45%;
-  width: 145px;
-  height: 272px;
+  left: 50%;
+  width: 385px;
+  height: 448px;
   transition: background 0s, transform 5s ease-in-out;
   z-index: 1;
 }
 .game2 #box2.hovered {
-  background-position-x: -144px;
+  background-position-x: -385px;
 }
 .game2 #successMessage {
   position: absolute;
