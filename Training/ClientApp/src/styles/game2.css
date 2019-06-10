@@ -58,10 +58,10 @@
   background: url("/games/game2/item12.png") no-repeat center center;
   background-size: cover;
 }
-.game2 #box1 div, .game2 #box2 div {
+.game2 #box div {
   float: left;
   width: 43%;
-  height: 18%;
+  height: 258px;
   padding: 0.85em;
   padding-top: 40px;
   padding-bottom: 0;
@@ -72,38 +72,20 @@
   margin: 10px 0 0 10px;
   background: #fff;
 }
-.game2 #box1 {
+.game2 #box {
   background: url("/games/game2/box.png") no-repeat;
   background-position-x: left;
   background-size: cover;
   position: absolute;
   margin: 1rem;
-  top: 17%;
-  left: 5%;
-  width: 385px;
-  height: 448px;
+  top: 43%;
+  width: 258px;
+  height: 300px;
   transition: background 0s, transform 5s ease-in-out;
   z-index: 1;
 }
-.game2 #box1.hovered {
-  background-position-x: -385px;
-}
-.game2 #box2 {
-  display: none;
-  background: url("/games/game2/box.png") no-repeat;
-  background-position-x: left;
-  background-size: cover;
-  position: absolute;
-  margin: 1rem;
-  top: 17%;
-  left: 50%;
-  width: 385px;
-  height: 448px;
-  transition: background 0s, transform 5s ease-in-out;
-  z-index: 1;
-}
-.game2 #box2.hovered {
-  background-position-x: -385px;
+.game2 #box.hovered {
+  background-position-x: -258px;
 }
 .game2 #successMessage {
   position: absolute;
@@ -137,7 +119,7 @@
   font-weight: 500 !important;
 }
 .game2 .progress-bar {
-  background-color: #aae8e6 !important;
+  background-color: #53de40 !important;
   color: black !important;
 }
 

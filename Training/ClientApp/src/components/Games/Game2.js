@@ -5,42 +5,52 @@ import {MDBBtn} from 'mdbreact';
 import {schoolchildService} from "../services/SchoolchildService";
 import '../../styles/game2.css'
 
-var positionleft1 = 0;
-var positionleft2 = 0;
-var positiontop1 = 0;
-var positiontop2 = 0;
 var correctCards = 0;
 var cardsCount = 0;
 var completedLevels = 0;
 var levelsCount = 0;
+var boxesCount = 0;
 
-const width = (index) => 380 + (index%3*70) + Math.round(20 + Math.random() *50);
-const height = (index) => 190 + (index%10*80) + Math.round(Math.random() *20);
+const width = (index) => 500 + (index%3*40) + Math.round(20 + Math.random() *50);
+const height = (index) => 10 + (index%10*100) + Math.round(Math.random() *20);
+const boxesPlace = () =>
+{
+  switch (boxesCount) {
+    case 2:
+      return [15, 55];
+    case 3:
+      return [5, 35, 65];
+    case 4:
+      return [0, 25, 50, 75];
+    case 5:
+      return [-2, 18, 38, 58, 78];
+    default:
+      return [0, 0, 0, 0, 0];
+  }
+}
 
 function init(mas) { 
   correctCards = 0;
-  positionleft1 = 15;
-  positionleft2 = 15;
-  positiontop1 = 0;
-  positiontop2 = 0;
   cardsCount = 0;
+  boxesCount = mas.boxesCount;
   cardsCount = mas.cardsCount;
   levelsCount = mas.countLevels;
   completedLevels = mas.currentLevel;
+  var places = boxesPlace;
 
   $('#successMessage').hide();
   $('#cardPile').html( '' );
   $('#fake').html( '' );
   for ( var i=0; i<cardsCount; i++ ) {
-    $(`<div style="left: ${height(i)}px;top:${width(i)}px" class="item item${ Math.round(1 + Math.random() * 12)}"></div>`).data( 'number', i ).attr( 'id', 'card' ).appendTo( '#cardPile' ).draggable( {
+    $(`<div style="left: ${height(i)}px;top:${width(i)}px" class="item item${ Math.round(1 + Math.random() * 11)}"></div>`).data( 'number', i ).attr( 'id', 'card' ).appendTo( '#cardPile' ).draggable( {
       stack: '#cardPile div',
       revert: true,
       containment: "#content", scroll: false
     } );
   }
 
-  for ( i=1; i<=3; i++ ) {
-    $(`<div id='box${i}'></div>`).data( 'number', i ).appendTo( `#fake` ).droppable( {
+  for ( i=1; i<=boxesCount; i++ ) {
+    $(`<div id='box' class='box${i}' style="left: ${places()[i-1]}%;"></div>`).data( 'number', i ).data( 'count', 0 ).appendTo( `#fake` ).droppable( {
       accept: '#cardPile div',
       hoverClass: 'hovered',
       drop: handleCardDrop
@@ -48,74 +58,33 @@ function init(mas) {
   }
 }
 
-function correct(element, ui, index)
+function correct(element, ui)
 {
-    correctCards++;
-    if (correctCards >= cardsCount/2 && index === 1) {
-      element.droppable( 'disable' );
-    }
-    ui.draggable.addClass( 'correct' );
-    ui.draggable.draggable( 'disable' );
-    ui.draggable.draggable( 'option', 'revert', false );
-    
-    switch (index) {
-      case 1:
-        if (positionleft1 > 70) {
-          positionleft1 = 15;
-          positiontop1 += 55;
-        }
-        ui.draggable.animate({ top: 155 + positiontop1 + "px" },
-        { duration: 1000, easing: 'easeOutBounce' });
-
-        ui.draggable.position( { of: element, my: `left+${positionleft1} top`, at: 'left top'});
-        positionleft1 += 55;
-        break;
-      case 2:
-        if (positionleft2 > 70) {
-          positionleft2 = 15;
-          positiontop2 += 55;
-        }
-        ui.draggable.animate({ top: 155 + positiontop2 + "px" },
-        { duration: 1000, easing: 'easeOutBounce' });
-
-        ui.draggable.position( { of: element, my: `left+${positionleft2} top`, at: 'left top'});
-        positionleft2 += 55;
-        break;
-      default:
-        break;
-    }
-    
-}
-function handleCardDrop( event, ui ) {
-  var slotNumber = $(this).data( 'number' );
-switch (slotNumber) {
-  case 1:
-    correct($(this), ui, 1);
-    break;
-  case 2:
-    correct($(this), ui, 2);
-    break;
-  default:
-    break;
-}
-  
-
-  if (correctCards === Math.round(cardsCount/2)) {
-    $('#box1').addClass('full');
-    $('#box2').show();
+  correctCards++;
+  element.data( 'count', +element.data( 'count' ) + 1);
+  if(element.data('count') >= (+cardsCount / +boxesCount))
+  {
+    element.droppable( 'disable' );
   }
+  ui.draggable.addClass( 'correct' );
+  ui.draggable.draggable( 'disable' );
+  ui.draggable.draggable( 'option', 'revert', false );
+}
 
+// function checkFinish() {
+// if (completedLevels === levelsCount) {
+//     $('#completedGame').show();
+//   }
+//   else{
+//     $('#successMessage').show();
+//   }
+// }
+
+function handleCardDrop( event, ui ) {
+  //var slotNumber = $(this).data( 'number' );
+  correct($(this), ui);
   if (correctCards === cardsCount) {
-    setTimeout(()=>
-    {
-      $('#cardSlots1').addClass('animated');
-      $('#cardSlots2').addClass('animated');
-      $('#cardSlots3').addClass('animated');
-      $('.leftItem').addClass('animated');
-      $('.centerItem').addClass('animated');
-      $('.rightItem').addClass('animated');
-    }, 500);
-    
+    //$('#finishButton').show();
     if (completedLevels === levelsCount) {
       $('#completedGame').show();
     }
@@ -135,13 +104,16 @@ class Game2 extends React.Component {
       var settings = this.props.settings;
     }
     else{
-      settings = [{"cardsCount" : Math.round(4 + Math.random() * 4)*2}];
+      var boxesCount = Math.round(2 + Math.random() * 3);
+      var cardsCount = boxesCount * Math.round(2 + Math.random() * 3);
+      settings = [{"cardsCount" : cardsCount, "boxesCount" : boxesCount}];
     }
     countLevels = countLevels || Math.round(1 + Math.random() * 2);
     eventId = eventId || 'test';
     this.state = {
       score: 0,
       cardsCount: settings[0].cardsCount,
+      boxesCount: settings[0].boxesCount,
       countLevels: countLevels,
       eventId: eventId,
       currentLevel: 0,
@@ -163,7 +135,7 @@ class Game2 extends React.Component {
       this.setState({redirect: true});
       return false;
     }
-    var score = this.state.cardsCount * 10;
+    var score = this.state.cardsCount * 7;
     this.setState({score: this.state.score + score});
     this.service.save(this.state.eventId, this.state.score + score).then((resp) => {
       if (resp === true) {
@@ -174,17 +146,20 @@ class Game2 extends React.Component {
 
   generateLevel(type)
   {
-    var cardsCount = Math.round(4 + Math.random() * 4)*2;
+    var boxesCount = Math.round(2 + Math.random() * 3);
+    var cardsCount = boxesCount * Math.round(2 + Math.random() * 3);
     var score;
-    type ? score = this.state.cardsCount * 7 : score = 0;
+    type ? score = this.state.cardsCount * 7 + this.state.boxesCount * 5 : score = 0;
 
     if (this.state.eventId !== "test") {
       cardsCount = this.state.settings[this.state.currentLevel].cardsCount;
+      boxesCount = this.state.settings[this.state.currentLevel].boxesCount;
     }
 
     this.setState({
       score: this.state.score + score,
       cardsCount: cardsCount,
+      boxesCount: boxesCount,
       currentLevel: this.state.currentLevel+1
     }, ()=> init(this.state));
   }
@@ -203,7 +178,7 @@ class Game2 extends React.Component {
           <div className="progress-bar progress-bar-danger progress-bar-striped active" style={{width:`${this.state.currentLevel*100/this.state.countLevels}%`}}>Уровень {this.state.currentLevel}/{this.state.countLevels}</div>
       </div>
         <div className="game2Name text-center text-black">
-          <h3 className="subtitle">Раздели {this.state.cardsCount} кристаллов по ящикам так, чтобы в каждом ящике было по {Math.round(this.state.cardsCount/2)}</h3>
+          <h3 className="subtitle">Посади {this.state.cardsCount} сов на деревья так, чтобы на каждом дереве было по {Math.round(this.state.cardsCount/this.state.boxesCount)}</h3>
         </div>
           <div id="fake"></div>
           <div id="cardPile"></div>
@@ -211,6 +186,13 @@ class Game2 extends React.Component {
             <h2>Успех!</h2>
               <MDBBtn color="primary" onClick={() => this.generateLevel(true)}>Перейти на следующий уровень</MDBBtn>
             </div>
+             
+          {
+            //<div id="finishButton" style={{display: 'none'}} className="text-center">
+            //<MDBBtn color="primary" onClick={() => checkFinish()}>ОК</MDBBtn>
+            //</div>
+          }
+
           <div id="completedGame" style={{display: 'none'}} className="text-center">
             <h2>Задание пройдено!</h2>
               <MDBBtn color="success" onClick={this.save}>Закончить задание</MDBBtn>
