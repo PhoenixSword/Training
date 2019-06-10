@@ -15,7 +15,7 @@ var completedLevels = 0;
 var levelsCount = 0;
 
 const width = (index) => 380 + (index%3*70) + Math.round(20 + Math.random() *50);
-const height = (index) => 180 + (index%10*80) + Math.round(Math.random() *20);
+const height = (index) => 190 + (index%10*80) + Math.round(Math.random() *20);
 
 function init(mas) { 
   correctCards = 0;
@@ -31,9 +31,8 @@ function init(mas) {
   $('#successMessage').hide();
   $('#cardPile').html( '' );
   $('#fake').html( '' );
-  var randItem = Math.round(1 + Math.random() * 7)
   for ( var i=0; i<cardsCount; i++ ) {
-    $(`<div style="left: ${height(i)}px;top:${width(i)}px" class="item item${randItem}"></div>`).data( 'number', i ).attr( 'id', 'card' ).appendTo( '#cardPile' ).draggable( {
+    $(`<div style="left: ${height(i)}px;top:${width(i)}px" class="item item${ Math.round(1 + Math.random() * 12)}"></div>`).data( 'number', i ).attr( 'id', 'card' ).appendTo( '#cardPile' ).draggable( {
       stack: '#cardPile div',
       revert: true,
       containment: "#content", scroll: false
