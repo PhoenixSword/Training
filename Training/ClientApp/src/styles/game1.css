@@ -160,7 +160,6 @@
   }
 }
 .game1 #cardSlots3.animated {
-  width: 409px;
   transform: translateY(3500px);
 }
 @keyframes animatedcenter {

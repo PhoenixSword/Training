@@ -62,7 +62,6 @@ export class TeachersEvents extends Component {
 
   getSettings()
   {
-    console.log(this.state);
     var settingsArray = []
       for (var i = 0; i < this.state.Events.length; ++i) {
       switch (this.state.Events[i].url) {

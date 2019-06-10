@@ -95,7 +95,7 @@ export class Game1Settings extends Component {
               <thead className="blue-gradient white-text">
                 <tr>
                   <th className="">Уровень</th>
-                  <th className="">Количество осьминогов</th>
+                  <th className="">Количество морских коньков</th>
                   <th className="">Левый осьминог</th>
                   <th className="">Значение левого осьминога</th>
                   <th className="">Правый осьминог</th>
