@@ -8,13 +8,12 @@ import $ from "jquery";
 const Settings = () => 
 {
   return {
-    cardsCount: 0,
-    boxesCount: 2
+    type: true
   }
 }
 
-export class Game2Settings extends Component {
-  static displayName = Game2Settings.name;
+export class Game3Settings extends Component {
+  static displayName = Game3Settings.name;
   constructor (props) {
     super(props);
       var settings = this.props.event.settings !== null ? JSON.parse(this.props.event.settings) : [];
@@ -65,11 +64,8 @@ export class Game2Settings extends Component {
     stateCopy.settings[index] = Object.assign({}, stateCopy.settings[index]);
     switch(e.target.name)
     {
-      case "cardsCount":
-        stateCopy.settings[index].cardsCount = +val;
-        break;
-      case "boxesCount":
-        stateCopy.settings[index].boxesCount = +val;
+      case "type":
+        stateCopy.settings[index].type = +val === 0 ? true : false;
         break;
       default:
         break;
@@ -83,8 +79,7 @@ export class Game2Settings extends Component {
               <thead className="blue-gradient white-text">
                 <tr>
                   <th className="">Уровень</th>
-                  <th className="">Количество сов</th>
-                  <th className="">Количество деревьев</th>
+                  <th className="">Тип упорядочивания</th>
                   <th className="">Удалить</th>
                 </tr>
               </thead>
@@ -98,17 +93,10 @@ export class Game2Settings extends Component {
                     </div>
                   </td>
                   <td>
-                    <div className="md-form">
-                      <MDBInput type="number" name="cardsCount" value={item.cardsCount.toString()} onChange={this.onChange} min="1" max="11"/>
-                    </div>
-                  </td>
-                  <td>
                     <div className="md-form text-center">
-                      <select name="boxesCount" className="browser-default custom-select" value={item.boxesCount} onChange={this.onChange}>
-                         <option value="2">2 дерева</option>
-                         <option value="3">3 дерева</option>
-                         <option value="4">4 дерева</option>
-                         <option value="5">5 деревьев</option>
+                      <select name="type" className="browser-default custom-select" value={item.type ? "0" : "1"} onChange={this.onChange}>
+                         <option value="0">По возрастанию</option>
+                         <option value="1">По убыванию</option>
                       </select>
                     </div>
                   </td>

@@ -5,10 +5,9 @@ import {MDBBtn} from 'mdbreact';
 import {schoolchildService} from "../services/SchoolchildService";
 import '../../styles/game3.css'
 
-var correctCards = 0;
 var completedLevels = 0;
 var levelsCount = 0;
-
+var type = true;
 function rand() {
      return Math.round(0 + Math.random() * 999);
 }
@@ -33,18 +32,18 @@ function reverse( a, b ) {
     return 0;   
 }
 function init(mas) { 
-  correctCards = 0;
   levelsCount = mas.countLevels;
   completedLevels = mas.currentLevel;
+  type = mas.type;
   $( "#sortable" ).sortable({
       items: "> li",
       revert: true,
       axis: "x",
       update: function( event, ui ) {
-        var mas = $( "#sortable" ).sortable( "toArray" );    
-        console.log(mas);   
-        console.log(mas.slice().sort((a, b) => sort(a, b)).reverse((a, b) => reverse(a, b)));    
-        if(mas.toString() === mas.slice().sort((a, b) => sort(a, b)).reverse((a, b) => reverse(a, b)).toString()){
+        var mas = $( "#sortable" ).sortable( "toArray" ); 
+        var masSortable = mas.slice().sort((a, b) => sort(a, b))
+        if(!type) masSortable = masSortable.reverse();
+        if(mas.toString() === masSortable.toString()){
           if (completedLevels === levelsCount) {
             $('#completedGame').show();
           }
@@ -54,13 +53,12 @@ function init(mas) {
         }
     }
   });
-
-  $('#sortable').html( '' );
-  $( "#sortable" ).disableSelection();
+  $('#sortable').html('');
+  $('#sortable').disableSelection();
   $('#successMessage').hide();
   for ( var i=0; i<5; i++ ) {
     var value = rand();
-    var element = $(`<li class="ui-state-default item item${i+1}"><p>${value}</p></li>`).data( 'number', value ).attr( 'id', value ).appendTo( '#sortable' );
+    $(`<li class="ui-state-default item item${i+1}"><p>${value}</p></li>`).data( 'number', value ).attr( 'id', value ).appendTo( '#sortable' );
   }
 }
 
@@ -70,20 +68,26 @@ class Game3 extends React.Component {
     this.service = schoolchildService;
     var countLevels = +this.props.countLevels;
     var eventId = this.props.eventId;
+    countLevels = countLevels || Math.round(1 + Math.random() * 2);
+    eventId = eventId || 'test';
     if (this.props.settings !== undefined) {
       var settings = this.props.settings;
     }
     else{
-      var boxesCount = Math.round(2 + Math.random() * 3);
-      var cardsCount = boxesCount * Math.round(2 + Math.random() * 3);
-      settings = [{"cardsCount" : cardsCount, "boxesCount" : boxesCount}];
+      settings = [];
+      for (var i = countLevels - 1; i >= 0; i--) {
+        if (Math.round(Math.random() * 1) > 0) {
+          var type = true;
+        }
+        else{
+          type = false;
+        }
+        settings.push({"type" : type});
+      }
     }
-    countLevels = countLevels || Math.round(1 + Math.random() * 2);
-    eventId = eventId || 'test';
     this.state = {
       score: 0,
-      cardsCount: settings[0].cardsCount,
-      boxesCount: settings[0].boxesCount,
+      type: settings[0].type,
       countLevels: countLevels,
       eventId: eventId,
       currentLevel: 0,
@@ -105,7 +109,7 @@ class Game3 extends React.Component {
       this.setState({redirect: true});
       return false;
     }
-    var score = this.state.cardsCount * 7;
+    var score = Math.round(1 + Math.random() * 9) + 5;
     this.setState({score: this.state.score + score});
     this.service.save(this.state.eventId, this.state.score + score).then((resp) => {
       if (resp === true) {
@@ -114,22 +118,14 @@ class Game3 extends React.Component {
     });
   }
 
-  generateLevel(type)
+  generateLevel(newlevel)
   {
-    var boxesCount = Math.round(2 + Math.random() * 3);
-    var cardsCount = boxesCount * Math.round(2 + Math.random() * 3);
     var score;
-    type ? score = this.state.cardsCount * 7 + this.state.boxesCount * 5 : score = 0;
-
-    if (this.state.eventId !== "test") {
-      cardsCount = this.state.settings[this.state.currentLevel].cardsCount;
-      boxesCount = this.state.settings[this.state.currentLevel].boxesCount;
-    }
-
+    newlevel ? score = Math.round(1 + Math.random() * 9) + 5 : score = 0;
+    type = this.state.settings[this.state.currentLevel].type;
     this.setState({
       score: this.state.score + score,
-      cardsCount: cardsCount,
-      boxesCount: boxesCount,
+      type: type,
       currentLevel: this.state.currentLevel+1
     }, ()=> init(this.state));
   }
@@ -148,12 +144,10 @@ class Game3 extends React.Component {
           <div className="progress-bar progress-bar-danger progress-bar-striped active" style={{width:`${this.state.currentLevel*100/this.state.countLevels}%`}}>Уровень {this.state.currentLevel}/{this.state.countLevels}</div>
       </div>
         <div className="game3Name text-center text-black">
-          <h1 className="title">Расположи рыбок по убыванию</h1>
+          <h1 className="title">Расположи рыбок по {this.state.type ? "возрастанию" : "убыванию"}</h1>
         </div>
           <ul id="sortable">
           </ul>
-
-
           <div id="successMessage" style={{display: 'none'}} className="text-center">
             <h2>Успех!</h2>
               <MDBBtn color="primary" onClick={() => this.generateLevel(true)}>Перейти на следующий уровень</MDBBtn>

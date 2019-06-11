@@ -6,6 +6,7 @@ import Notification from "./Notification";
 import {ListGames} from "./ListGames.js";
 import {Game1Settings} from "./Game1Settings";
 import {Game2Settings} from "./Game2Settings";
+import {Game3Settings} from "./Game3Settings";
 import $ from "jquery";
 
 const Event = () => 
@@ -71,6 +72,9 @@ export class TeachersEvents extends Component {
         case "Game2":
           settingsArray[i] = <Game2Settings event={this.state.Events[i]}/>;
           break;
+        case "Game3":
+          settingsArray[i] = <Game3Settings event={this.state.Events[i]}/>;
+          break;
         default:
           settingsArray[i] = <Game1Settings event={this.state.Events[i]}/>;
           break;
@@ -106,19 +110,9 @@ export class TeachersEvents extends Component {
     var stateCopy = Object.assign({}, this.state);
     stateCopy.Events = stateCopy.Events.slice();
     stateCopy.Events[index] = Object.assign({}, stateCopy.Events[index]);
-    switch(e.target.name)
-    {
-      case "url":
-        var text = e.target.selectedOptions[0].innerText;
-        stateCopy.Events[index].url = val;
-        stateCopy.Events[index].name = text;
-        break;
-      case "countLevels":
-        stateCopy.Events[index].countLevels = val;
-        break;
-      default:
-        break;
-    }
+    var text = e.target.selectedOptions[0].innerText;
+    stateCopy.Events[index].url = val;
+    stateCopy.Events[index].name = text;
     this.setState(stateCopy, () => {
           this.save();
     });
