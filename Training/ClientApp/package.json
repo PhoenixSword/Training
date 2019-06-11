@@ -42,6 +42,7 @@
     "sass": "sass --watch src/styles/style.scss:src/styles/style.css",
     "sassgame1": "sass --watch src/styles/game1.scss:src/styles/game1.css",
     "sassgame2": "sass --watch src/styles/game2.scss:src/styles/game2.css",
+    "sassgame3": "sass --watch src/styles/game3.scss:src/styles/game3.css",
     "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

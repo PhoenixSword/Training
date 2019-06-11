@@ -11,7 +11,6 @@ import { role } from './components/services/Auth-header';
 import { TeachersEvents } from './components/TeachersEvents';
 import { SchoolchildsEvents } from './components/SchoolchildsEvents';
 import { TeachersSchoolchilds } from './components/TeachersSchoolchilds';
-import { TeacherProfile } from './components/TeacherProfile';
 import { SchoolchildProfile } from './components/SchoolchildProfile';
 
 import { Games } from './components/Games';
@@ -37,8 +36,7 @@ const App = () => (
     <Switch>
       {role() === "Teacher" ? 
       <React.Fragment>
-      <AppRoute exact path="/" layout={Layout} component={TeacherProfile} /> 
-      <AppRoute exact path="/profile" layout={Layout} component={TeacherProfile} />
+      <AppRoute exact path="/" layout={Layout} component={TeachersEvents} /> 
       <AppRoute exact path="/events" layout={Layout} component={TeachersEvents}/>
       <AppRoute exact path="/schoolchilds" layout={Layout} component={TeachersSchoolchilds}/> 
       <AppRoute exact path="/games" layout={Layout} component={Games} />

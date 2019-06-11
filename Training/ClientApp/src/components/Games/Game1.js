@@ -16,6 +16,7 @@ var rightResult = 0;
 var rightValue = 0;
 var completedLevels = 0;
 var levelsCount = 0;
+var score = 0;
 
 function rand(type) {
   switch (type) {
@@ -156,6 +157,7 @@ function handleCardDrop( event, ui ) {
         setTimeout(function(){
           ui.draggable.removeClass( 'invalidItem' );
         }, 500);
+        score -= 5;
       }
       break;
     case 2:
@@ -168,6 +170,7 @@ function handleCardDrop( event, ui ) {
         setTimeout(function(){
           ui.draggable.removeClass( 'invalidItem' );
         }, 500);
+        score -= 5;
       }
       break;
     case 3:
@@ -180,6 +183,7 @@ function handleCardDrop( event, ui ) {
         setTimeout(function(){
           ui.draggable.removeClass( 'invalidItem' );
         }, 500);
+        score -= 5;
       }
       break;
     default:

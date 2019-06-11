@@ -1,218 +1,184 @@
-.game1 {
-  /* Slots for final card positions */
-}
-.game1 .wideBox {
-  clear: both;
-  text-align: center;
-  margin: 70px;
-  padding: 10px;
-  background: #ebedf2;
-  border: 1px solid #333;
-}
-.game1 .wideBox h1 {
-  font-weight: bold;
-  margin: 20px;
-  color: #666;
-  font-size: 1.5em;
-}
-.game1 #cardPile {
-  margin: 0 auto;
-  background: green;
-  float: left;
-}
-.game1 .item {
-  cursor: grab;
-  position: absolute;
-  background: url("/games/game1/item.png") no-repeat;
-  width: 80px;
-  height: 130px;
-  z-index: 10;
-}
-.game1 .item > p {
-  font-weight: bold;
-  font-size: 16px;
-  border-radius: 10px;
-  text-align: center;
-  margin: 50px 0 0 35px;
-  width: 42px;
-  height: 20px;
-  background: white;
-  color: black;
-}
-.game1 .invalidItem {
-  position: absolute;
-  background: url("/games/game1/item.png") no-repeat;
-  width: 80px;
-  background-position-x: -80px;
-  height: 130px;
-  z-index: 10;
-}
-.game1 .leftItem {
-  position: absolute;
-  background: url("/games/game1/item.png") no-repeat;
-  width: 80px;
-  background-position-x: -240px;
-  height: 130px;
-  z-index: 10;
-  animation: 0;
-}
-.game1 .centerItem {
-  position: absolute;
-  background: url("/games/game1/item.png") no-repeat;
-  width: 80px;
-  height: 130px;
-  z-index: 10;
-  animation: 0;
-}
-.game1 .rightItem {
-  position: absolute;
-  background: url("/games/game1/item.png") no-repeat;
-  width: 80px;
-  background-position-x: -160px;
-  height: 130px;
-  z-index: 10;
-  animation: 0;
-}
-.game1 .leftItem.animated {
-  transition: transform 3s ease-in-out;
-  transform: translateX(-2500px);
-}
-.game1 .centerItem.animated {
-  transition: transform 3s ease-in-out;
-  transform: translateY(3500px);
-}
-.game1 .rightItem.animated {
-  transition: transform 3s ease-in-out;
-  transform: translateX(2500px);
-}
-.game1 #cardSlots1 div, .game1 #cardSlots2 div, .game1 #cardSlots3 div {
-  float: left;
-  width: 43%;
-  height: 18%;
-  padding: 0.85em;
-  padding-top: 40px;
-  padding-bottom: 0;
-  border: 2px solid #333;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  margin: 10px 0 0 10px;
-  background: #fff;
-}
-.game1 #cardSlots1 {
-  background: url("/games/game1/slot1.png") no-repeat;
-  background-position-y: bottom !important;
-  position: absolute;
-  margin: 1rem;
-  top: 23%;
-  left: -50px;
-  width: 400px;
-  height: 568px;
-  transition: background 0s, transform 3s ease-in-out;
-  z-index: 1;
-}
-.game1 #cardSlots1.hovered {
-  background-position-x: -400px;
-}
-.game1 #cardSlots2 {
-  background: url("/games/game1/slot2.png") no-repeat;
-  background-position-y: bottom !important;
-  position: absolute;
-  margin: 1rem;
-  top: 23%;
-  right: -50px;
-  width: 400px;
-  height: 568px;
-  transition: background 0s, transform 3s ease-in-out;
-  z-index: 1;
-}
-.game1 #cardSlots2.hovered {
-  background-position-x: -400px;
-}
-.game1 #cardSlots3 {
-  background: url("/games/game1/slot3.png") no-repeat;
-  margin: 0 10%;
-  position: absolute;
-  left: 25%;
-  bottom: 0%;
-  width: 380px;
-  height: 185px;
-  transition: background 0s, transform 3s ease-in-out;
-  z-index: 1;
-}
-.game1 #cardSlots3.hovered {
-  background-position-x: -380px;
-}
-.game1 #cardSlots1.animated {
-  transform: translateX(-2500px);
-}
+﻿.game1 {
+  /* Slots for final card positions */ }
+  .game1 .wideBox {
+    clear: both;
+    text-align: center;
+    margin: 70px;
+    padding: 10px;
+    background: #ebedf2;
+    border: 1px solid #333; }
+  .game1 .wideBox h1 {
+    font-weight: bold;
+    margin: 20px;
+    color: #666;
+    font-size: 1.5em; }
+  .game1 #cardPile {
+    margin: 0 auto;
+    background: green;
+    float: left; }
+  .game1 .item {
+    cursor: grab;
+    position: absolute;
+    background: url("/games/game1/item.png") no-repeat;
+    width: 80px;
+    height: 130px;
+    z-index: 10; }
+  .game1 .item > p {
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 50px 0 0 35px;
+    width: 42px;
+    height: 20px;
+    background: white;
+    color: black; }
+  .game1 .invalidItem {
+    position: absolute;
+    background: url("/games/game1/item.png") no-repeat;
+    width: 80px;
+    background-position-x: -80px;
+    height: 130px;
+    z-index: 10; }
+  .game1 .leftItem {
+    position: absolute;
+    background: url("/games/game1/item.png") no-repeat;
+    width: 80px;
+    background-position-x: -240px;
+    height: 130px;
+    z-index: 10;
+    animation: 0; }
+  .game1 .centerItem {
+    position: absolute;
+    background: url("/games/game1/item.png") no-repeat;
+    width: 80px;
+    height: 130px;
+    z-index: 10;
+    animation: 0; }
+  .game1 .rightItem {
+    position: absolute;
+    background: url("/games/game1/item.png") no-repeat;
+    width: 80px;
+    background-position-x: -160px;
+    height: 130px;
+    z-index: 10;
+    animation: 0; }
+  .game1 .leftItem.animated {
+    transition: transform 3s ease-in-out;
+    transform: translateX(-2500px); }
+  .game1 .centerItem.animated {
+    transition: transform 3s ease-in-out;
+    transform: translateY(3500px); }
+  .game1 .rightItem.animated {
+    transition: transform 3s ease-in-out;
+    transform: translateX(2500px); }
+  .game1 #cardSlots1 div, .game1 #cardSlots2 div, .game1 #cardSlots3 div {
+    float: left;
+    width: 43%;
+    height: 18%;
+    padding: .85em;
+    padding-top: 40px;
+    padding-bottom: 0;
+    border: 2px solid #333;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    margin: 10px 0 0 10px;
+    background: #fff; }
+  .game1 #cardSlots1 {
+    background: url("/games/game1/slot1.png") no-repeat;
+    background-position-y: bottom !important;
+    position: absolute;
+    margin: 1rem;
+    top: 23%;
+    left: -50px;
+    width: 400px;
+    height: 568px;
+    transition: background 0s, transform 3s ease-in-out;
+    z-index: 1; }
+  .game1 #cardSlots1.hovered {
+    background-position-x: -400px; }
+  .game1 #cardSlots2 {
+    background: url("/games/game1/slot2.png") no-repeat;
+    background-position-y: bottom !important;
+    position: absolute;
+    margin: 1rem;
+    top: 23%;
+    right: -50px;
+    width: 400px;
+    height: 568px;
+    transition: background 0s, transform 3s ease-in-out;
+    z-index: 1; }
+  .game1 #cardSlots2.hovered {
+    background-position-x: -400px; }
+  .game1 #cardSlots3 {
+    background: url("/games/game1/slot3.png") no-repeat;
+    margin: 0 10%;
+    position: absolute;
+    left: 25%;
+    bottom: 0%;
+    width: 380px;
+    height: 185px;
+    transition: background 0s, transform 3s ease-in-out;
+    z-index: 1; }
+  .game1 #cardSlots3.hovered {
+    background-position-x: -380px; }
+  .game1 #cardSlots1.animated {
+    transform: translateX(-2500px); }
+
 @keyframes animatedleft {
   100% {
-    background-position-x: -7600px;
-  }
-}
-.game1 #cardSlots2.animated {
-  transform: translateX(2500px);
-}
+    background-position-x: -7600px; } }
+  .game1 #cardSlots2.animated {
+    transform: translateX(2500px); }
+
 @keyframes animatedright {
   100% {
-    background-position-x: -6593px;
-  }
-}
-.game1 #cardSlots3.animated {
-  transform: translateY(3500px);
-}
+    background-position-x: -6593px; } }
+  .game1 #cardSlots3.animated {
+    transform: translateY(3500px); }
+
 @keyframes animatedcenter {
   100% {
-    background-position-y: -2828px;
-  }
-}
-.game1 #successMessage {
-  position: absolute;
-  color: white;
-  left: 400px;
-  top: 200px;
-  width: 380px;
-  height: 180px;
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.1);
-  border: 3px solid #333;
-  border-radius: 10px;
-  box-shadow: 0 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.8);
-  padding: 20px;
-}
-.game1 #completedGame {
-  position: absolute;
-  color: white;
-  left: 400px;
-  top: 200px;
-  width: 380px;
-  height: 180px;
-  z-index: 100;
-  background: rgba(64, 255, 64, 0.2);
-  border: 3px solid #333;
-  border-radius: 10px;
-  box-shadow: 0 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.8);
-  padding: 20px;
-}
-.game1 .game1Name > h1, .game1 .game1Name > h2 {
-  font-weight: 500 !important;
-}
-.game1 #cardSlots1 > p, .game1 #cardSlots2 > p {
-  border: 2px solid white;
-  border-radius: 10px;
-  padding: 10px;
-  position: absolute;
-  width: 260px;
-  font-size: 24px;
-  top: -80px;
-  color: white;
-}
-.game1 #cardSlots1 > p {
-  left: 50px;
-}
-.game1 #cardSlots2 > p {
-  right: 50px;
-}
-
-/*# sourceMappingURL=game1.css.map */
+    background-position-y: -2828px; } }
+  .game1 #successMessage {
+    position: absolute;
+    color: white;
+    left: 400px;
+    top: 200px;
+    width: 380px;
+    height: 180px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.8);
+    padding: 20px; }
+  .game1 #completedGame {
+    position: absolute;
+    color: white;
+    left: 400px;
+    top: 200px;
+    width: 380px;
+    height: 180px;
+    z-index: 100;
+    background: rgba(64, 255, 64, 0.2);
+    border: 3px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.8);
+    padding: 20px; }
+  .game1 .game1Name > h1, .game1 .game1Name > h2 {
+    font-weight: 500 !important; }
+  .game1 #cardSlots1 > p, .game1 #cardSlots2 > p {
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    width: 260px;
+    font-size: 24px;
+    top: -80px;
+    color: white; }
+  .game1 #cardSlots1 > p {
+    left: 50px; }
+  .game1 #cardSlots2 > p {
+    right: 50px; }

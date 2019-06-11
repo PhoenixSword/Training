@@ -6,8 +6,8 @@
 .game2 .item {
   cursor: grab;
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 76px;
+  height: 100px;
   z-index: 10;
 }
 .game2 .item1 {

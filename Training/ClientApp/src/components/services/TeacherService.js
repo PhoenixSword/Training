@@ -8,7 +8,8 @@ export const teacherService={
   getEvents,
   addEvents,
   removeEvents,
-  saveSettings
+  saveSettings,
+  getProfile
 }
 
 var result = [];
@@ -35,6 +36,17 @@ function getSchoolChildsWithEvents() {
 
 function getEvents() {
  return fetch('/api/teachers/getEvents', {headers: {'Authorization': 'Bearer ' + token()}})
+.then((resp)=>{ 
+ if (resp.ok) return resp.json(); else return result;})
+.then((json)=>{ 
+  result = json;
+  return result;
+  })
+}
+
+
+function getProfile(id) {
+ return fetch('/api/teachers/getProfile?id=' + id, {headers: {'Authorization': 'Bearer ' + token()}})
 .then((resp)=>{ 
  if (resp.ok) return resp.json(); else return result;})
 .then((json)=>{ 

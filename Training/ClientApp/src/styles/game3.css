@@ -1,0 +1,92 @@
+.game3 .item {
+  cursor: grab;
+  width: 206px;
+  height: 150px;
+  z-index: 10;
+}
+.game3 #sortable {
+  position: absolute;
+  left: 5%;
+  top: 40%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.game3 #sortable li {
+  margin: 3px 3px 3px 0;
+  padding: 1px;
+  float: left;
+  text-align: center;
+}
+.game3 #sortable li > p {
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin: -40px 0 0 80px;
+  width: 80px;
+  height: 30px;
+  background: white;
+  color: black;
+}
+.game3 .item1 {
+  background: url("/games/game3/item1.png") no-repeat center center;
+  background-size: cover;
+}
+.game3 .item2 {
+  background: url("/games/game3/item2.png") no-repeat center center;
+  width: 173px !important;
+  background-size: cover;
+}
+.game3 .item3 {
+  background: url("/games/game3/item3.png") no-repeat center center;
+  background-size: cover;
+}
+.game3 .item4 {
+  background: url("/games/game3/item4.png") no-repeat center center;
+  background-size: cover;
+}
+.game3 .item5 {
+  background: url("/games/game3/item5.png") no-repeat center center;
+  background-size: cover;
+}
+.game3 #successMessage {
+  position: absolute;
+  color: white;
+  left: 400px;
+  top: 200px;
+  width: 380px;
+  height: 180px;
+  z-index: 100;
+  background: rgba(64, 64, 255, 0.7);
+  border: 3px solid #333;
+  border-radius: 10px;
+  box-shadow: 0 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.8);
+  padding: 20px;
+}
+.game3 #completedGame {
+  position: absolute;
+  color: white;
+  left: 400px;
+  top: 200px;
+  width: 380px;
+  height: 180px;
+  z-index: 100;
+  background: rgba(64, 255, 64, 0.7);
+  border: 3px solid #333;
+  border-radius: 10px;
+  box-shadow: 0 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.8);
+  padding: 20px;
+}
+.game3 .subtitle {
+  color: white;
+}
+.game3 .game3Name > h1, .game3 .game3Name > h2 {
+  font-weight: 500 !important;
+}
+.game3 .progress-bar {
+  background-color: #07e6e5 !important;
+  color: black !important;
+}
+
+/*# sourceMappingURL=game3.css.map */

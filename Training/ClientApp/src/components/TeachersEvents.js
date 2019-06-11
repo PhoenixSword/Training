@@ -13,7 +13,7 @@ const Event = () =>
   return {id: "00000000-0000-0000-0000-000000000000", name: 'Осьминоги', url: 'Game1', countLevels: 1}
 }
 
-$(document).mouseup(function (e){
+$(document).mousedown(function (e){
   var div = $(".settingsBlock"); 
   if (!div.is(e.target) && div.has(e.target).length === 0 && e.which === 1) { 
     div.hide(); 

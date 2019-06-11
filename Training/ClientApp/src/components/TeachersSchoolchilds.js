@@ -3,6 +3,16 @@ import {userService} from "./services/UserService";
 import {teacherService} from "./services/TeacherService";
 import { MDBBtn, MDBInput, ToastContainer   } from "mdbreact";
 import Notification from "./Notification";
+import $ from "jquery";
+
+
+$(document).mouseup(function (e){
+  var div = $(".profile"); 
+  if (!div.is(e.target) && div.has(e.target).length === 0 && e.which === 1) { 
+    div.hide(); 
+    $('#overlay3').hide(); 
+  }
+});
 
 const Schoolchild = () => 
 {
@@ -15,19 +25,31 @@ export class TeachersSchoolchilds extends Component {
     super(props);
     this.state = 
     {
-      schoolChilds: []
+      schoolChilds: [],
+      Profile: []
     }
     this.service = userService;
     this.teacherService = teacherService;
     this.teacherService.getSchoolChilds().then(response => 
-    this.setState(state => ({
-      schoolChilds: response
-    })));
+      this.setState(state => ({
+        schoolChilds: response
+      })));
     this.add = this.add.bind(this);
     this.save = this.save.bind(this);
     this.remove = this.remove.bind(this);
     this.onChange = this.onChange.bind(this);
   }
+
+  getProfile(id){
+    this.teacherService.getProfile(id).then(response => 
+      this.setState(state => ({
+        Profile: response
+      })),
+    $(".profile").show(),
+    $('#overlay3').show()
+    );
+  }
+
 
   save(){
     this.teacherService.addSchoolChilds(this.state.schoolChilds).then(
@@ -48,8 +70,8 @@ export class TeachersSchoolchilds extends Component {
     this.state.schoolChilds.splice(index, 1)
     this.setState(
       prevState => ({
-            schoolChilds: this.state.schoolChilds
-          }));
+          schoolChilds: this.state.schoolChilds
+        }));
     if (id !== '00000000-0000-0000-0000-000000000000') {
       this.teacherService.removeSchoolChilds(id);
     }
@@ -91,6 +113,7 @@ export class TeachersSchoolchilds extends Component {
                   <th className="">Логин</th>
                   <th className="">Пароль</th>
                   <th className="">ФИО</th>
+                  <th className="">Профиль ученика</th>
                   <th className="">Удалить</th>
                 </tr>
               </thead>
@@ -107,6 +130,7 @@ export class TeachersSchoolchilds extends Component {
                   <td>
                     <MDBInput name="fio" value={item.fio} onChange={this.onChange}/>
                   </td>
+                  <td><MDBBtn style={{padding: "5px 20px"}} onClick={() => this.getProfile(item.id)} color="primary">Профиль ученика</MDBBtn></td>
                   <td><MDBBtn style={{padding: "5px 20px"}} onClick={() => this.remove(item.id, index)} color="danger">Удалить</MDBBtn></td>
                 </tr>
                 )}
@@ -114,7 +138,49 @@ export class TeachersSchoolchilds extends Component {
             </table>
               <MDBBtn color="primary" onClick={this.add}>Добавить</MDBBtn>
               <MDBBtn color="success" onClick={this.save}>Сохранить</MDBBtn>
-
+            </div>
+            <div className="profile">
+              <div className="card">
+            <h3 className="blue-gradient white-text card-header text-center font-weight-bold text-uppercase py-4 mb-0">Выполненные задания</h3>
+              <table className="table">
+                    <thead className="blue-gradient white-text">
+                      <tr>
+                        <th className="">Название игры</th>
+                        <th className="">Количество уровней</th>
+                        <th className="">Дата выполнения</th>
+                        <th className="">Количество очков</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {
+                    this.state.Profile.map((item, index) =>
+                      <tr key={index} id={index}>
+                        <td>
+                          <div className="md-form">
+                            <span>{item.name}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="md-form">
+                            <span>{item.countLevels}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="md-form">
+                            <span>{item.date}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="md-form">
+                            <span>{item.score}</span>
+                          </div>
+                        </td>
+                      </tr>
+                      )
+                    }
+                    </tbody>
+                  </table>
+                  </div>
             </div>
       </div>
     );

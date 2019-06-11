@@ -39,7 +39,7 @@ export class Register extends Component {
 
   render () {
     if (this.state.redirect && !this.state.alert) {
-      return <Redirect to='/profile'/>;
+      return <Redirect to='/'/>;
     }
     return (
       <MDBContainer>

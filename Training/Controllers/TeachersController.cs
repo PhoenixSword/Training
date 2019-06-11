@@ -33,6 +33,10 @@ namespace Training.Controllers
         {
             return _repo.GetSchoolChildsWithEvents(UserId);
         }
+        public IEnumerable<Event> GetProfile(string id)
+        {
+            return _repo.GetCompletedEvents(id, UserId);
+        }
 
         [HttpPost]
         public async Task<IEnumerable<object>> AddSchoolChilds([FromBody] IEnumerable<ApplicationUserModel> listUserModels)
