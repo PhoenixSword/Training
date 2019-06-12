@@ -21,16 +21,6 @@ function sort( a, b ) {
     }
     return 0;   
 }
-
-function reverse( a, b ) {
-    if ( +a < +b) {
-        return 1;
-    }
-    if ( +a > +b) {
-        return -1; 
-    }
-    return 0;   
-}
 function init(mas) { 
   levelsCount = mas.countLevels;
   completedLevels = mas.currentLevel;

@@ -3,6 +3,8 @@ import {userService} from "./services/UserService";
 import {teacherService} from "./services/TeacherService";
 import { MDBBtn, MDBInput, ToastContainer   } from "mdbreact";
 import Notification from "./Notification";
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import $ from "jquery";
 
 
@@ -26,7 +28,8 @@ export class TeachersSchoolchilds extends Component {
     this.state = 
     {
       schoolChilds: [],
-      Profile: []
+      Profile: [],
+      options: {}
     }
     this.service = userService;
     this.teacherService = teacherService;
@@ -41,13 +44,63 @@ export class TeachersSchoolchilds extends Component {
   }
 
   getProfile(id){
-    this.teacherService.getProfile(id).then(response => 
-      this.setState(state => ({
-        Profile: response
-      })),
+    var dateArray = [];
+    var nameArray = [];
+    var date = new Date();
+    var dayofMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    for (var i = 0; i < dayofMonth; i++) {
+      dateArray.push(('0' + ((i + 1))).slice(-2) + "." + ('0' + ((date.getMonth()+1))).slice(-2) + "." + date.getFullYear());
+    }
+     this.teacherService.getProfile(id).then((resp) => {
+      for (var i = 0; i < resp.length; i++) {
+          var score = [];
+          for (var j = 0; j < dayofMonth; j++) {
+              score.push(0);
+          }
+          var index = $.trim(resp[i].date[0] + "" + resp[i].date[1])-1;
+          score[+index] = resp[i].score
+          nameArray.push({
+          name: resp[i].name,
+          data: score
+        })
+      }
+    this.setState({
+        options: {
+          title: {
+            display: true,
+            text: 'Образовательная траектория'
+          },
+          plotOptions: {
+              line: {
+                 dataLabels: {
+                      enabled: true,
+                      formatter: function() {
+                          if (this.y > 0)
+                              return this.y;
+                          else
+                              return null;
+                      }
+                  }
+              }
+          },
+          series: nameArray,
+          yAxis: [{
+            title: {
+                text: 'Количество очков'
+            }
+          }],
+          xAxis: [{
+            categories: dateArray,
+            title: {
+                text: 'Дата'
+            }
+          }],
+        },
+        Profile: resp
+    })
     $(".profile").show(),
     $('#overlay3').show()
-    );
+    });
   }
 
 
@@ -139,7 +192,7 @@ export class TeachersSchoolchilds extends Component {
               <MDBBtn color="primary" onClick={this.add}>Добавить</MDBBtn>
               <MDBBtn color="success" onClick={this.save}>Сохранить</MDBBtn>
             </div>
-            <div className="profile">
+            <div className="profile scrollBlock">
               <div className="card">
             <h3 className="blue-gradient white-text card-header text-center font-weight-bold text-uppercase py-4 mb-0">Выполненные задания</h3>
               <table className="table">
@@ -180,6 +233,11 @@ export class TeachersSchoolchilds extends Component {
                     }
                     </tbody>
                   </table>
+                  <hr/>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={this.state.options}
+                  />
                   </div>
             </div>
       </div>
