@@ -11,7 +11,7 @@
     "jquery-ui": "^1.12.1",
     "jquery-ui-dist": "^1.12.1",
     "mdbreact": "^4.11.1",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "react": "^16.8.4",
     "react-addons-update": "^15.6.2",
     "react-dom": "^16.8.4",
